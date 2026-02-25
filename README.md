@@ -1,2 +1,5 @@
-# TaskManager-Solve
-sistema de gerenciamento de projetos
+Bibliotecas utilizadas:
+    - Material-UI
+    - React-icons
+    - Sonner
+    - 
