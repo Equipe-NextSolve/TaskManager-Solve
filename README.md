@@ -1,16 +1,17 @@
 
 # Bibliotecas utilizadas:
  - Componentes:
-     - @mui/material (Material-UI): Biblioteca de componentes prontos do Google Material Design
-     - @mui/icons-material: Pacote oficial de ícones do Material Design
+     - @mui/material (Material-UI): Biblioteca de componentes prontos do Google Material Design.
+     - @mui/icons-material: Pacote oficial de ícones do Material Design.
 
- - React-icons: Coleção gigante de ícones de várias bibliotecas (FontAwesome, Feather, Bootstrap etc)
+ - React-icons: Coleção gigante de ícones de várias bibliotecas (FontAwesome, Feather, Bootstrap etc).
 
  - Sonner: Biblioteca de notificações (toasts), Após criar um projeto, aparece uma mensagem verde no canto da tela.
 
  - emailjs: Serviço que envia email direto do frontend, Quando um dev clica "Solicitar projeto", o gerente recebe email na hora.
 
- - date-fns: Biblioteca para manipular datas de forma simples, Ex: format(project.deadline, 'dd/MM/yyyy') mostra "25/03/2026"
+ - date-fns: Biblioteca para manipular datas de forma simples, Ex: format(project.deadline, 'dd/MM/yyyy') mostra "25/03/2026".
+
  - Firebase:
    - firebase: Biblioteca para conectar com Firebase pelo navegador, Quando um dev muda o status do projeto, o Firebase atualiza em tempo real para o gerente.
    - firebase-admin: Versão servidor do Firebase (roda nas API Routes do Next.js), A ação de promover alguém a admin só pode ser feita pelo backend com firebase-admin.
