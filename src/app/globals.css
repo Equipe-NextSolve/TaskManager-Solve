@@ -37,7 +37,8 @@
  
 
     /* ─── FUNDO / DARK THEME ────────────────────────────── */
-    --color-bg-pure:  #0C0C0C;
+    --color-background-page: #0A0A0A;
+    --color-bg-pure:  #000000b6;
     --color-bg-card:  #121212;
     --color-bg-navy:  #171C23;
    --color-bg-hover:#2D2D2D;

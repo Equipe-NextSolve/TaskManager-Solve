@@ -5,6 +5,7 @@ import { useState } from "react"
 export function BurgerButton({ isOpen, onClick }) {
     const [isHovered, setIsHovered] = useState(false)
 
+
     return (
         <label 
             onMouseEnter={() => setIsHovered(true)}
@@ -12,7 +13,7 @@ export function BurgerButton({ isOpen, onClick }) {
             style={{
                 position: 'relative',
                 width: '24px',        
-                height: '18px',       
+                height:'18px',       
                 background: 'transparent',
                 cursor: 'pointer',
                 display: 'block',
@@ -39,9 +40,9 @@ export function BurgerButton({ isOpen, onClick }) {
                 transition: '.25s ease-in-out',
                 ...(i === 0 && {
                 top: '0px',
-                transformOrigin: 'center',           // centralizado
+                transformOrigin: 'center',        
                 transform: isOpen
-                    ? 'translateY(8px) rotate(45deg)'  // desce até o meio e gira
+                    ? 'translateY(8px) rotate(45deg)' 
                     : 'rotate(0deg)',
                 }),
                 ...(i === 1 && {
@@ -52,9 +53,9 @@ export function BurgerButton({ isOpen, onClick }) {
                 }),
                 ...(i === 2 && {
                 top: '100%',
-                transformOrigin: 'center',            // centralizado
+                transformOrigin: 'center',           
                 transform: isOpen
-                    ? 'translateY(-10px) rotate(-45deg)' // sobe até o meio e gira
+                    ? 'translateY(-10px) rotate(-45deg)' 
                     : 'translateY(-100%)',
                 }),
             }}

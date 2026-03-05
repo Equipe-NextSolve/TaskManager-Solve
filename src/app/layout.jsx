@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
             <body
                 className={`antialiased`}
             >
-                <SideMenu/>
+                
                 {children}
             </body>
         </html>
