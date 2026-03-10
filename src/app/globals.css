@@ -41,7 +41,8 @@
     --color-bg-pure:  #000000b6;
     --color-bg-card:  #121212;
     --color-bg-navy:  #171C23;
-   --color-bg-hover:#2D2D2D;
+    --color-bg-hover:#2D2D2D;
+    --color-bg-hover2: #4B4B4B;
     /* ─── ALIASES SEMÂNTICOS ────────────────────────────── */
   --color-primary: var(--color-brand-500);
   --color-accent:  var(--color-cyan-400);
@@ -50,7 +51,10 @@
   --color-warning: #f59e0b;
   --color-error:   #ef4444;
   --color-info:    var(--color-cyan-500);
+
+  --background-image-geometric: url('../../public/img/ondas.jpg'); 
 }
+
 
 :root {
   --background: #ffffff;
