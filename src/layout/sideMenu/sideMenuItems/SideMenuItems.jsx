@@ -2,21 +2,55 @@
 import { useState } from 'react'
 import Link from "next/link"
 import { menuItems } from "./Icons"
-
 import { BurgerButton } from './BurgerBtn';
+import { useEffect } from 'react';
+import { auth } from '@/lib/firebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
+import Image from 'next/image';
 
 export default function SideMenuItems() {
     const [isOpen, setIsOpen] = useState(false)
+    const [user, setUser] = useState(null)
+    
+    useEffect(()=>{
+        const unsub = onAuthStateChanged(auth,(firebaseUser) => {
+            setUser(firebaseUser)
+            
+        })
+        return () => unsub()
+    }, [])
 
     return (
         <div
-            className={`overflow-hidden h-full fixed top-0 left-0 bg-linear-to-br from-bg-pure via-[#050505] to-bg-pure flex flex-col gap-3 py-10 transition-all duration-200 ease-in-out  ${isOpen ? 'w-53 items-start' : 'w-15 items-center'}  shadow-xl`}
-            
+            className={`overflow-hidden h-full fixed top-0 left-0 bg-linear-to-br from-bg-pure via-[#0a0a0a] to-bg-pure flex flex-col gap-3 py-10 transition-all duration-300 ease-in-out ${isOpen ? 'w-58 items-start' : 'w-20 items-center'} shadow-xl z-50`}
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => setIsOpen(false)}
         >
             
-            FOto
-            <div className={`flex  w-[95%] ] ${isOpen ? ' justify-end' : 'w-15 justify-center'}`}>
-               <BurgerButton  isOpen={isOpen} onClick={() => setIsOpen(prev => !prev)}/>
+            <div className="mb-6 flex items-center min-h-10 w-full">
+                {/* Container da Foto: Largura fixa de 80px (mesma do menu fechado) para centralizar sempre */}
+                <div className="w-20 flex justify-center shrink-0">
+                    <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-gray-800 shadow-inner bg-gray-900 flex items-center justify-center">
+                        {user?.photoURL ? (
+                            <Image
+                                src={user.photoURL}
+                                alt="Foto de perfil"
+                                fill
+                                className="object-cover"
+                            />
+                        ) : (
+                            <span className="text-white text-lg font-bold">
+                                {user?.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
+                            </span>
+                        )}
+                    </div>
+                </div>
+                {/* Nome do Usuário: Aparece suavemente sem empurrar a foto */}
+                <div className={`ml-2 transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'opacity-100 w-32' : 'opacity-0 w-0'}`}>
+                    <p className="text-white text-sm font-bold whitespace-nowrap truncate">
+                        {user?.displayName || 'Usuário'}
+                    </p>
+                </div>
             </div>
 
             <div style={{
@@ -29,22 +63,29 @@ export default function SideMenuItems() {
             }} 
 
             />
-            {menuItems.map ((item)=>(
-                <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={()=>setIsOpen(true)}
-                    
-                    className={`h-11 flex items-center gap-2 bg-[--color-cyan-300]  text-[#6d6d6d] mx-1 hover:text-white  hover:bg-bg-hover w-[90%] justify-center rounded-lg p-2 ${isOpen ? 'justify-start' : 'justify-center'} transition-all duration-200 ease-in-out`}
-                >   
-                        <item.icon
-                            className={`  text-2xl transition-transform duration-200 `}
-                        />
-                        <span className={`text-sm mt-0.50  ${isOpen ? 'block ' : 'hidden'}`}>{item.label}</span>
-            
-                </Link>
-        
-            ))}
+            <nav className="flex flex-col gap-2 w-full px-4">
+                {menuItems.map((item) => (
+                    <Link
+                        key={item.label}
+                        href={item.href}
+                        className="h-12 flex items-center text-[#6d6d6d] hover:text-white hover:bg-[#1a1a1a] rounded-lg transition-colors duration-200 group"
+                    >   
+                        
+                        <div className="w-12 flex justify-center shrink-0">
+                            <item.icon
+                                className="text-xl transition-transform duration-200 group-hover:scale-110"
+                            />
+                        </div>
+
+                        
+                        <div className={`ml-1 transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'opacity-100 w-40' : 'opacity-0 w-0'}`}>
+                            <span className="text-sm font-medium whitespace-nowrap tracking-wide">
+                                {item.label}
+                            </span>
+                        </div>
+                    </Link>
+                ))}
+            </nav>
         </div>
         
     )

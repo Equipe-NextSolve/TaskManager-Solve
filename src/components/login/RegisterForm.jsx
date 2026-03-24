@@ -7,6 +7,7 @@ import { IoMdLock } from "react-icons/io";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdOutlineEmail } from "react-icons/md"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import GoogleLoginBtn from "./GoogleLoginBtn"
 
 export default function RegisterForm({setHaveAccount}) {
     const { register } = useAuth()
@@ -71,7 +72,7 @@ export default function RegisterForm({setHaveAccount}) {
     }
 
     return (
-        <form onSubmit={handleRegister} className="relative flex flex-col gap-10 overflow-hidden rounded-2xl mx-auto w-full max-w-120 p-8 pb-32">
+        <form onSubmit={handleRegister} className="relative flex flex-col gap-8 overflow-hidden rounded-2xl mx-auto w-full max-w-120 p-8 pb-32">
             <div className="flex flex-col gap-5">
                 <TextField
                     label="Nome"
@@ -129,7 +130,7 @@ export default function RegisterForm({setHaveAccount}) {
                 type="submit"
                 disabled={loading}
                 className="
-                    mt-1 h-12 w-full rounded-lg
+                    mt-1 h-12 w-full max-w-100 mx-auto rounded-lg
                     font-semibold text-xl tracking-wide
                     bg-brand-600 hover:bg-brand-700
                     text-white
@@ -142,7 +143,7 @@ export default function RegisterForm({setHaveAccount}) {
             >
                 {loading ?<CircularProgress size={24} color="inherit" /> : "Criar conta"}
             </button>
-            
+            <GoogleLoginBtn/>
         </form>
     )
 }

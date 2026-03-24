@@ -7,6 +7,7 @@ import { TextField, CircularProgress, InputAdornment} from "@mui/material"
 import { IoMdLock } from "react-icons/io";
 import { MdOutlineEmail } from "react-icons/md"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import GoogleLoginBtn from "./GoogleLoginBtn"
 
 export default function LoginForm({setHaveAccount}) {
     const { login } =   useAuth()
@@ -116,7 +117,7 @@ export default function LoginForm({setHaveAccount}) {
                 type="submit"
                 disabled={loading}
                 className="
-                    mt-1 h-12 w-full rounded-lg
+                    mt-1 h-12 w-full max-w-100 mx-auto rounded-lg
                     font-semibold text-xl tracking-wide
                     bg-brand-600 hover:bg-brand-700
                     text-white
@@ -129,7 +130,7 @@ export default function LoginForm({setHaveAccount}) {
             >
                 {loading ?<CircularProgress size={24} color="inherit" /> : "Entrar"}
             </button>
-            
+            <GoogleLoginBtn/>
         </form>
     )
 }

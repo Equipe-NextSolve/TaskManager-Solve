@@ -16,17 +16,60 @@ export default function GoogleLoginBtn(){
     async function handleGoogleLogin(){
         setLoading(true)
 
-        ty{
+        try{
             const result = await signInWithPopup(auth, googleProvider)
             const user = result.user
 
             //verificar se o user já existe
             const userRef = doc(db, "users", user.uid)
             const userSnap = await getDoc(userRef)
+
+            if (!userSnap.exists()){
+                //se for um novo, cria o documento novo
+                await setDoc(userRef, {
+                    name:user.displayName,
+                    email: user.email,
+                    photo: user.photoURL,
+                    createdAt: new Date(),
+                    authMethod: "google"
+                })
+            }
+            router.goHome()
+        }catch (error) {
+            const messages = {
+                "auth/user-not-found": "Nenhuma conta encontrada com este e-mail.",
+                "auth/wrong-password": "Senha incorreta.",
+                "auth/invalid-email": "E-mail inválido.",
+                "auth/invalid-credential": "E-mail ou senha incorretos.",
+                "auth/too-many-requests": "Muitas tentativas. Tente novamente mais tarde.",
+            }
+
+            toast.error("Erro ao fazer login", {
+                description: messages[error.code] ?? "Tente novamente mais tarde.",
+            })
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
-
+        <div className="flex flex-col items-center gap-4 w-full max-w-100 mx-auto">
+            <button
+                type="button"
+                onClick={handleGoogleLogin}
+                disabled={loading}
+                className="
+                    flex items-center justify-center gap-3
+                    w-full py-3 px-4 border -mt-3
+                  border-gray-300 rounded-lg bg-white
+                  text-gray-700 font-medium shadow-sm transition-all cursor-pointer
+                  hover:bg-[#D1D1D1] hover:shadow-md active:scale-[0.98] disabled:opacity-50
+                "
+            >
+                <FcGoogle className="text-2xl " />
+                {loading ? "Conectando..." : "Entrar com Google"}
+            </button>
+            
+        </div>
     )
 }
