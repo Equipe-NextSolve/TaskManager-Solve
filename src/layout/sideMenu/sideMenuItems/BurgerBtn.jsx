@@ -1,15 +1,15 @@
 'use client'
 
 import { useState } from "react"
-
+import useIsMobile from "@/responsive/useIsMobile"
 export function BurgerButton({ isOpen, onClick }) {
     const [isHovered, setIsHovered] = useState(false)
-
+    const isMobile = useIsMobile()
 
     return (
         <label 
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={!isMobile ? () => setIsHovered(true) : undefined}
+            onMouseLeave={!isMobile ?  () => setIsHovered(false) : undefined}
             style={{
                 position: 'relative',
                 width: '24px',        

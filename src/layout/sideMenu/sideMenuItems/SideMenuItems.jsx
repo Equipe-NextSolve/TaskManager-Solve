@@ -46,17 +46,17 @@ export default function SideMenuItems() {
     return (
         // biome-ignore lint/a11y/noStaticElementInteractions: <>
         <div
-            className={`overflow-hidden h-full fixed top-0 left-0 bg-linear-to-br from-bg-pure via-[#0a0a0a] to-bg-pure flex flex-col gap-3 py-10 transition-all duration-300 ease-in-out ${isOpen ? 'w-58 items-start' : 'w-12 sm:w-20 items-center'} shadow-xl z-50`}
+            className={`overflow-hidden h-full fixed top-0 left-0 bg-linear-to-br from-bg-pure via-[#0a0a0a] to-bg-pure flex flex-col gap-3 py-10 transition-all duration-300 ease-in-out ${isOpen ? 'w-58 items-start' : 'w-20 items-center'} shadow-xl z-50`}
             onMouseEnter={!isMobile ? () => setIsOpen(true) : undefined}
             onMouseLeave={!isMobile ? () => setIsOpen(false) : undefined}
         >
-            <div className={`flex  w-[95%] ] ${isOpen ? ' justify-end' : 'w-15 justify-center'}`}>
+            <div className={`flex mb-5 w-[95%] ] ${isOpen ? ' justify-end' : 'w-15 justify-center'}`}>
                 {isMobile && (<BurgerButton  isOpen={isOpen} onClick={() => setIsOpen(prev => !prev)}/>)}
             </div>
             <div className="mb-6 flex items-center min-h-10 w-full">
                 {/* Container da Foto: Largura fixa de 80px (mesma do menu fechado) para centralizar sempre */}
-                <div className="w-20 flex justify-center sm:shrink-0">
-                    <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-gray-800 shadow-inner bg-gray-900 flex items-center justify-center">
+                <div className="w-20 flex justify-center shrink-0">
+                    <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-gray-800 shadow-inner bg-gray-900 flex items-center justify-center">
                         {user?.photoURL ? (
                             <Image
                                 src={user.photoURL}
@@ -72,7 +72,7 @@ export default function SideMenuItems() {
                     </div>
                 </div>
                 {/* Nome do Usuário: Aparece suavemente sem empurrar a foto */}
-                <div className={`sm:ml-2 transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'opacity-100 w-32' : 'opacity-0 w-0'}`}>
+                <div className={`ml-2 transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'opacity-100 w-32' : 'opacity-0 w-0'}`}>
                     <p className="text-white text-sm font-bold whitespace-nowrap truncate">
                         {displayName}
                     </p>
