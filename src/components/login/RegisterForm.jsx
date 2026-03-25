@@ -83,7 +83,9 @@ export default function RegisterForm({setHaveAccount}) {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="relative flex flex-col gap-8 overflow-hidden rounded-2xl mx-auto w-full max-w-120 p-8 pb-32">
+        <form onSubmit={handleSubmit(onSubmit)} className="bg-white/10 backdrop-blur-xl md:bg-transparent md:border-0 md:backdrop-blur-none border border-white/20 
+                shadow-2xl absolute top-10 md:top-0 md:relative flex flex-col gap-10 overflow-hidden rounded-2xl mx-auto w-[90%] sm:w-full max-w-120 p-5 sm:p-8 pb-20">
+            <h2 className=" flex items-center justify-center w-full max-w-100 text-4xl font-bold text-center">Crie sua Conta</h2>
             <div className="flex flex-col gap-5">
                 <TextField
                     {...register("name")}
@@ -136,9 +138,13 @@ export default function RegisterForm({setHaveAccount}) {
                         className="w-full"
                     
                     />
-                    <button type="button" className="absolute right-2" onClick={handlePassword}>{seePassword ? <FaEyeSlash size={20} className="cursor-pointer text-bg-hover hover:text-bg-hover2"/> : <FaEye size={20} className="cursor-pointer text-bg-hover hover:text-bg-hover2"/>}</button>
+                    <button type="button" className="absolute right-2" onClick={handlePassword}>{seePassword ?
+                        <FaEyeSlash size={20} className="cursor-pointer text-white md:text-bg-hover md:hover:text-bg-hover2"/>
+                        :
+                        <FaEye size={20} className="cursor-pointer text-white md:text-bg-hover md:hover:text-bg-hover2"/>}
+                    </button>
                 </div>
-                <button type="button" className="text-bg-hover2 cursor-pointer hover:text-brand-700" onClick={()=> setHaveAccount(true)}>Já tem conta criada? clique aqui</button>
+                <button type="button" className="text-white md:text-bg-hover2 cursor-pointer md:hover:text-brand-700" onClick={()=> setHaveAccount(true)}>Já tem conta criada? clique aqui</button>
             </div>
             <button
                 type="submit"
@@ -146,11 +152,11 @@ export default function RegisterForm({setHaveAccount}) {
                 className="
                     mt-1 h-12 w-full max-w-100 mx-auto rounded-lg
                     font-semibold text-xl tracking-wide
-                    bg-brand-600 hover:bg-brand-700
+                    bg-brand-600 sm:hover:bg-brand-700
                     text-white
                     shadow-[0_0_20px_var(--color-surface-green-md)]
                     cursor-pointer
-                    hover:shadow-[0_0_28px_var(--color-surface-green-alt)]
+                    sm:hover:shadow-[0_0_28px_var(--color-surface-green-alt)]
                     disabled:opacity-50 disabled:cursor-not-allowed
                     active:scale-95 active:brightness-90 transition-all duration-150
                 "

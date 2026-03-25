@@ -75,7 +75,7 @@ export default function GoogleLoginBtn(){
                     w-full py-3 px-4 border -mt-3
                   border-gray-300 rounded-lg bg-white
                   text-gray-700 font-medium shadow-sm transition-all cursor-pointer
-                  hover:bg-[#D1D1D1] hover:shadow-md active:scale-[0.98] disabled:opacity-50
+                  sm:hover:bg-[#D1D1D1] sm:hover:shadow-md active:scale-[0.98] disabled:opacity-50
                 "
             >
                 <FcGoogle className="text-2xl " />

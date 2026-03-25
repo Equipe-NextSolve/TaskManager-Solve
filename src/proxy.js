@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export function middleware(request) {
+export function proxy(request) {
     const {pathname} = request.nextUrl
 
     // Verificar se o user está tentando acessar a página de login
