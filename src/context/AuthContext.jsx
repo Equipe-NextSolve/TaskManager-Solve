@@ -10,7 +10,7 @@ import {
 } from 'firebase/auth';
 import { auth, db } from '../lib/firebaseConfig'; 
 import { useAppRouter } from "@/utils/useAppRouter"
-import { setDoc, doc, getDoc } from 'firebase/firestore';
+import { setDoc, doc, getDoc, getDocs, collection } from 'firebase/firestore';
 import { serialize } from 'cookie';
 
 const AuthContext = createContext();  // Criação do contexto
@@ -82,7 +82,8 @@ export const AuthProvider = ({ children})  => {
             name: name.trim(),
             email,
             role: isFirstUser ? "administrador" : "desenvolvedor",
-            createdAt: new Date()
+            createdAt: new Date(),
+            authMethod: "email"
         })
         setSessionCookie(token)
         router.goHome()

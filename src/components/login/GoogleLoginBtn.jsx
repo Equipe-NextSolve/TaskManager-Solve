@@ -3,7 +3,7 @@
 
 import { googleProvider, auth, db } from "@/lib/firebaseConfig"
 import { signInWithPopup } from "firebase/auth"
-import { doc, setDoc, getDoc } from "firebase/firestore"
+import { doc, setDoc, getDoc, getDocs, collection } from "firebase/firestore"
 import { useState } from "react"
 import { useAppRouter } from "@/utils/useAppRouter"
 import {FcGoogle} from "react-icons/fc"
@@ -36,16 +36,25 @@ export default function GoogleLoginBtn(){
             const userRef = doc(db, "users", user.uid)
             const userSnap = await getDoc(userRef)
 
+            //Verifica se é o primeiro usuário
+            const usersSnapshot = await getDocs(collection(db, "users"))
+            const isFirstUser = usersSnapshot.empty
+            console.log(isFirstUser);
             if (!userSnap.exists()){
                 //se for um novo, cria o documento novo
                 await setDoc(userRef, {
                     name:user.displayName,
                     email: user.email,
+                    role: isFirstUser ? "administrador" : "desenvolvedor",
                     photo: user.photoURL,
                     createdAt: new Date(),
                     authMethod: "google"
                 })
             }
+            console.log(userRef);
+            
+            
+            
             router.goHome()
         }catch (error) {
             const messages = {
