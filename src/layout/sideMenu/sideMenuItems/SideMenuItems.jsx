@@ -9,12 +9,20 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { getDoc, doc } from 'firebase/firestore';
 import Image from 'next/image';
 import useIsMobile from '@/responsive/useIsMobile';
+import { useRole } from '@/hooks/useRole';
+import RoleBadge from '@/components/auth/RoleBadge';
 
 export default function SideMenuItems() {
     const [isOpen, setIsOpen] = useState(false)
     const [user, setUser] = useState(null)
     const [displayName, setDisplayName] = useState('')
     const isMobile = useIsMobile()
+    const {role} = useRole()
+
+    //filtrar os itens com base no cargo do usuário
+    const visibleItems = menuItems.filter(item  =>
+        !item.roles ||  item.roles.includes(role)
+    )
     
     useEffect(()=>{
         const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -90,7 +98,7 @@ export default function SideMenuItems() {
 
             />
             <nav className="flex flex-col items-center gap-2 w-full sm:px-4">
-                {menuItems.map((item) => (
+                {visibleItems.map((item) => (
                     <Link
                         key={item.label}
                         href={item.href}

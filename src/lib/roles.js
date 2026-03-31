@@ -10,7 +10,11 @@ export const ROLE_LABELS = {
   [ROLES.DEVELOPER]: "Desenvolvedor",
   [ROLES.PROJECT_LEAD]: "Líder de Projetos",
 }
-
+export const ROLE_COLORS = {
+  [ROLES.ADMIN]:        { bg: "bg-brand-500/15",   text: "text-brand-400",   border: "border-brand-500/30"   },
+  [ROLES.PROJECT_LEAD]: { bg: "bg-cyan-500/15",    text: "text-cyan-400",    border: "border-cyan-500/30"    },
+  [ROLES.DEVELOPER]:    { bg: "bg-bg-hover/60",    text: "text-bg-hover2",   border: "border-bg-hover/60"    },
+}
 /**
  * Mapa de permissões → quais cargos têm acesso.
  * Para adicionar uma nova regra, basta incluir aqui.
