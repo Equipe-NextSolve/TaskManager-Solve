@@ -12,6 +12,7 @@ import useIsMobile from '@/responsive/useIsMobile';
 import { useRole } from '@/hooks/useRole';
 import RoleBadge from '@/components/auth/RoleBadge';
 import { useAppRouter } from '@/utils/useAppRouter';
+import { CiLogout } from "react-icons/ci";
 
 export default function SideMenuItems() {
     const [isOpen, setIsOpen] = useState(false)
@@ -61,7 +62,7 @@ export default function SideMenuItems() {
     return (
         // biome-ignore lint/a11y/noStaticElementInteractions: <>
         <div
-            className={`overflow-hidden h-full fixed top-0 left-0 bg-linear-to-br from-bg-pure via-[#0a0a0a] to-bg-pure flex flex-col gap-3 py-10 transition-all duration-300 ease-in-out ${isOpen ? 'w-58 items-start' : 'w-20 items-center'} shadow-xl z-50`}
+            className={` overflow-hidden h-full top-0 left-0 bg-linear-to-br from-bg-pure via-[#0a0a0a] to-bg-pure flex flex-col gap-3 py-10 transition-all duration-300 ease-in-out ${isOpen ? 'w-58 items-start' : 'w-20 items-center'} shadow-xl z-50`}
             onMouseEnter={!isMobile ? () => setIsOpen(true) : undefined}
             onMouseLeave={!isMobile ? () => setIsOpen(false) : undefined}
         >
@@ -86,7 +87,6 @@ export default function SideMenuItems() {
                         )}
                     </div>
                 </div>
-                {/* Nome do Usuário: Aparece suavemente sem empurrar a foto */}
                 <div className={`ml-2 transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'opacity-100 w-32' : 'opacity-0 w-0'}`}>
                     <p className="text-white text-sm font-bold whitespace-nowrap truncate">
                         {displayName}
@@ -130,9 +130,9 @@ export default function SideMenuItems() {
                     </Link>
                 ))}
             </nav>
-            <button onClick={handleLogout}>
-                Sair
-            </button>
+            <div className={` mt-auto flex flex-col w-full sm:px-4  `}>
+                <CiLogout className='text-error text-[27px] cursor-pointer sm:hover:text-error/85 transition-transform duration-200 hover:translate-x-1' onClick={handleLogout}/>
+            </div>
         </div>
         
     )

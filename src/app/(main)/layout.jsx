@@ -23,9 +23,9 @@ export default function MainLayout ({ children }) {
     }
 
     return (
-        <div className="flex min-h-screen">
+        <div className="flex min-h-screen pr-10">
             <SideMenu/>
-            <main className="flex-1 p-4">
+            <main className="w-full">
                 {children}
             </main>
         </div>
