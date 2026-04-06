@@ -4,10 +4,9 @@ import SideMenu from "@/layout/sideMenu/SideMenu";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-
+import { ProjectsProvider } from "@/context/ProjectsContext";
 
 export default function MainLayout ({ children }) {
-
     const {currentUser, loading} = useAuth()
     const router = useRouter()
 
@@ -23,11 +22,13 @@ export default function MainLayout ({ children }) {
     }
 
     return (
-        <div className="flex min-h-screen pr-10">
-            <SideMenu/>
-            <main className="w-full">
-                {children}
-            </main>
-        </div>
+        <ProjectsProvider>
+            <div className="flex min-h-screen pr-10">
+                <SideMenu/>
+                <main className="w-full">
+                    {children}
+                </main>
+            </div>
+        </ProjectsProvider>
     )
 }

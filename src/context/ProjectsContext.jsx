@@ -71,8 +71,8 @@ export const ProjectsProvider = ({children}) => {
                 status: data.status || 'em_andamento',
                 priority: data.priority || 'media',
                 developers: data.developers || [],           
-                startDate: data.startDate || '',
-                deliveryDate: data.deliveryDate || '',
+                startDate: data.startDate ? new Date(data.startDate) : null,
+                deliveryDate: data.deliveryDate ? new Date(data.deliveryDate) : null,
                 techStack: data.techStack || [],            
                 repositoryUrl: data.repositoryUrl || '',
                 hosting: data.hosting || '',
@@ -87,5 +87,53 @@ export const ProjectsProvider = ({children}) => {
             return { id: ref.id, ...payload } // A função retorna o projeto recém-criado com seu ID.
         },
         [currentUser]
+    )
+
+    const updateProject = useCallback(
+        async (projectId, data)  =>  {
+            const payload  = {
+                title: data.title,
+                description: data.description || '',
+                client: data.client || '',
+                status: data.status,
+                priority: data.priority,
+                developers: data.developers || [],
+                startDate: data.startDate || '',
+                deliveryDate: data.deliveryDate || '',
+                techStack: data.techStack || [],
+                repositoryUrl: data.repositoryUrl || '',
+                hosting: data.hosting || '',
+                lastModified: serverTimestamp(),
+                lastModifiedBy: currentUser.uid,
+                lastModifiedByName: currentUser.name || currentUser.displayName || '',
+            }
+            await updateDoc (doc(db,'projects', projectId), payload) // localiza o documento pelo caminho projects/projectId e aplica as alterações
+            return { id:  projectId,  ...payload}
+        },[currentUser]
+    )
+
+    const deleteProject = useCallback(async (projectId) => {
+        await deleteDoc(doc(db,'projects',projectId)) // remove o documento com o ID fornecido
+    }, [])
+
+    //isso permite usar usersMap[uid] para obter os dados rapidamente de um usuário sem precisar usar find
+    const usersMap = Object.fromEntries(users.map((u)=>  [u.id, u]))
+
+    //Estados e funções disponíveis para os componentes filhos
+    const value = {
+        projects,
+        users,
+        usersMap,
+        loadingProjects,
+        loadingUsers,
+        createProject,
+        updateProject,
+        deleteProject,
+    }
+
+    return (
+        <ProjectsContext.Provider value={value}>
+            {children}
+        </ProjectsContext.Provider>
     )
 }
