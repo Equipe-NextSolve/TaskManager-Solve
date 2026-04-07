@@ -11,7 +11,7 @@
   --color-brand-600: #1AD76F;   /* ← sua brand-light  */
   --color-brand-700: #15a356;
   --color-brand-800: #166534;
-  --color-brand-900: #14532d;
+  --color-surface-cyan-dark: #14532d;
 
   /* Superfícies com transparência verde */
   --color-surface-green-dark: #1AD76F10;
@@ -42,6 +42,7 @@
     --color-bg-card:  #121212;
     --color-bg-navy:  #171C23;
     --color-bg-hover:#2D2D2D;
+    --color-bg-selected:#222222;
     --color-bg-hover2: #4B4B4B;
     /* ─── ALIASES SEMÂNTICOS ────────────────────────────── */
   --color-primary: var(--color-brand-500);

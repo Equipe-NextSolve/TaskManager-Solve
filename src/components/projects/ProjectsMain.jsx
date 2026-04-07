@@ -3,9 +3,9 @@
 import { useState, useMemo, useCallback } from 'react'
 import { toast } from 'sonner'
 import { MdAdd, MdSearch, MdClose, MdFilterList, MdOutlineRocketLaunch } from 'react-icons/md'
-import { CircularProgress } from '@mui/material'
+import { CircularProgress, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import { useProjects } from '@/context/ProjectsContext'
-
+import { muiDark2, menuPaper2 } from '@/utils/Projects/StyleInputs'
 import { STATUS_MAP, PRIORITY_MAP } from '@/components/projects/ProjectsConfig'
 import ProjectCard from '@/components/projects/ProjectCard'
 import ProjectForm from '@/components/projects/ProjectForm'
@@ -53,6 +53,7 @@ export default function ProjectsMain() {
     em_andamento: projects.filter((p) => p.status === 'em_andamento').length,
     concluido:   projects.filter((p) => p.status === 'concluido').length,
     pausado:     projects.filter((p) => p.status === 'pausado').length,
+    suporte: projects.filter((p)=> p.status === 'suporte').length,
   }), [projects])
 
   // ── Handlers ────────────────────────────────────────────────────────────────
@@ -64,7 +65,7 @@ export default function ProjectsMain() {
     setSubmitting(true)
     try {
       if (editingProject) {
-        await updateProject(editingProject.id, data)
+        await updateProject(editingProject.id, data, editingProject)
         toast.success('Projeto atualizado!')
       } else {
         await createProject(data)
@@ -133,10 +134,11 @@ export default function ProjectsMain() {
       {/* STAT PILLS */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
         {[
-          { label: 'Total',        value: stats.total,        color: '#a78bfa', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.2)' },
-          { label: 'Em Andamento', value: stats.em_andamento, color: '#22d3ee', bg: 'rgba(34,211,238,0.1)',  border: 'rgba(34,211,238,0.2)'  },
-          { label: 'Concluídos',   value: stats.concluido,    color: '#19CA68', bg: 'rgba(25,202,104,0.1)',  border: 'rgba(25,202,104,0.2)'  },
-          { label: 'Pausados',     value: stats.pausado,      color: '#f59e0b', bg: 'rgba(245,158,11,0.1)',  border: 'rgba(245,158,11,0.2)'  },
+          { label: 'Total', value: stats.total,        color: '#a78bfa', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.2)' },
+          { label: 'Em Andamento', value: stats.em_andamento, color: 'var(--color-cyan-400)', bg: 'var(--color-surface-cyan-alt)',  border: 'var(--color-surface-cyan-md)'  },
+          { label: 'Concluídos', value: stats.concluido,    color: 'var(--color-brand-500)', bg: 'var(--color-surface-green-alt)', border: 'var(--color-surface-green-md)'},
+          { label: 'Pausados', value: stats.pausado,      color: 'var(--color-warning)', bg: 'rgba(245,158,11,0.12)',  border: 'rgba(245,158,11,0.25)'  },
+          { label:'Suporte', value:stats.suporte, color:'#a855f7', bg: 'rgba(168, 85, 247, 0.12)', border: 'rgba(168, 85, 247, 0.25)'},
         ].map((s) => (
           <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px', borderRadius: 24, background: s.bg, border: `1px solid ${s.border}`, fontSize: 13 }}>
             <span style={{ fontSize: 18, fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.value}</span>
@@ -154,8 +156,55 @@ export default function ProjectsMain() {
         </div>
 
         <MdFilterList size={16} style={{ color: '#6b7280', flexShrink: 0 }} />
-
-        {[
+        <FormControl size="small" sx={{ minWidth: 160, ...muiDark2 }}>
+            <InputLabel>Status</InputLabel>
+            <Select
+                value={filterStatus}
+                label="Status"
+                onChange={(e) => setFilterStatus(e.target.value)}
+                MenuProps={menuPaper2}
+            >
+                <MenuItem value="all" style={{color: '#e5e7eb'}}>Todos status</MenuItem>
+                {Object.entries(STATUS_MAP).map(([val, cfg]) => (
+                    <MenuItem key={val} value={val} style={{ color: cfg.color }}>
+                        {cfg.label}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+        <FormControl size="small" sx={{ minWidth: 160, ...muiDark2 }}>
+            <InputLabel>Prioridade</InputLabel>
+            <Select
+                value={filterPriority}
+                label="Prioridade"
+                onChange={(e) => setFilterPriority(e.target.value)}
+                MenuProps={menuPaper2}
+            >
+                <MenuItem value="all" style={{color: '#e5e7eb'}}>Todas prioridades</MenuItem>
+                {Object.entries(PRIORITY_MAP).map(([val, cfg]) => (
+                    <MenuItem key={val} value={val} style={{ color: cfg.color }}>
+                        {cfg.label}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+        <FormControl size="small" sx={{ minWidth: 160, ...muiDark2 }}>
+            <InputLabel>Dev</InputLabel>
+            <Select
+                value={filterDev}
+                label="Dev"
+                onChange={(e) => setFilterDev(e.target.value)}
+                MenuProps={menuPaper2}
+            >
+                <MenuItem value="all" style={{color: '#e5e7eb'}}>Todos devs</MenuItem>
+                {users.map((u) => (
+                    <MenuItem key={u.id} value={u.id} style={{color: '#e5e7eb'}}>
+                        {u.name}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+        {/* {[
           { value: filterStatus,   onChange: setFilterStatus,   options: [['all', 'Todos status'], ...Object.entries(STATUS_MAP).map(([v, c]) => [v, c.label])] },
           { value: filterPriority, onChange: setFilterPriority, options: [['all', 'Todas prioridades'], ...Object.entries(PRIORITY_MAP).map(([v, c]) => [v, c.label])] },
           { value: filterDev,      onChange: setFilterDev,      options: [['all', 'Todos devs'], ...users.map((u) => [u.id, u.name])] },
@@ -167,7 +216,8 @@ export default function ProjectsMain() {
               <option key={val} value={val}>{label}</option>
             ))}
           </select>
-        ))}
+          
+        ))} */}
 
         {hasFilters && (
           <button onClick={clearFilters} type='button' style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 8, color: '#ef4444', padding: '6px 12px', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}>

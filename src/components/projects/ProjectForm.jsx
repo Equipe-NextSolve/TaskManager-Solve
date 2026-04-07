@@ -10,22 +10,9 @@ import { MdOutlineRocketLaunch, MdClose, MdPerson, MdCode, MdComputer } from 're
 import { RiGitBranchLine } from 'react-icons/ri'
 import { STATUS_MAP, PRIORITY_MAP, projectSchema } from '@/components/projects/ProjectsConfig'
 import { Avatar } from "./ProjectBadges"
-import { formatDateInput } from "@/utils/FormatDateProjects"
+import { muiDark } from "@/utils/Projects/StyleInputs"
+import { formatDateInput } from "@/utils/Projects/FormatDateProjects"
 
-const muiDark = {
-  '& .MuiOutlinedInput-root': {
-    color: '#e5e7eb',
-    '& fieldset': { borderColor: 'rgba(255,255,255,0.12)' },
-    '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.25)' },
-    '&.Mui-focused fieldset': { borderColor: '#19CA68' },
-    '& .MuiSelect-icon': { color: '#9ca3af' },
-    '& .MuiChip-root': { background: 'rgba(25,202,104,0.15)', color: '#19CA68', fontSize: 11 },
-  },
-  '& .MuiInputLabel-root': { color: '#9ca3af' },
-  '& .MuiInputLabel-root.Mui-focused': { color: '#19CA68' },
-  '& .MuiFormHelperText-root': { color: '#ef4444' },
-  '& .MuiOutlinedInput-input': { color: '#e5e7eb' },
-}
 
 const menuPaper = {
   PaperProps: {
@@ -62,6 +49,7 @@ export default function ProjectForm({ open, onClose, project, users, onSubmit, l
                     priority:      project.priority      || 'media',
                     developers:    project.developers    || [],
                     startDate:     formatDateInput(project.startDate),
+                    expectedDeliveryDate:formatDateInput(project.expectedDeliveryDate),
                     deliveryDate:  formatDateInput(project.deliveryDate),
                     techStack:     Array.isArray(project.techStack)
                                     ? project.techStack.join(', ')
@@ -145,7 +133,6 @@ export default function ProjectForm({ open, onClose, project, users, onSubmit, l
                     </FormControl>
                 </div>
 
-                {/* Developers */}
                 <FormControl size="small" error={Boolean(errors.developers)} sx={muiDark} fullWidth>
                     <InputLabel>Desenvolvedores *</InputLabel>
                     <Controller name="developers" control={control} render={({ field }) => (
@@ -180,7 +167,15 @@ export default function ProjectForm({ open, onClose, project, users, onSubmit, l
                 {/* StartDate + DeliveryDate */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                     <TextField label="Data de Início" type="date" {...register('startDate')} fullWidth size="small" InputLabelProps={{ shrink: true }} sx={muiDark} />
-                    <TextField label="Data de Entrega" type="date" {...register('deliveryDate')} fullWidth size="small" InputLabelProps={{ shrink: true }} sx={muiDark} />
+                    <TextField label="Previsão de Entrega" type="date" {...register('expectedDeliveryDate')} fullWidth size="small" InputLabelProps={{ shrink: true }} sx={muiDark}/>
+                    {project?.status === 'concluido' && (
+                        <TextField
+                            label="Data de Entrega"
+                            type="date"
+                            {...register('deliveryDate')}
+                            disabled
+                        />
+                    )}
                 </div>
 
                 {/* TechStack + Hosting */}

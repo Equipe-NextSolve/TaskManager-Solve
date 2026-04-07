@@ -21,19 +21,52 @@ export default function ProjectCard({project, usersMap, onEdit, onDelete}){
     const createdBy = usersMap[project.createdBy] // pega o objeto do usuário que criou o projeto (usando o createdBy que veio do Firebase)
     const lastModifiedBy = usersMap[project.lastModifiedBy] // agora pega quem editou pela última vez
 
-    // executa essa função apenas quando project.deliveryDate mudar. Se não mudar, reutiliza o valor antigo
-        const deliveryInfo = useMemo(()=>{
-        //se não houver data de entrega, retorna null
-        if (!project.deliveryDate) return null
+    // executa essa função apenas quando project.expectedDeliveryDate mudar. Se não mudar, reutiliza o valor antigo
+    const expectedInfo = useMemo(()=>{
+        //se não houver previsão de entrega, retorna null
+        if (!project.expectedDeliveryDate) return null
 
-        const due = parseDate(project.deliveryDate) 
+        const due = parseDate(project.expectedDeliveryDate) 
+        if (!due) return null
+
         const diff = differenceInDays(due, new Date()) // calcula quantos dias faltam para a entrega, se for negativa, ja passou
         const formatted = format(due, 'dd/MM/yyyy')
+
         if (diff < 0) return { text: `${Math.abs(diff)}d atrasado`, color: 'var(--color-error)', formatted }
         if (diff <= 7) return { text: `${diff}d restantes`,          color: 'var(--color-warning)', formatted }
-        return           { text: formatted,                            color: '#6b7280', formatted }
+
+        return {
+            text: formatted,
+            color: '#6b7280',
+            formatted 
+        }
+    }, [project.expectedDeliveryDate])
+
+    // executa essa função apenas quando project.deliveryDate mudar. Se não mudar, reutiliza o valor antigo
+    const deliveredInfo = useMemo(() => {
+        if (!project.deliveryDate) return null
+
+        const delivered = parseDate(project.deliveryDate)
+        if (!delivered) return null
+
+        return {
+            formatted: format(delivered, 'dd/MM/yyyy')
+        }
     }, [project.deliveryDate])
 
+    const expected = parseDate(project.expectedDeliveryDate)
+    const delivered = parseDate(project.deliveryDate)
+
+    const deliveryStatus = useMemo(()=>{
+        if (!expected || !delivered) return null
+
+        const diff = differenceInDays(delivered, expected)
+
+        if (diff > 0) return { text: `${diff}d atrasado`, color: 'var(--color-error)' }
+        if (diff < 0) return { text: `${Math.abs(diff)}d adiantado`, color: 'var(--color-success)' }
+
+        return { text: 'No prazo', color: 'var(--color-cyan-500)' }
+    },[expected, delivered])
     const techStack = Array.isArray(project.techStack) ?  project.techStack : [] // Verifica se techkStack é um array, se for, usa ele.
         
     return (
@@ -148,14 +181,39 @@ export default function ProjectCard({project, usersMap, onEdit, onDelete}){
                     </span>
                 )
             })()}
-          {deliveryInfo && (
-            <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, color: deliveryInfo.color, fontWeight: 600 }}>
-              <MdOutlineTimer size={11} />
-              {deliveryInfo.text !== deliveryInfo.formatted
-                ? `Entrega: ${deliveryInfo.formatted} · ${deliveryInfo.text}`
-                : `Entrega: ${deliveryInfo.formatted}`}
-            </span>
-          )}
+            {expectedInfo && (
+                <span style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    fontSize: 11,
+                    color: expectedInfo.color,
+                    fontWeight: 600
+                }}>
+                    <MdOutlineTimer size={11} />
+                    {expectedInfo.text !== expectedInfo.formatted
+                    ? `Previsão: ${expectedInfo.formatted} · ${expectedInfo.text}`
+                    : `Previsão: ${expectedInfo.formatted}`}
+                </span>
+            )}
+            {deliveredInfo && (
+                <span style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    fontSize: 11,
+                    color: '#22c55e',
+                    fontWeight: 600
+                }}>
+                    <MdOutlineTimer size={11} />
+                    Entregue em: {deliveredInfo.formatted}
+                </span>
+            )}
+            {deliveryStatus && (
+                <span style={{ fontSize: 10, color: deliveryStatus.color }}>
+                    {deliveryStatus.text}
+                </span>
+            )}
         </div>
 
         <div style={{ display: 'flex', gap: 6 }}>

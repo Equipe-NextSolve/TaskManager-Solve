@@ -37,7 +37,7 @@ export function PriorityBadge({ priority }) {
     <span style={{
       display: 'inline-flex', alignItems: 'center', padding: '2px 8px',
       borderRadius: 20, fontSize: 10, fontWeight: 700, color: p.color,
-      background: p.bg, textTransform: 'uppercase', letterSpacing: '0.06em',
+      background: p.bg, letterSpacing: '0.06em',
       whiteSpace: 'nowrap',
     }}>
       {p.label}

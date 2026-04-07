@@ -72,7 +72,8 @@ export const ProjectsProvider = ({children}) => {
                 priority: data.priority || 'media',
                 developers: data.developers || [],           
                 startDate: data.startDate ? new Date(data.startDate) : null,
-                deliveryDate: data.deliveryDate ? new Date(data.deliveryDate) : null,
+                expectedDeliveryDate: data.expectedDeliveryDate ? new Date(data.expectedDeliveryDate) : null,
+                deliveryDate: null,
                 techStack: data.techStack || [],            
                 repositoryUrl: data.repositoryUrl || '',
                 hosting: data.hosting || '',
@@ -90,7 +91,22 @@ export const ProjectsProvider = ({children}) => {
     )
 
     const updateProject = useCallback(
-        async (projectId, data)  =>  {
+        async (projectId, data,  currentProject)  =>  {
+            const wasConcluded = currentProject.status === 'concluido'
+            const isNowConcluded = data.status === 'concluido'
+
+            let deliveryDate = currentProject.deliveryDate || null
+
+            // virou concluído agora
+            if (!wasConcluded && isNowConcluded) {
+                deliveryDate = serverTimestamp()
+            }
+
+            // Saiu de concluído
+            if (wasConcluded && !isNowConcluded){
+                deliveryDate  = null
+            }
+
             const payload  = {
                 title: data.title,
                 description: data.description || '',
@@ -99,7 +115,8 @@ export const ProjectsProvider = ({children}) => {
                 priority: data.priority,
                 developers: data.developers || [],
                 startDate: data.startDate ? new Date(data.startDate) : null,
-                deliveryDate: data.deliveryDate ? new Date(data.deliveryDate) : null,
+                expectedDeliveryDate: data.expectedDeliveryDate ? new Date(data.expectedDeliveryDate): null,
+                deliveryDate,
                 techStack: data.techStack || [],
                 repositoryUrl: data.repositoryUrl || '',
                 hosting: data.hosting || '',
