@@ -103,13 +103,36 @@ export default function ProjectCard({project, usersMap, onEdit, onDelete}){
             </CanDo>
 
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}
-            PaperProps={{ style: { background: '#1e2430', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, boxShadow: '0 12px 32px rgba(0,0,0,0.6)', minWidth: 140 }}}>
-            <MenuItem onClick={() => { setAnchorEl(null); onEdit(project) }} style={{ color: '#e5e7eb', fontSize: 13, gap: 8 }}>
-                <MdEdit size={15} style={{ color: '#22d3ee' }} /> Editar
-            </MenuItem>
-            <MenuItem onClick={() => { setAnchorEl(null); onDelete(project) }} style={{ color: '#ef4444', fontSize: 13, gap: 8 }}>
-                <MdDelete size={15} /> Excluir
-            </MenuItem>
+                PaperProps={{ style: { background: 'var(--color-bg-selected)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, boxShadow: '0 12px 32px rgba(0,0,0,0.6)', minWidth: 140 }}}
+            >
+                <MenuItem
+                    onClick={() => { setAnchorEl(null); onEdit(project) }}
+                    sx={{ 
+                        color: '#e5e7eb', 
+                        fontSize: 13, 
+                        gap: '8px',
+                        transition: 'all 0.2s ease',
+                        '&:hover': {
+                            backgroundColor: 'var(--color-bg-hover)', // Fundo claro ao passar o mouse
+                        }
+                    }}
+                >
+                    <MdEdit size={15} style={{ color: '#22d3ee' }} /> Editar
+                </MenuItem>
+                <MenuItem
+                    onClick={() => { setAnchorEl(null); onDelete(project) }}
+                    sx={{ 
+                        color: 'var(--color-error)', 
+                        fontSize: 13, 
+                        gap: '8px',
+                        transition: 'all 0.2s ease',
+                        '&:hover': {
+                            backgroundColor: 'var(--color-bg-hover)', // Fundo claro ao passar o mouse
+                        }
+                    }}
+                >
+                    <MdDelete size={15} /> Excluir
+                </MenuItem>
             </Menu>
         </div>
 

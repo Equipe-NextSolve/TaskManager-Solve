@@ -16,14 +16,19 @@ export const muiDark = {
 export const muiDark2 = {
   '& .MuiOutlinedInput-root': {
     color: '#e5e7eb',
-    background:'rgba(255,255,255,0.04)',
+    background:'#FFFFFF0A',
     '& fieldset': { borderColor: 'rgba(255,255,255,0.12)' },
     '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.25)' },
     '&.Mui-focused fieldset': { borderColor: 'var(--color-bg-hover2)' },
     '& .MuiSelect-icon': { color: '#9ca3af' },
     
   },
-  '& .MuiInputLabel-root': { color: '#9ca3af' },
+  '& .MuiInputLabel-root': {
+    color: '#9ca3af',
+    '&.Mui-focused ': { Color: '#9ca3af' },
+
+  
+  },
   '& .MuiFormHelperText-root': { color: '#ef4444' },
   '& .MuiOutlinedInput-input': { color: '#e5e7eb' },
 }
