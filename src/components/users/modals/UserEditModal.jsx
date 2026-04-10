@@ -52,7 +52,6 @@ export default function UserEditModal({ open, onClose, user }) {
                 },
             }}
         >
-            {/* Header */}
             <DialogTitle style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '20px 24px 12px',
@@ -64,7 +63,7 @@ export default function UserEditModal({ open, onClose, user }) {
                         background: 'rgba(34,211,238,0.12)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
-                        <MdEdit style={{ color: '#22d3ee', fontSize: 17 }} />
+                        <MdEdit className={`text--cyan-400 text-[17px]`}/>
                     </div>
                     <span style={{ color: '#fff', fontWeight: 700, fontSize: 16 }}>Editar Cargo</span>
                 </div>
@@ -82,7 +81,6 @@ export default function UserEditModal({ open, onClose, user }) {
             </DialogTitle>
  
             <DialogContent style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 20 }}>
-                {/* User info */}
                 {user && (
                     <div style={{
                         display: 'flex', alignItems: 'center', gap: 12,
@@ -102,7 +100,6 @@ export default function UserEditModal({ open, onClose, user }) {
                     </div>
                 )}
  
-                {/* Role selector */}
                 <FormControl size="small" fullWidth sx={muiDark}>
                     <InputLabel>Cargo</InputLabel>
                     <Select
@@ -118,7 +115,7 @@ export default function UserEditModal({ open, onClose, user }) {
                                 <MenuItem key={value} value={value} style={{ fontSize: 13 }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                         {Icon && <Icon className={`${m.color} text-[15px]`}/>}
-                                        <span style={{ color: '#e5e7eb' }}>{label}</span>
+                                        <span className={`text-[#e5e7eb]`}>{label}</span>
                                     </div>
                                 </MenuItem>
                             )
@@ -126,7 +123,6 @@ export default function UserEditModal({ open, onClose, user }) {
                     </Select>
                 </FormControl>
  
-                {/* Role description */}
                 {meta && (
                     <div style={{
                         display: 'flex', alignItems: 'flex-start', gap: 10,
