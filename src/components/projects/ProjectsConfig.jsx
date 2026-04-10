@@ -39,7 +39,7 @@ export const STATUS_MAP = {
     },
     suporte: {
         label: 'Suporte',
-        color: '#a855f7', // Roxo (Tailwind purple-500)
+        color: 'var(--color-purple-400)', // Roxo (Tailwind purple-500)
         bg: 'rgba(168, 85, 247, 0.12)',
         border: 'rgba(168, 85, 247, 0.25)',
         icon: MdOutlineSupportAgent,
