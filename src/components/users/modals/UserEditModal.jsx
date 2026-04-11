@@ -5,13 +5,14 @@ import { MdClose, MdEdit } from 'react-icons/md'
 import { ROLE_LABELS, ROLES_STYLES } from '@/lib/roles'
 import { useUsers } from '@/context/UsersContext'
 import { Avatar } from '@/components/projects/ProjectBadges'
-import { muiDark, menuPaper } from '@/utils/Projects/StyleInputs'
+import { muiDark, menuPaper, muiDark2 } from '@/utils/Projects/StyleInputs'
 import { toast } from 'sonner'
 
+
 export default function UserEditModal({ open, onClose, user }) {
-    const { updateUserRole } = useUsers()
+    const { updateUser } = useUsers()
     const [selectedRole, setSelectedRole] = useState('')
-    const [loading, setLoading]           = useState(false)
+    const [loading, setLoading] = useState(false)
  
     useEffect(() => {
         if (open && user) setSelectedRole(user.role || '')
@@ -23,7 +24,7 @@ export default function UserEditModal({ open, onClose, user }) {
         if (!user || selectedRole === user.role) { onClose(); return }
         setLoading(true)
         try {
-            await updateUserRole(user.id, selectedRole)
+            await updateUser(user.id, selectedRole)
             toast.success(`Cargo de ${user.name} atualizado!`)
             onClose()
         } catch (err) {
@@ -100,7 +101,7 @@ export default function UserEditModal({ open, onClose, user }) {
                     </div>
                 )}
  
-                <FormControl size="small" fullWidth sx={muiDark}>
+                <FormControl size="small" fullWidth sx={muiDark2}>
                     <InputLabel>Cargo</InputLabel>
                     <Select
                         value={selectedRole}
@@ -124,13 +125,9 @@ export default function UserEditModal({ open, onClose, user }) {
                 </FormControl>
  
                 {meta && (
-                    <div style={{
-                        display: 'flex', alignItems: 'flex-start', gap: 10,
-                        padding: '10px 14px', borderRadius: 10,
-                        background: meta.bg, border: `1px solid ${meta.border}`,
-                    }}>
-                        <meta.icon style={{ color: meta.color, fontSize: 16, flexShrink: 0, marginTop: 1 }} />
-                        <p style={{ color: meta.color, fontSize: 12, margin: 0, lineHeight: 1.5, opacity: 0.9 }}>
+                    <div className={`${meta.bg} ${meta.border} rounded-[10px] border flex items-start gap-2.5 py-2.5 px-3.5`}>
+                        <meta.icon className={`${meta.color} mt-px text-base shrink-0`}/>
+                        <p className={`${meta.color} m-0 opacity-[0.9] text-[12px] leading-normal`}>
                             {meta.description}
                         </p>
                     </div>

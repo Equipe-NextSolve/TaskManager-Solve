@@ -1,5 +1,5 @@
 
-# Bibliotecas utilizadas:
+# Bibliotecas instaladas:
  - Componentes:
      - @mui/material (Material-UI): Biblioteca de componentes prontos do Google Material Design.
      - @mui/icons-material: Pacote oficial de ícones do Material Design.
