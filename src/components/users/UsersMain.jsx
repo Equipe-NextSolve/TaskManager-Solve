@@ -18,36 +18,13 @@ import { Avatar } from "@/components/projects/ProjectBadges";
 import UserDeleteModal from "@/components/users/modals/UserDeleteModal";
 import UserEditModal from "@/components/users/modals/UserEditModal";
 import { useUsers } from "@/context/UsersContext";
+import { StatPill } from "../ui/StatPill";
 import { ROLE_LABELS, ROLES } from "@/lib/roles";
 
 // ── Constantes de layout da tabela ───────────────────────────────────────────
 const COL = "48px 1fr 160px 100px 100px 72px";
 const GAP = 16;
 
-// ── Stat Pill ────────────────────────────────────────────────────────────────
-function StatPill({ icon: Icon, label, value, color, bg, border }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "8px 16px",
-        borderRadius: 24,
-        background: bg,
-        border: `1px solid ${border}`,
-        fontSize: 13,
-        userSelect: "none",
-      }}
-    >
-      <Icon style={{ color, fontSize: 15 }} />
-      <span style={{ fontSize: 18, fontWeight: 800, color, lineHeight: 1 }}>
-        {value}
-      </span>
-      <span style={{ color: "#6b7280", fontWeight: 500 }}>{label}</span>
-    </div>
-  );
-}
 
 // ── User Row ─────────────────────────────────────────────────────────────────
 function UserRow({ user, onEdit, onDelete }) {

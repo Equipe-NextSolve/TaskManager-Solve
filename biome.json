@@ -19,7 +19,7 @@
     "rules": {
       "recommended": true,
       "a11y": {
-        "noLabelWithoutControl": "off"
+        "noLabelWithoutControl": "warn"
       },
       "suspicious": {
         "noUnknownAtRules": "off"
