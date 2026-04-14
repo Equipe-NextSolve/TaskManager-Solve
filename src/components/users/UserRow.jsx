@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useMemo } from "react";
 import CanDo from "@/components/auth/CanDo";
 import RoleBadge from "@/components/auth/RoleBadge";
@@ -106,7 +106,13 @@ export default function UserRow({ user, onEdit, onDelete }) {
 
             {/* Data de entrada */}
             <div style={{ display: "flex", alignItems: "center" }}>
-                <span style={{ fontSize: 11, color: "#4b5563", whiteSpace: "nowrap" }}>
+                <span
+                    style={{
+                        fontSize: 11,
+                        color: "#4b5563",
+                        whiteSpace: "nowrap",
+                    }}
+                >
                     {formattedDate}
                 </span>
             </div>
@@ -140,12 +146,16 @@ export default function UserRow({ user, onEdit, onDelete }) {
                             flexShrink: 0,
                         }}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.background = "rgba(34,211,238,0.15)";
-                            e.currentTarget.style.borderColor = "rgba(34,211,238,0.35)";
+                            e.currentTarget.style.background =
+                                "rgba(34,211,238,0.15)";
+                            e.currentTarget.style.borderColor =
+                                "rgba(34,211,238,0.35)";
                         }}
                         onMouseLeave={(e) => {
-                            e.currentTarget.style.background = "rgba(34,211,238,0.07)";
-                            e.currentTarget.style.borderColor = "rgba(34,211,238,0.15)";
+                            e.currentTarget.style.background =
+                                "rgba(34,211,238,0.07)";
+                            e.currentTarget.style.borderColor =
+                                "rgba(34,211,238,0.15)";
                         }}
                     >
                         <MdEdit size={14} />
@@ -169,12 +179,16 @@ export default function UserRow({ user, onEdit, onDelete }) {
                             flexShrink: 0,
                         }}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.background = "rgba(239,68,68,0.15)";
-                            e.currentTarget.style.borderColor = "rgba(239,68,68,0.35)";
+                            e.currentTarget.style.background =
+                                "rgba(239,68,68,0.15)";
+                            e.currentTarget.style.borderColor =
+                                "rgba(239,68,68,0.35)";
                         }}
                         onMouseLeave={(e) => {
-                            e.currentTarget.style.background = "rgba(239,68,68,0.07)";
-                            e.currentTarget.style.borderColor = "rgba(239,68,68,0.15)";
+                            e.currentTarget.style.background =
+                                "rgba(239,68,68,0.07)";
+                            e.currentTarget.style.borderColor =
+                                "rgba(239,68,68,0.15)";
                         }}
                     >
                         <MdDelete size={14} />

@@ -89,11 +89,13 @@ export default function ProjectForm({
                     title: project.title || "",
                     description: project.description || "",
                     client: project.client || "",
-                    status:project.status || "em_andamento",
+                    status: project.status || "em_andamento",
                     priority: project.priority || "media",
                     developers: project.developers || [],
                     startDate: formatDateInput(project.startDate),
-                    expectedDeliveryDate: formatDateInput(project.expectedDeliveryDate),
+                    expectedDeliveryDate: formatDateInput(
+                        project.expectedDeliveryDate,
+                    ),
                     deliveryDate: formatDateInput(project.deliveryDate),
                     techStack: Array.isArray(project.techStack)
                         ? project.techStack.join(", ")
@@ -118,9 +120,9 @@ export default function ProjectForm({
             ...data,
             techStack: data.techStack
                 ? data.techStack
-                    .split(",")
-                    .map((t) => t.trim())
-                    .filter(Boolean)
+                      .split(",")
+                      .map((t) => t.trim())
+                      .filter(Boolean)
                 : [],
         });
     };
@@ -161,9 +163,13 @@ export default function ProjectForm({
                             justifyContent: "center",
                         }}
                     >
-                        <MdOutlineRocketLaunch style={{ color: "#19CA68", fontSize: 18 }} />
+                        <MdOutlineRocketLaunch
+                            style={{ color: "#19CA68", fontSize: 18 }}
+                        />
                     </div>
-                    <span style={{ color: "#fff", fontWeight: 700, fontSize: 16 }}>
+                    <span
+                        style={{ color: "#fff", fontWeight: 700, fontSize: 16 }}
+                    >
                         {isEdit ? "Editar Projeto" : "Novo Projeto"}
                     </span>
                 </div>
@@ -196,7 +202,11 @@ export default function ProjectForm({
                 >
                     {/* Title + Client */}
                     <div
-                        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr 1fr",
+                            gap: 12,
+                        }}
                     >
                         <TextField
                             label="Título *"
@@ -217,7 +227,10 @@ export default function ProjectForm({
                                 startAdornment: (
                                     <MdPerson
                                         size={15}
-                                        style={{ color: "#6b7280", marginRight: 6 }}
+                                        style={{
+                                            color: "#6b7280",
+                                            marginRight: 6,
+                                        }}
                                     />
                                 ),
                             }}
@@ -237,7 +250,11 @@ export default function ProjectForm({
 
                     {/* Status + Priority */}
                     <div
-                        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr 1fr",
+                            gap: 12,
+                        }}
                     >
                         <FormControl
                             size="small"
@@ -249,16 +266,26 @@ export default function ProjectForm({
                                 name="status"
                                 control={control}
                                 render={({ field }) => (
-                                    <Select {...field} label="Status *" MenuProps={menuPaper} disabled={!isEdit}>
-                                        {Object.entries(STATUS_MAP).map(([val, cfg]) => (
-                                            <MenuItem
-                                                key={val}
-                                                value={val}
-                                                style={{ color: cfg.color, fontSize: 13 }}
-                                            >
-                                                {cfg.label}
-                                            </MenuItem>
-                                        ))}
+                                    <Select
+                                        {...field}
+                                        label="Status *"
+                                        MenuProps={menuPaper}
+                                        disabled={!isEdit}
+                                    >
+                                        {Object.entries(STATUS_MAP).map(
+                                            ([val, cfg]) => (
+                                                <MenuItem
+                                                    key={val}
+                                                    value={val}
+                                                    style={{
+                                                        color: cfg.color,
+                                                        fontSize: 13,
+                                                    }}
+                                                >
+                                                    {cfg.label}
+                                                </MenuItem>
+                                            ),
+                                        )}
                                     </Select>
                                 )}
                             />
@@ -274,16 +301,25 @@ export default function ProjectForm({
                                 name="priority"
                                 control={control}
                                 render={({ field }) => (
-                                    <Select {...field} label="Prioridade *" MenuProps={menuPaper}>
-                                        {Object.entries(PRIORITY_MAP).map(([val, cfg]) => (
-                                            <MenuItem
-                                                key={val}
-                                                value={val}
-                                                style={{ color: cfg.color, fontSize: 13 }}
-                                            >
-                                                {cfg.label}
-                                            </MenuItem>
-                                        ))}
+                                    <Select
+                                        {...field}
+                                        label="Prioridade *"
+                                        MenuProps={menuPaper}
+                                    >
+                                        {Object.entries(PRIORITY_MAP).map(
+                                            ([val, cfg]) => (
+                                                <MenuItem
+                                                    key={val}
+                                                    value={val}
+                                                    style={{
+                                                        color: cfg.color,
+                                                        fontSize: 13,
+                                                    }}
+                                                >
+                                                    {cfg.label}
+                                                </MenuItem>
+                                            ),
+                                        )}
                                     </Select>
                                 )}
                             />
@@ -305,19 +341,30 @@ export default function ProjectForm({
                                     {...field}
                                     multiple
                                     label="Desenvolvedores *"
-                                    input={<OutlinedInput label="Desenvolvedores *" />}
+                                    input={
+                                        <OutlinedInput label="Desenvolvedores *" />
+                                    }
                                     MenuProps={menuPaper}
                                     renderValue={(selected) => (
-                                        <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                flexWrap: "wrap",
+                                                gap: 4,
+                                            }}
+                                        >
                                             {selected.map((uid) => {
-                                                const u = users.find((x) => x.id === uid);
+                                                const u = users.find(
+                                                    (x) => x.id === uid,
+                                                );
                                                 return (
                                                     <Chip
                                                         key={uid}
                                                         label={u?.name || uid}
                                                         size="small"
                                                         style={{
-                                                            background: "rgba(25,202,104,0.15)",
+                                                            background:
+                                                                "rgba(25,202,104,0.15)",
                                                             color: "#19CA68",
                                                             fontSize: 11,
                                                             height: 22,
@@ -329,13 +376,21 @@ export default function ProjectForm({
                                     )}
                                 >
                                     {users.map((u) => (
-                                        <MenuItem key={u.id} value={u.id} style={{ fontSize: 13 }}>
+                                        <MenuItem
+                                            key={u.id}
+                                            value={u.id}
+                                            style={{ fontSize: 13 }}
+                                        >
                                             <Checkbox
-                                                checked={field.value?.includes(u.id)}
+                                                checked={field.value?.includes(
+                                                    u.id,
+                                                )}
                                                 size="small"
                                                 sx={{
                                                     color: "#6b7280",
-                                                    "&.Mui-checked": { color: "#19CA68" },
+                                                    "&.Mui-checked": {
+                                                        color: "#19CA68",
+                                                    },
                                                     padding: "0 8px 0 0",
                                                 }}
                                             />
@@ -346,9 +401,22 @@ export default function ProjectForm({
                                                     gap: 8,
                                                 }}
                                             >
-                                                <Avatar name={u.name} uid={u.id} size={22} />
-                                                <span style={{ color: "#e5e7eb" }}>{u.name}</span>
-                                                <span style={{ fontSize: 11, color: "#6b7280" }}>
+                                                <Avatar
+                                                    name={u.name}
+                                                    uid={u.id}
+                                                    size={22}
+                                                />
+                                                <span
+                                                    style={{ color: "#e5e7eb" }}
+                                                >
+                                                    {u.name}
+                                                </span>
+                                                <span
+                                                    style={{
+                                                        fontSize: 11,
+                                                        color: "#6b7280",
+                                                    }}
+                                                >
                                                     ({u.role || "membro"})
                                                 </span>
                                             </div>
@@ -358,13 +426,19 @@ export default function ProjectForm({
                             )}
                         />
                         {errors.developers && (
-                            <FormHelperText>{errors.developers.message}</FormHelperText>
+                            <FormHelperText>
+                                {errors.developers.message}
+                            </FormHelperText>
                         )}
                     </FormControl>
 
                     {/* StartDate + DeliveryDate */}
                     <div
-                        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr 1fr",
+                            gap: 12,
+                        }}
                     >
                         <TextField
                             label="Data de Início"
@@ -396,7 +470,11 @@ export default function ProjectForm({
 
                     {/* TechStack + Hosting */}
                     <div
-                        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr 1fr",
+                            gap: 12,
+                        }}
                     >
                         <TextField
                             label="Tech Stack (separado por vírgula)"
@@ -409,7 +487,10 @@ export default function ProjectForm({
                                 startAdornment: (
                                     <MdCode
                                         size={15}
-                                        style={{ color: "#6b7280", marginRight: 6 }}
+                                        style={{
+                                            color: "#6b7280",
+                                            marginRight: 6,
+                                        }}
                                     />
                                 ),
                             }}
@@ -425,7 +506,10 @@ export default function ProjectForm({
                                 startAdornment: (
                                     <MdComputer
                                         size={15}
-                                        style={{ color: "#6b7280", marginRight: 6 }}
+                                        style={{
+                                            color: "#6b7280",
+                                            marginRight: 6,
+                                        }}
                                     />
                                 ),
                             }}
@@ -494,11 +578,16 @@ export default function ProjectForm({
                             display: "flex",
                             alignItems: "center",
                             gap: 6,
-                            boxShadow: loading ? "none" : "0 4px 14px rgba(25,202,104,0.35)",
+                            boxShadow: loading
+                                ? "none"
+                                : "0 4px 14px rgba(25,202,104,0.35)",
                         }}
                     >
                         {loading && (
-                            <CircularProgress size={14} style={{ color: "#000" }} />
+                            <CircularProgress
+                                size={14}
+                                style={{ color: "#000" }}
+                            />
                         )}
                         {isEdit ? "Salvar Alterações" : "Criar Projeto"}
                     </button>

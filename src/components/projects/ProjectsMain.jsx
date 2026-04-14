@@ -51,10 +51,14 @@ export default function ProjectsMain() {
 
     const filtered = useMemo(() => {
         return projects.filter((p) => {
-            if (filterStatus !== "all" && p.status !== filterStatus) return false;
+            if (filterStatus !== "all" && p.status !== filterStatus)
+                return false;
             if (filterPriority !== "all" && p.priority !== filterPriority)
                 return false;
-            if (filterDev !== "all" && !(p.developers || []).includes(filterDev))
+            if (
+                filterDev !== "all" &&
+                !(p.developers || []).includes(filterDev)
+            )
                 return false;
             if (search) {
                 const q = search.toLowerCase();
@@ -62,7 +66,9 @@ export default function ProjectsMain() {
                     p.title?.toLowerCase().includes(q) ||
                     p.description?.toLowerCase().includes(q) ||
                     p.client?.toLowerCase().includes(q) ||
-                    (p.techStack || []).some((t) => t.toLowerCase().includes(q)) ||
+                    (p.techStack || []).some((t) =>
+                        t.toLowerCase().includes(q),
+                    ) ||
                     (p.developers || []).some((uid) =>
                         usersMap[uid]?.name?.toLowerCase().includes(q),
                     )
@@ -75,7 +81,8 @@ export default function ProjectsMain() {
     const stats = useMemo(
         () => ({
             total: projects.length,
-            em_andamento: projects.filter((p) => p.status === "em_andamento").length,
+            em_andamento: projects.filter((p) => p.status === "em_andamento")
+                .length,
             concluido: projects.filter((p) => p.status === "concluido").length,
             pausado: projects.filter((p) => p.status === "pausado").length,
             suporte: projects.filter((p) => p.status === "suporte").length,
@@ -162,7 +169,9 @@ export default function ProjectsMain() {
                             marginBottom: 4,
                         }}
                     >
-                        <MdOutlineRocketLaunch style={{ color: "#19CA68", fontSize: 18 }} />
+                        <MdOutlineRocketLaunch
+                            style={{ color: "#19CA68", fontSize: 18 }}
+                        />
                         <span
                             style={{
                                 fontSize: 11,
@@ -176,13 +185,19 @@ export default function ProjectsMain() {
                         </span>
                     </div>
                     <h1
-                        style={{ fontSize: 26, fontWeight: 800, color: "#fff", margin: 0 }}
+                        style={{
+                            fontSize: 26,
+                            fontWeight: 800,
+                            color: "#fff",
+                            margin: 0,
+                        }}
                     >
                         Projetos
                     </h1>
                     <p style={{ fontSize: 13, color: "#6b7280", marginTop: 4 }}>
-                        {projects.length} projeto{projects.length !== 1 ? "s" : ""}{" "}
-                        cadastrado{projects.length !== 1 ? "s" : ""}
+                        {projects.length} projeto
+                        {projects.length !== 1 ? "s" : ""} cadastrado
+                        {projects.length !== 1 ? "s" : ""}
                     </p>
                 </div>
                 <CanDo permission="canCreateProjects">
@@ -259,7 +274,13 @@ export default function ProjectsMain() {
                     alignItems: "center",
                 }}
             >
-                <div style={{ position: "relative", flex: "1 1 200px", minWidth: 180 }}>
+                <div
+                    style={{
+                        position: "relative",
+                        flex: "1 1 200px",
+                        minWidth: 180,
+                    }}
+                >
                     <MdSearch
                         size={16}
                         style={{
@@ -288,7 +309,10 @@ export default function ProjectsMain() {
                     />
                 </div>
 
-                <MdFilterList size={16} style={{ color: "#6b7280", flexShrink: 0 }} />
+                <MdFilterList
+                    size={16}
+                    style={{ color: "#6b7280", flexShrink: 0 }}
+                />
                 <FormControl size="small" sx={{ minWidth: 160, ...muiDark2 }}>
                     <InputLabel>Status</InputLabel>
                     <Select
@@ -301,7 +325,11 @@ export default function ProjectsMain() {
                             Todos status
                         </MenuItem>
                         {Object.entries(STATUS_MAP).map(([val, cfg]) => (
-                            <MenuItem key={val} value={val} style={{ color: cfg.color }}>
+                            <MenuItem
+                                key={val}
+                                value={val}
+                                style={{ color: cfg.color }}
+                            >
                                 {cfg.label}
                             </MenuItem>
                         ))}
@@ -319,7 +347,11 @@ export default function ProjectsMain() {
                             Todas prioridades
                         </MenuItem>
                         {Object.entries(PRIORITY_MAP).map(([val, cfg]) => (
-                            <MenuItem key={val} value={val} style={{ color: cfg.color }}>
+                            <MenuItem
+                                key={val}
+                                value={val}
+                                style={{ color: cfg.color }}
+                            >
                                 {cfg.label}
                             </MenuItem>
                         ))}
@@ -337,7 +369,11 @@ export default function ProjectsMain() {
                             Todos devs
                         </MenuItem>
                         {users.map((u) => (
-                            <MenuItem key={u.id} value={u.id} style={{ color: "#e5e7eb" }}>
+                            <MenuItem
+                                key={u.id}
+                                value={u.id}
+                                style={{ color: "#e5e7eb" }}
+                            >
                                 {u.name}
                             </MenuItem>
                         ))}
@@ -397,8 +433,16 @@ export default function ProjectsMain() {
                         borderRadius: 16,
                     }}
                 >
-                    <MdOutlineRocketLaunch style={{ fontSize: 44, color: "#2D2D2D" }} />
-                    <p style={{ color: "#4b4b4b", fontSize: 14, fontWeight: 600 }}>
+                    <MdOutlineRocketLaunch
+                        style={{ fontSize: 44, color: "#2D2D2D" }}
+                    />
+                    <p
+                        style={{
+                            color: "#4b4b4b",
+                            fontSize: 14,
+                            fontWeight: 600,
+                        }}
+                    >
                         {projects.length === 0
                             ? "Nenhum projeto cadastrado ainda"
                             : "Nenhum projeto encontrado"}
@@ -430,7 +474,8 @@ export default function ProjectsMain() {
                 <div
                     style={{
                         display: "grid",
-                        gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+                        gridTemplateColumns:
+                            "repeat(auto-fill, minmax(320px, 1fr))",
                         gap: 14,
                     }}
                 >

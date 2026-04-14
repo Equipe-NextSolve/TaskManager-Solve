@@ -37,13 +37,18 @@ export const ProjectsProvider = ({ children }) => {
 
     useEffect(() => {
         // consulta que busca a collection projects, e ordena pela data de criação, do mais novo para o mais antigo
-        const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
+        const q = query(
+            collection(db, "projects"),
+            orderBy("createdAt", "desc"),
+        );
 
         // abre uma conexão em tempo real com o firestore,Toda vez que a coleção projects mudar, a função do primeiro callback será executada.
         const unsubscribe = onSnapshot(
             q,
             (snapshot) => {
-                setProjects(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
+                setProjects(
+                    snapshot.docs.map((d) => ({ id: d.id, ...d.data() })),
+                );
                 setLoadingProjects(false);
             },
             (error) => {
@@ -87,11 +92,13 @@ export const ProjectsProvider = ({ children }) => {
                 repositoryUrl: data.repositoryUrl || "",
                 hosting: data.hosting || "",
                 createdBy: currentUser.uid,
-                createdByName: currentUser.name || currentUser.displayName || "",
+                createdByName:
+                    currentUser.name || currentUser.displayName || "",
                 createdAt: serverTimestamp(),
                 lastModified: serverTimestamp(),
                 lastModifiedBy: currentUser.uid,
-                lastModifiedByName: currentUser.name || currentUser.displayName || "",
+                lastModifiedByName:
+                    currentUser.name || currentUser.displayName || "",
             };
             const ref = await addDoc(collection(db, "projects"), payload); // adiciona o payload como um novo documento na coleção projects
             return { id: ref.id, ...payload }; // A função retorna o projeto recém-criado com seu ID.
@@ -101,10 +108,11 @@ export const ProjectsProvider = ({ children }) => {
 
     const updateProject = useCallback(
         async (projectId, data, currentProject) => {
-            const isFinishedStatus = (status) => status === "concluido" || status === "suporte";
+            const isFinishedStatus = (status) =>
+                status === "concluido" || status === "suporte";
 
             const wasFinished = isFinishedStatus(currentProject.status);
-            const isNowFinished  = isFinishedStatus(data.status);
+            const isNowFinished = isFinishedStatus(data.status);
 
             let deliveryDate = currentProject.deliveryDate || null;
 
@@ -135,7 +143,8 @@ export const ProjectsProvider = ({ children }) => {
                 hosting: data.hosting || "",
                 lastModified: serverTimestamp(),
                 lastModifiedBy: currentUser.uid,
-                lastModifiedByName: currentUser.name || currentUser.displayName || "",
+                lastModifiedByName:
+                    currentUser.name || currentUser.displayName || "",
             };
             await updateDoc(doc(db, "projects", projectId), payload); // localiza o documento pelo caminho projects/projectId e aplica as alterações
             return { id: projectId, ...payload };

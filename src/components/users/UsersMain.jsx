@@ -110,12 +110,18 @@ export default function UsersMain() {
                         </span>
                     </div>
                     <h1
-                        style={{ fontSize: 26, fontWeight: 800, color: "#fff", margin: 0 }}
+                        style={{
+                            fontSize: 26,
+                            fontWeight: 800,
+                            color: "#fff",
+                            margin: 0,
+                        }}
                     >
                         Usuários
                     </h1>
                     <p style={{ fontSize: 13, color: "#6b7280", marginTop: 4 }}>
-                        {users.length} usuário{users.length !== 1 ? "s" : ""} cadastrado
+                        {users.length} usuário{users.length !== 1 ? "s" : ""}{" "}
+                        cadastrado
                         {users.length !== 1 ? "s" : ""}
                     </p>
                 </div>
@@ -170,7 +176,13 @@ export default function UsersMain() {
                     alignItems: "center",
                 }}
             >
-                <div style={{ position: "relative", flex: "1 1 200px", minWidth: 180 }}>
+                <div
+                    style={{
+                        position: "relative",
+                        flex: "1 1 200px",
+                        minWidth: 180,
+                    }}
+                >
                     <MdSearch
                         size={16}
                         style={{
@@ -283,19 +295,28 @@ export default function UsersMain() {
                     }}
                 >
                     <MdPeople style={{ fontSize: 44, color: "#2D2D2D" }} />
-                    <p style={{ color: "#4b5563", fontSize: 14, fontWeight: 600 }}>
+                    <p
+                        style={{
+                            color: "#4b5563",
+                            fontSize: 14,
+                            fontWeight: 600,
+                        }}
+                    >
                         {users.length === 0
                             ? "Nenhum usuário cadastrado ainda"
                             : "Nenhum usuário encontrado"}
                     </p>
                 </div>
             ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                <div
+                    style={{ display: "flex", flexDirection: "column", gap: 6 }}
+                >
                     {/* Cabeçalho */}
                     <div
                         style={{
                             display: "grid",
-                            gridTemplateColumns: "48px 1fr 160px 100px 100px 72px",
+                            gridTemplateColumns:
+                                "48px 1fr 160px 100px 100px 72px",
                             gap: "16",
                             padding: "6px 20px",
                             fontSize: 11,

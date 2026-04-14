@@ -15,25 +15,25 @@ import { useRole } from "@/hooks/useRole";
  */
 
 export default function ProtectedRoutes({
-  permission,
-  role,
-  redirectTo = "/",
-  children,
+    permission,
+    role,
+    redirectTo = "/",
+    children,
 }) {
-  const { can, hasRole } = useRole();
-  const router = useRouter();
+    const { can, hasRole } = useRole();
+    const router = useRouter();
 
-  // Determina se tem permissão para o acesso
-  const allowed = permission ? can(permission) : role ? hasRole(role) : true;
+    // Determina se tem permissão para o acesso
+    const allowed = permission ? can(permission) : role ? hasRole(role) : true;
 
-  useEffect(() => {
-    // Se allowed for falso, chama redirectTo para redirecionar o usuário
-    if (!allowed) {
-      router.replace(redirectTo);
-    }
-  }, [allowed, router, redirectTo]);
+    useEffect(() => {
+        // Se allowed for falso, chama redirectTo para redirecionar o usuário
+        if (!allowed) {
+            router.replace(redirectTo);
+        }
+    }, [allowed, router, redirectTo]);
 
-  if (!allowed) return null; // Se o acesso não for permitido, o componente não renderiza nada
+    if (!allowed) return null; // Se o acesso não for permitido, o componente não renderiza nada
 
-  return children; // Se for permitido, o componente será renderizado
+    return children; // Se for permitido, o componente será renderizado
 }

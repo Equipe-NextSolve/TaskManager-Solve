@@ -19,7 +19,7 @@ export default function SideMenuItems() {
     const [displayName, setDisplayName] = useState("");
     const isMobile = useIsMobile();
     const { role } = useRole();
-    const { logout } = useAuth()
+    const { logout } = useAuth();
 
     //filtrar os itens com base no cargo do usuário
     const visibleItems = menuItems.filter(
@@ -59,7 +59,9 @@ export default function SideMenuItems() {
             onMouseEnter={!isMobile ? () => setIsOpen(true) : undefined}
             onMouseLeave={!isMobile ? () => setIsOpen(false) : undefined}
         >
-            <div className={` max-h-screen top-0 left-0 flex flex-col gap-3 py-10 `}>
+            <div
+                className={` max-h-screen top-0 left-0 flex flex-col gap-3 py-10 `}
+            >
                 <div
                     className={`flex mb-5 w-[95%] ] ${isOpen ? " justify-end" : "w-15 justify-center"}`}
                 >
