@@ -8,18 +8,21 @@ import { CiLogout } from "react-icons/ci";
 import RoleBadge from "@/components/auth/RoleBadge";
 import { useRole } from "@/hooks/useRole";
 import { auth, db } from "@/lib/firebaseConfig";
-import useIsMobile from "@/responsive/useIsMobile";
 import { BurgerButton } from "./BurgerBtn";
 import { menuItems } from "./MenuItems";
 import { useAuth } from "@/context/AuthContext";
 
-export default function SideMenuItems() {
-    const [isOpen, setIsOpen] = useState(false);
+export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
+    const [hoverOpen, setHoverOpen] = useState(false);
+    // No desktop, o menu abre com hover (ou se isOpen for true, mas isOpen só é usado no mobile)
+    const effectiveOpen = isMobile ? isOpen : hoverOpen 
     const [user, setUser] = useState(null);
     const [displayName, setDisplayName] = useState("");
-    const isMobile = useIsMobile();
     const { role } = useRole();
     const { logout } = useAuth();
+
+    const handleMouseEnter = !isMobile ? () => setHoverOpen(true) : undefined;
+    const handleMouseLeave = !isMobile ? () => setHoverOpen(false) : undefined;
 
     //filtrar os itens com base no cargo do usuário
     const visibleItems = menuItems.filter(
@@ -52,26 +55,29 @@ export default function SideMenuItems() {
 
     const initial = displayName ? displayName.charAt(0).toUpperCase() : "";
 
+    const containerClasses = isMobile
+    ? `fixed top-0 right-0 h-full w-64 z-50 transform transition-transform duration-300 ease-in-out
+       bg-gradient-to-br from-black  via-background-page to-black shadow-xl
+       ${isOpen ? "translate-x-0" : "translate-x-full"}`
+    : `fixed top-0 left-0 h-full z-50 transition-all duration-300 ease-in-out
+       bg-gradient-to-br from-bg-pure via-background-page to-bg-pure shadow-xl
+       ${effectiveOpen ? "w-58 items-start" : "w-20 items-center"}`;
+
     return (
         // biome-ignore lint/a11y/noStaticElementInteractions: <>
         <div
-            className={`bg-linear-to-br from-bg-pure via-background-page to-bg-pure h-full overflow-hidden ${isOpen ? "w-58 items-start" : "w-20 items-center"} transition-all duration-300 ease-in-out  shadow-xl z-50`}
-            onMouseEnter={!isMobile ? () => setIsOpen(true) : undefined}
-            onMouseLeave={!isMobile ? () => setIsOpen(false) : undefined}
+            className={containerClasses}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
         >
             <div
-                className={` max-h-screen top-0 left-0 flex flex-col gap-3 py-10 `}
+                className={` max-h-screen flex flex-col gap-3 py-10 `}
             >
-                <div
-                    className={`flex mb-5 w-[95%] ] ${isOpen ? " justify-end" : "w-15 justify-center"}`}
-                >
-                    {isMobile && (
-                        <BurgerButton
-                            isOpen={isOpen}
-                            onClick={() => setIsOpen((prev) => !prev)}
-                        />
-                    )}
-                </div>
+                {isMobile && isOpen && (
+                    <div className="flex justify-end mb-5 w-full pr-4">
+                        <BurgerButton isOpen={isOpen} onClick={onToggle} />
+                    </div>
+                )}
                 <div className="mb-6 flex items-center min-h-10 w-full">
                     <div className="w-20 flex justify-center shrink-0">
                         <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-gray-800 shadow-inner bg-gray-900 flex items-center justify-center">
@@ -90,7 +96,7 @@ export default function SideMenuItems() {
                         </div>
                     </div>
                     <div
-                        className={`ml-2 transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? "opacity-100 w-32" : "opacity-0 w-0"}`}
+                        className={`ml-2 transition-all duration-300 ease-in-out overflow-hidden ${effectiveOpen  ? "opacity-100 w-32" : "opacity-0 w-0"}`}
                     >
                         <p className="text-white text-sm font-bold whitespace-nowrap truncate">
                             {displayName}
@@ -102,7 +108,7 @@ export default function SideMenuItems() {
                 </div>
                 <div
                     style={{
-                        width: isOpen ? "90%" : "70%",
+                        width: effectiveOpen ? "90%" : "70%",
                         height: "1px",
                         borderRadius: "5px",
                         background: "rgba(73, 73, 73, 0.41)",
@@ -121,7 +127,7 @@ export default function SideMenuItems() {
                             </div>
 
                             <div
-                                className={`sm:ml-1 transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? "opacity-100 w-40" : "opacity-0 w-0"}`}
+                                className={`sm:ml-1 transition-all duration-300 ease-in-out overflow-hidden ${effectiveOpen ? "opacity-100 w-40" : "opacity-0 w-0"}`}
                             >
                                 <span className="text-sm font-medium whitespace-nowrap tracking-wide">
                                     {item.label}
@@ -141,7 +147,7 @@ export default function SideMenuItems() {
                         </div>
 
                         <div
-                            className={`sm:ml-1 flex justify-start transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? "opacity-100 w-40" : "opacity-0 w-0"}`}
+                            className={`sm:ml-1 flex justify-start transition-all duration-300 ease-in-out overflow-hidden ${effectiveOpen ? "opacity-100 w-40" : "opacity-0 w-0"}`}
                         >
                             <span className="text-sm font-medium whitespace-nowrap tracking-wide">
                                 Sair

@@ -18,7 +18,7 @@ export function BurgerButton({ isOpen, onClick }) {
                 cursor: "pointer",
                 display: "block",
                 flexShrink: 0,
-                marginLeft: isOpen ? "8px" : "0",
+                marginRight: 0,
             }}
         >
             <input

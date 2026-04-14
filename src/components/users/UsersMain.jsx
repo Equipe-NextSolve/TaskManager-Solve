@@ -68,7 +68,7 @@ export default function UsersMain() {
     ];
 
     return (
-        <div
+        <main
             style={{
                 minHeight: "100vh",
                 background: "var(--color-background-page)",
@@ -89,6 +89,7 @@ export default function UsersMain() {
                     flexWrap: "wrap",
                     gap: 12,
                 }}
+                className="mb-5"
             >
                 <div>
                     <div
@@ -117,8 +118,9 @@ export default function UsersMain() {
                             fontSize: 26,
                             fontWeight: 800,
                             color: "#fff",
-                            margin: 0,
+
                         }}
+                        className="mt-2"
                     >
                         Usuários
                     </h1>
@@ -366,6 +368,6 @@ export default function UsersMain() {
                 onClose={() => setDeletingUser(null)}
                 user={deletingUser}
             />
-        </div>
+        </main>
     );
 }
