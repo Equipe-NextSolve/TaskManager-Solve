@@ -323,20 +323,10 @@ export default function UsersMain() {
                     style={{ display: "flex", flexDirection: "column", gap: 6 }}
                 >
                     {/* Cabeçalho */}
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns:
-                                "48px 1fr 160px 100px 100px 72px",
-                            gap: "16",
-                            padding: "6px 20px",
-                            fontSize: 11,
-                            fontWeight: 700,
-                            textTransform: "uppercase",
-                            letterSpacing: "0.08em",
-                            color: "#4b5563",
-                            userSelect: "none",
-                        }}
+                    <div         
+                        className="grid grid-cols-[48px_1fr_160px_100px_100px_72px] gap-4
+                        px-5 py-1.5 text-[11px] font-bold
+                        text-[#4b5563] select-none uppercase tracking-[0.08em]"
                     >
                         <span />
                         <span>Usuário</span>

@@ -4,6 +4,7 @@ import CanDo from "@/components/auth/CanDo";
 import RoleBadge from "@/components/auth/RoleBadge";
 import { Avatar } from "@/components/projects/ProjectBadges";
 import { MdDelete, MdEdit } from "react-icons/md";
+
 export default function UserRow({ user, onEdit, onDelete }) {
     const formattedDate = useMemo(() => {
         if (!user.createdAt) return "—";
@@ -16,7 +17,7 @@ export default function UserRow({ user, onEdit, onDelete }) {
     }, [user.createdAt]);
 
     const authLabel = user.authMethod === "google" ? "Google" : "E-mail";
-    const authColor = user.authMethod === "google" ? "#ea4335" : "#22d3ee";
+    const authColor = user.authMethod === "google" ? "#ea4335" : "var(--color-cyan-400)";
     const authBg =
         user.authMethod === "google"
             ? "rgba(234,67,53,0.1)"
@@ -25,23 +26,16 @@ export default function UserRow({ user, onEdit, onDelete }) {
     return (
         // biome-ignore lint/a11y/noStaticElementInteractions: <>
         <div
-            style={{
-                display: "grid",
-                gridTemplateColumns: "48px 1fr 160px 100px 100px 72px",
-                gap: "16",
-                alignItems: "center",
-                padding: "12px 20px",
-                background: "#121212",
-                border: "1px solid rgba(255,255,255,0.05)",
-                borderRadius: 12,
-                transition: "border-color 0.2s, transform 0.15s",
-            }}
+            className="grid grid-cols-[48px_1fr_160px_100px_100px_72px] 
+            gap-4 items-center px-5 py-3 bg-bg-card
+            rounded-xl border border-[rgba(255,255,255,0.05)] 
+            transition-[border-color_0.2s,transform_0.15s]"
             onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(25, 202, 104, 0.2)";
+                e.currentTarget.style.borderColor = "var(--color-surface-green-md)";
                 e.currentTarget.style.transform = "translateY(-1px)";
             }}
             onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
+                e.currentTarget.style.borderColor = "#FFFFFF0D";
                 e.currentTarget.style.transform = "translateY(0)";
             }}
         >

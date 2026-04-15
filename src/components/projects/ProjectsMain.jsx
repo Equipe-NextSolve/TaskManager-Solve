@@ -11,7 +11,6 @@ import { useCallback, useMemo, useState } from "react";
 import { AiOutlineClear } from "react-icons/ai";
 import {
     MdAdd,
-    MdFilterList,
     MdOutlineRocketLaunch,
     MdSearch,
 } from "react-icons/md";
@@ -24,6 +23,7 @@ import { PRIORITY_MAP, STATUS_MAP } from "@/components/projects/ProjectsConfig";
 import { useProjects } from "@/context/ProjectsContext";
 import { menuPaper2, muiDark2 } from "@/utils/StyleInputs";
 import { StatPill } from "../ui/StatPill";
+import useIsMobile from "@/responsive/useIsMobile";
 
 export default function ProjectsMain() {
     const {
@@ -35,6 +35,8 @@ export default function ProjectsMain() {
         updateProject,
         deleteProject,
     } = useProjects();
+
+    const isMobile = useIsMobile()
 
     const [search, setSearch] = useState("");
     const [filterStatus, setFilterStatus] = useState("all");
@@ -205,16 +207,16 @@ export default function ProjectsMain() {
                         onClick={handleOpenCreate}
                         type="button"
                         className="
-                    relative inline-flex items-center gap-1.5
-                    px-4.5 h-9.5 rounded-[7px]
-                    text-[13px] font-bold tracking-tight text-black
-                    bg-linear-to-br from-brand-500 to-brand-600
-                    overflow-hidden cursor-pointer
-                    transition-all duration-150
-                    hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(25,202,104,0.42)]
-                    active:scale-[0.97]
-                    shadow-[0_2px_10px_rgba(25,202,104,0.25)]
-                "
+                            relative inline-flex items-center gap-1.5
+                            px-4.5 h-9.5 rounded-[7px]
+                            text-[13px] font-bold tracking-tight text-black
+                            bg-linear-to-br from-brand-500 to-brand-600
+                            overflow-hidden cursor-pointer
+                            transition-all duration-150
+                            hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(25,202,104,0.42)]
+                            active:scale-[0.97]
+                            shadow-[0_2px_10px_rgba(25,202,104,0.25)]
+                        "
                     >
                         <span className="pointer-events-none absolute inset-0 rounded-[10px] bg-linear-to-b from-white/18 to-transparent" />
 
@@ -263,16 +265,8 @@ export default function ProjectsMain() {
 
             {/* FILTERS */}
             <div
-                style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 10,
-                    padding: "14px 16px",
-                    background: "#121212",
-                    border: "1px solid rgba(255,255,255,0.06)",
-                    borderRadius: 14,
-                    alignItems: "center",
-                }}
+                className="flex flex-wrap gap-4 md:gap-2.5 py-3.5 px-4
+                bg-bg-card border border-white/10 rounded-[14px] items-center"
             >
                 <div
                     style={{
@@ -309,76 +303,82 @@ export default function ProjectsMain() {
                     />
                 </div>
 
-                <MdFilterList
-                    size={16}
-                    style={{ color: "#6b7280", flexShrink: 0 }}
-                />
-                <FormControl size="small" sx={{ minWidth: 160, ...muiDark2 }}>
-                    <InputLabel>Status</InputLabel>
-                    <Select
-                        value={filterStatus}
-                        label="Status"
-                        onChange={(e) => setFilterStatus(e.target.value)}
-                        MenuProps={menuPaper2}
-                    >
-                        <MenuItem value="all" style={{ color: "#e5e7eb" }}>
-                            Todos status
-                        </MenuItem>
-                        {Object.entries(STATUS_MAP).map(([val, cfg]) => (
-                            <MenuItem
-                                key={val}
-                                value={val}
-                                style={{ color: cfg.color }}
-                            >
-                                {cfg.label}
+                    <FormControl size="small" sx={{
+                        minWidth: isMobile ? '100%' :160,
+                        ...muiDark2
+                    }}>
+                        <InputLabel>Status</InputLabel>
+                        <Select
+                            value={filterStatus}
+                            label="Status"
+                            onChange={(e) => setFilterStatus(e.target.value)}
+                            MenuProps={menuPaper2}
+                        >
+                            <MenuItem value="all" style={{ color: "#e5e7eb" }}>
+                                Todos status
                             </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <FormControl size="small" sx={{ minWidth: 160, ...muiDark2 }}>
-                    <InputLabel>Prioridade</InputLabel>
-                    <Select
-                        value={filterPriority}
-                        label="Prioridade"
-                        onChange={(e) => setFilterPriority(e.target.value)}
-                        MenuProps={menuPaper2}
-                    >
-                        <MenuItem value="all" style={{ color: "#e5e7eb" }}>
-                            Todas prioridades
-                        </MenuItem>
-                        {Object.entries(PRIORITY_MAP).map(([val, cfg]) => (
-                            <MenuItem
-                                key={val}
-                                value={val}
-                                style={{ color: cfg.color }}
-                            >
-                                {cfg.label}
+                            {Object.entries(STATUS_MAP).map(([val, cfg]) => (
+                                <MenuItem
+                                    key={val}
+                                    value={val}
+                                    style={{ color: cfg.color }}
+                                >
+                                    {cfg.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl size="small" sx={{
+                        minWidth: isMobile ? '100%' :160,                   
+                        ...muiDark2
+                    }}>
+                        <InputLabel>Prioridade</InputLabel>
+                        <Select
+                            value={filterPriority}
+                            label="Prioridade"
+                            onChange={(e) => setFilterPriority(e.target.value)}
+                            MenuProps={menuPaper2}
+                        >
+                            <MenuItem value="all" style={{ color: "#e5e7eb" }}>
+                                Todas prioridades
                             </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <FormControl size="small" sx={{ minWidth: 160, ...muiDark2 }}>
-                    <InputLabel>Dev</InputLabel>
-                    <Select
-                        value={filterDev}
-                        label="Dev"
-                        onChange={(e) => setFilterDev(e.target.value)}
-                        MenuProps={menuPaper2}
-                    >
-                        <MenuItem value="all" style={{ color: "#e5e7eb" }}>
-                            Todos devs
-                        </MenuItem>
-                        {users.map((u) => (
-                            <MenuItem
-                                key={u.id}
-                                value={u.id}
-                                style={{ color: "#e5e7eb" }}
-                            >
-                                {u.name}
+                            {Object.entries(PRIORITY_MAP).map(([val, cfg]) => (
+                                <MenuItem
+                                    key={val}
+                                    value={val}
+                                    style={{ color: cfg.color }}
+                                >
+                                    {cfg.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl size="small" sx={{
+                        minWidth: isMobile ? '100%' :160,
+                        ...muiDark2
+                    }}>
+                        <InputLabel>Dev</InputLabel>
+                        <Select
+                            value={filterDev}
+                            label="Dev"
+                            onChange={(e) => setFilterDev(e.target.value)}
+                            MenuProps={menuPaper2}
+                        >
+                            <MenuItem value="all" style={{ color: "#e5e7eb" }}>
+                                Todos devs
                             </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                            {users.map((u) => (
+                                <MenuItem
+                                    key={u.id}
+                                    value={u.id}
+                                    style={{ color: "#e5e7eb" }}
+                                >
+                                    {u.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
 
                 {hasFilters && (
                     <button

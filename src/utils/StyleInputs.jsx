@@ -3,17 +3,17 @@ export const muiDark = {
         color: "#e5e7eb",
         "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
         "&:hover fieldset": { borderColor: "rgba(255,255,255,0.25)" },
-        "&.Mui-focused fieldset": { borderColor: "#19CA68" },
-        "& .MuiSelect-icon": { color: "#9ca3af" },
+        "&.Mui-focused fieldset": { borderColor: "var(--color-brand-500)" },
+        "& .MuiSelect-icon": { color: "var(--color-font-gray)" },
         "& .MuiChip-root": {
             background: "rgba(25,202,104,0.15)",
-            color: "#19CA68",
+            color: "var(--color-brand-500)",
             fontSize: 11,
         },
     },
-    "& .MuiInputLabel-root": { color: "#9ca3af" },
-    "& .MuiInputLabel-root.Mui-focused": { color: "#19CA68" },
-    "& .MuiFormHelperText-root": { color: "#ef4444" },
+    "& .MuiInputLabel-root": { color: "var(--color-font-gray)" },
+    "& .MuiInputLabel-root.Mui-focused": { color: "var(--color-brand-500)" },
+    "& .MuiFormHelperText-root": { color: "var(--color-error)" },
     "& .MuiOutlinedInput-input": { color: "#e5e7eb" },
 };
 
@@ -24,13 +24,13 @@ export const muiDark2 = {
         "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
         "&:hover fieldset": { borderColor: "rgba(255,255,255,0.25)" },
         "&.Mui-focused fieldset": { borderColor: "var(--color-bg-hover2)" },
-        "& .MuiSelect-icon": { color: "#9ca3af" },
+        "& .MuiSelect-icon": { color: "var(--color-font-gray)" },
     },
     "& .MuiInputLabel-root": {
-        color: "#9ca3af",
-        "&.Mui-focused ": { color: "#9ca3af" },
+        color: "var(--color-font-gray)",
+        "&.Mui-focused ": { color: "var(--color-font-gray)" },
     },
-    "& .MuiFormHelperText-root": { color: "#ef4444" },
+    "& .MuiFormHelperText-root": { color: "var(--color-error)" },
     "& .MuiOutlinedInput-input": { color: "#e5e7eb" },
 };
 
