@@ -16,6 +16,7 @@ import {
     useCallback,
     useContext,
     useEffect,
+    useMemo,
     useState,
 } from "react";
 import { toast } from "sonner";
@@ -157,7 +158,9 @@ export const ProjectsProvider = ({ children }) => {
     }, []);
 
     //isso permite usar usersMap[uid] para obter os dados rapidamente de um usuário sem precisar usar find
-    const usersMap = Object.fromEntries(users.map((u) => [u.id, u]));
+    const usersMap = useMemo(() => {
+        return Object.fromEntries(users.map((u) => [u.id, u]));
+    }, [users]);
 
     //Estados e funções disponíveis para os componentes filhos
     const value = {

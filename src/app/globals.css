@@ -61,6 +61,7 @@
     --color-bg-selected: #222222;
     --color-bg-hover2: #4b4b4b;
     --color-font-gray: #9ca3af;
+    
     /* ─── ALIASES SEMÂNTICOS ────────────────────────────── */
     --color-primary: var(--color-brand-500);
     --color-accent: var(--color-cyan-400);

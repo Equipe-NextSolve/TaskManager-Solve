@@ -2,28 +2,18 @@
 
 import {
     CircularProgress,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
 } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
-import { AiOutlineClear } from "react-icons/ai";
-import {
-    MdAdd,
-    MdOutlineRocketLaunch,
-    MdSearch,
-} from "react-icons/md";
 import { toast } from "sonner";
-import CanDo from "@/components/auth/CanDo";
 import ProjectCard from "@/components/projects/card/ProjectCard";
 import ModalDelete from "@/components/projects/modals/ModalDelete";
 import ProjectForm from "@/components/projects/modals/ProjectForm";
-import { PRIORITY_MAP, STATUS_MAP } from "@/components/projects/ProjectsConfig";
 import { useProjects } from "@/context/ProjectsContext";
-import { menuPaper2, muiDark2 } from "@/utils/StyleInputs";
-import { StatPill } from "../ui/StatPill";
-import useIsMobile from "@/responsive/useIsMobile";
+import ProjectsFilters from "./sections/ProjectsFilters";
+import ProjectsStats from "./sections/ProjectsStats";
+import { useDebounce } from "@/hooks/UseDebounce";
+import ProjectsEmptyState from "./sections/ProjectsEmptyState";
+import ProjectsHeader from "./sections/ProjectsHeader";
 
 export default function ProjectsMain() {
     const {
@@ -36,23 +26,21 @@ export default function ProjectsMain() {
         deleteProject,
     } = useProjects();
 
-    const isMobile = useIsMobile()
-
-    const [search, setSearch] = useState("");
     const [filterStatus, setFilterStatus] = useState("all");
     const [filterPriority, setFilterPriority] = useState("all");
     const [filterDev, setFilterDev] = useState("all");
-
+    const [searchInput, setSearchInput] = useState("");
     const [dialogOpen, setDialogOpen] = useState(false);
     const [editingProject, setEditingProject] = useState(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [deletingProject, setDeletingProject] = useState(null);
-
     const [submitting, setSubmitting] = useState(false);
     const [deleting, setDeleting] = useState(false);
 
-    const filtered = useMemo(() => {
-        return projects.filter((p) => {
+    const debouncedSearch = useDebounce(searchInput, 300)
+
+    const filtered = useMemo(() => { // Só recalcula a lista quando as dependências mudarem, evita processamento desnecessário.
+        return projects.filter((p) => { // percorre todos os projetos e mantém apenas os que passam nas validações
             if (filterStatus !== "all" && p.status !== filterStatus)
                 return false;
             if (filterPriority !== "all" && p.priority !== filterPriority)
@@ -62,8 +50,8 @@ export default function ProjectsMain() {
                 !(p.developers || []).includes(filterDev)
             )
                 return false;
-            if (search) {
-                const q = search.toLowerCase();
+            if (debouncedSearch) {
+                const q = debouncedSearch.toLowerCase(); // Converte tudo para minúsculo
                 return (
                     p.title?.toLowerCase().includes(q) ||
                     p.description?.toLowerCase().includes(q) ||
@@ -74,13 +62,13 @@ export default function ProjectsMain() {
                     (p.developers || []).some((uid) =>
                         usersMap[uid]?.name?.toLowerCase().includes(q),
                     )
-                );
+                ); // verifica se o título, descrição, cliente, tech stack ou nome do desenvolvedor contém o termo digitado
             }
             return true;
         });
-    }, [projects, filterStatus, filterPriority, filterDev, search, usersMap]);
+    }, [projects, filterStatus, filterPriority, filterDev, debouncedSearch, usersMap]);
 
-    const stats = useMemo(
+    const stats = useMemo( // Conta quantos projetos existem em cada status
         () => ({
             total: projects.length,
             em_andamento: projects.filter((p) => p.status === "em_andamento")
@@ -88,19 +76,20 @@ export default function ProjectsMain() {
             concluido: projects.filter((p) => p.status === "concluido").length,
             pausado: projects.filter((p) => p.status === "pausado").length,
             suporte: projects.filter((p) => p.status === "suporte").length,
+            arquivado: projects.filter((p) => p.status === "arquivado").length,
         }),
         [projects],
     );
 
-    const handleOpenCreate = () => {
+    const handleOpenCreate = () => { // abre modal de criação
         setEditingProject(null);
         setDialogOpen(true);
     };
-    const handleOpenEdit = useCallback((p) => {
+    const handleOpenEdit = useCallback((p) => { // Abre o modal de edição, recebendo o projeto p e guardando em editingProject
         setEditingProject(p);
         setDialogOpen(true);
     }, []);
-    const handleOpenDelete = useCallback((p) => {
+    const handleOpenDelete = useCallback((p) => { // Abre o modal de exclusão
         setDeletingProject(p);
         setDeleteDialogOpen(true);
     }, []);
@@ -109,10 +98,10 @@ export default function ProjectsMain() {
         setSubmitting(true);
         try {
             if (editingProject) {
-                await updateProject(editingProject.id, data, editingProject);
+                await updateProject(editingProject.id, data, editingProject); // edita o projeto
                 toast.success("Projeto atualizado!");
             } else {
-                await createProject(data);
+                await createProject(data); // cria um projeto novo
                 toast.success("Projeto criado!");
             }
             setDialogOpen(false);
@@ -125,9 +114,9 @@ export default function ProjectsMain() {
     };
 
     const handleConfirmDelete = async () => {
-        setDeleting(true);
+        setDeleting(true); 
         try {
-            await deleteProject(deletingProject.id);
+            await deleteProject(deletingProject.id); // exclui o projeto baseado no id dele
             toast.success("Projeto excluído!");
             setDeleteDialogOpen(false);
             setDeletingProject(null);
@@ -139,346 +128,47 @@ export default function ProjectsMain() {
         }
     };
 
-    const clearFilters = () => {
+    const clearFilters = () => { // função para limpar filtros
         setFilterStatus("all");
         setFilterPriority("all");
         setFilterDev("all");
-        setSearch("");
+        setSearchInput("");
     };
-    const hasFilters =
+    const hasFilters = // se tiver ao menos um filtro ativo, mostra o botão para limpar
         filterStatus !== "all" ||
         filterPriority !== "all" ||
         filterDev !== "all" ||
-        search;
+        searchInput;
 
     return (
         <div className="min-h-screen bg-background-page text-white py-6 space-y-6 font-sans">
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    justifyContent: "space-between",
-                    flexWrap: "wrap",
-                    gap: 16,
-                }}
-            >
-                <div>
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 8,
-                            marginBottom: 4,
-                        }}
-                    >
-                        <MdOutlineRocketLaunch
-                            style={{ color: "#19CA68", fontSize: 18 }}
-                        />
-                        <span
-                            style={{
-                                fontSize: 11,
-                                fontWeight: 700,
-                                textTransform: "uppercase",
-                                letterSpacing: "0.12em",
-                                color: "#4b4b4b",
-                            }}
-                        >
-                            Gestão de Projetos
-                        </span>
-                    </div>
-                    <h1
-                        style={{
-                            fontSize: 26,
-                            fontWeight: 800,
-                            color: "#fff",
-                            margin: 0,
-                        }}
-                    >
-                        Projetos
-                    </h1>
-                    <p style={{ fontSize: 13, color: "#6b7280", marginTop: 4 }}>
-                        {projects.length} projeto
-                        {projects.length !== 1 ? "s" : ""} cadastrado
-                        {projects.length !== 1 ? "s" : ""}
-                    </p>
-                </div>
-                <CanDo permission="canCreateProjects">
-                    <button
-                        onClick={handleOpenCreate}
-                        type="button"
-                        className="
-                            relative inline-flex items-center gap-1.5
-                            px-4.5 h-9.5 rounded-[7px]
-                            text-[13px] font-bold tracking-tight text-black
-                            bg-linear-to-br from-brand-500 to-brand-600
-                            overflow-hidden cursor-pointer
-                            transition-all duration-150
-                            hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(25,202,104,0.42)]
-                            active:scale-[0.97]
-                            shadow-[0_2px_10px_rgba(25,202,104,0.25)]
-                        "
-                    >
-                        <span className="pointer-events-none absolute inset-0 rounded-[10px] bg-linear-to-b from-white/18 to-transparent" />
+            <ProjectsHeader projectsCount={projects.length} onCreate={handleOpenCreate}/>
+            <ProjectsStats stats={stats}/>
+            <ProjectsFilters
+                search={searchInput}
+                onSearchChange={setSearchInput}
+                filterStatus={filterStatus}
+                onStatusChange={setFilterStatus}
+                filterPriority={filterPriority}
+                onPriorityChange={setFilterPriority}
+                filterDev={filterDev}
+                onDevChange={setFilterDev}
+                users={users}
+                onClearFilters={clearFilters}
+                hasFilters={hasFilters}
+            />
 
-                        <span className="relative z-10">Novo Projeto</span>
-                    </button>
-                </CanDo>
-            </div>
-
-            <div className="flex flex-wrap gap-2 select-none">
-                <StatPill
-                    label="Total"
-                    value={stats.total}
-                    color="#a78bfa"
-                    bg="rgba(167,139,250,0.1)"
-                    border="rgba(167,139,250,0.2)"
-                />
-                <StatPill
-                    label="Em Andamento"
-                    value={stats.em_andamento}
-                    color="var(--color-cyan-400)"
-                    bg="var(--color-surface-cyan-alt)"
-                    border="var(--color-surface-cyan-md)"
-                />
-                <StatPill
-                    label="Concluídos"
-                    value={stats.concluido}
-                    color="var(--color-brand-500)"
-                    bg="var(--color-surface-green-alt)"
-                    border="var(--color-surface-green-md)"
-                />
-                <StatPill
-                    label="Pausados"
-                    value={stats.pausado}
-                    color="var(--color-warning)"
-                    bg="rgba(245,158,11,0.12)"
-                    border="rgba(245,158,11,0.25)"
-                />
-                <StatPill
-                    label="Suporte"
-                    value={stats.suporte}
-                    color="#a855f7"
-                    bg="rgba(168, 85, 247, 0.12)"
-                    border="rgba(168, 85, 247, 0.25)"
-                />
-            </div>
-
-            {/* FILTERS */}
-            <div
-                className="flex flex-wrap gap-4 md:gap-2.5 py-3.5 px-4
-                bg-bg-card border border-white/10 rounded-[14px] items-center"
-            >
-                <div
-                    style={{
-                        position: "relative",
-                        flex: "1 1 200px",
-                        minWidth: 180,
-                    }}
-                >
-                    <MdSearch
-                        size={16}
-                        style={{
-                            position: "absolute",
-                            left: 10,
-                            top: "50%",
-                            transform: "translateY(-50%)",
-                            color: "#6b7280",
-                        }}
-                    />
-                    <input
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Buscar projetos, clientes, tecnologias..."
-                        style={{
-                            width: "100%",
-                            background: "rgba(255,255,255,0.04)",
-                            border: "1px solid rgba(255,255,255,0.1)",
-                            borderRadius: 8,
-                            color: "#e5e7eb",
-                            padding: "7px 10px 7px 32px",
-                            fontSize: 13,
-                            outline: "none",
-                            boxSizing: "border-box",
-                        }}
-                    />
-                </div>
-
-                    <FormControl size="small" sx={{
-                        minWidth: isMobile ? '100%' :160,
-                        ...muiDark2
-                    }}>
-                        <InputLabel>Status</InputLabel>
-                        <Select
-                            value={filterStatus}
-                            label="Status"
-                            onChange={(e) => setFilterStatus(e.target.value)}
-                            MenuProps={menuPaper2}
-                        >
-                            <MenuItem value="all" style={{ color: "#e5e7eb" }}>
-                                Todos status
-                            </MenuItem>
-                            {Object.entries(STATUS_MAP).map(([val, cfg]) => (
-                                <MenuItem
-                                    key={val}
-                                    value={val}
-                                    style={{ color: cfg.color }}
-                                >
-                                    {cfg.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl size="small" sx={{
-                        minWidth: isMobile ? '100%' :160,                   
-                        ...muiDark2
-                    }}>
-                        <InputLabel>Prioridade</InputLabel>
-                        <Select
-                            value={filterPriority}
-                            label="Prioridade"
-                            onChange={(e) => setFilterPriority(e.target.value)}
-                            MenuProps={menuPaper2}
-                        >
-                            <MenuItem value="all" style={{ color: "#e5e7eb" }}>
-                                Todas prioridades
-                            </MenuItem>
-                            {Object.entries(PRIORITY_MAP).map(([val, cfg]) => (
-                                <MenuItem
-                                    key={val}
-                                    value={val}
-                                    style={{ color: cfg.color }}
-                                >
-                                    {cfg.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl size="small" sx={{
-                        minWidth: isMobile ? '100%' :160,
-                        ...muiDark2
-                    }}>
-                        <InputLabel>Dev</InputLabel>
-                        <Select
-                            value={filterDev}
-                            label="Dev"
-                            onChange={(e) => setFilterDev(e.target.value)}
-                            MenuProps={menuPaper2}
-                        >
-                            <MenuItem value="all" style={{ color: "#e5e7eb" }}>
-                                Todos devs
-                            </MenuItem>
-                            {users.map((u) => (
-                                <MenuItem
-                                    key={u.id}
-                                    value={u.id}
-                                    style={{ color: "#e5e7eb" }}
-                                >
-                                    {u.name}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-
-
-                {hasFilters && (
-                    <button
-                        onClick={clearFilters}
-                        type="button"
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 4,
-                            background: "rgba(239,68,68,0.1)",
-                            border: "1px solid rgba(239,68,68,0.2)",
-                            borderRadius: 8,
-                            color: "#ef4444",
-                            padding: " 8px",
-                            cursor: "pointer",
-                            fontSize: 12,
-                            fontWeight: 600,
-                        }}
-                    >
-                        <AiOutlineClear className="text-xl" />
-                    </button>
-                )}
-            </div>
-
-            {/* GRID */}
             {loadingProjects ? (
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        padding: "60px 0",
-                        gap: 12,
-                    }}
-                >
+                <div className="flex items-center justify-center px-0 py-15 gap-3">
                     <CircularProgress size={24} style={{ color: "#19CA68" }} />
-                    <span style={{ color: "#6b7280", fontSize: 14 }}>
+                    <span className="text-[#6b7280] text-sm">
                         Carregando projetos...
                     </span>
                 </div>
             ) : filtered.length === 0 ? (
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        padding: "60px 0",
-                        gap: 12,
-                        background: "#121212",
-                        border: "1px solid rgba(255,255,255,0.06)",
-                        borderRadius: 16,
-                    }}
-                >
-                    <MdOutlineRocketLaunch
-                        style={{ fontSize: 44, color: "#2D2D2D" }}
-                    />
-                    <p
-                        style={{
-                            color: "#4b4b4b",
-                            fontSize: 14,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {projects.length === 0
-                            ? "Nenhum projeto cadastrado ainda"
-                            : "Nenhum projeto encontrado"}
-                    </p>
-                    {projects.length === 0 && (
-                        <button
-                            onClick={handleOpenCreate}
-                            type="button"
-                            style={{
-                                marginTop: 4,
-                                background: "rgba(25,202,104,0.1)",
-                                border: "1px solid rgba(25,202,104,0.2)",
-                                borderRadius: 8,
-                                color: "#19CA68",
-                                padding: "8px 18px",
-                                cursor: "pointer",
-                                fontSize: 13,
-                                fontWeight: 600,
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 6,
-                            }}
-                        >
-                            <MdAdd size={16} /> Criar primeiro projeto
-                        </button>
-                    )}
-                </div>
+                <ProjectsEmptyState projectsLength={projects.length} onCreate={handleOpenCreate}/>
             ) : (
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns:
-                            "repeat(auto-fill, minmax(240px, 1fr))",
-                        gap: 14,
-                    }}
-                >
+                <div className="grid gap-3.5 grid-cols-[repeat(auto-fill,minmax(240px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(320px,1fr))]" >
                     {filtered.map((project) => (
                         <ProjectCard
                             key={project.id}
@@ -491,7 +181,7 @@ export default function ProjectsMain() {
                 </div>
             )}
 
-            {/* DIALOGS */}
+            {/* Modals */}
             <ProjectForm
                 open={dialogOpen}
                 onClose={() => setDialogOpen(false)}

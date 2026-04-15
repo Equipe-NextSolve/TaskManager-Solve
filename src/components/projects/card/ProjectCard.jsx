@@ -1,4 +1,5 @@
 "use client";
+import { memo } from "react";
 import { Menu, MenuItem, Tooltip } from "@mui/material";
 import { differenceInDays, format } from "date-fns";
 import { useMemo, useState } from "react";
@@ -16,7 +17,8 @@ import { RiGitBranchLine } from "react-icons/ri";
 import CanDo from "@/components/auth/CanDo";
 import { parseDate } from "@/utils/FormatDateProjects";
 import { Avatar, PriorityBadge, StatusBadge } from "../ProjectBadges";
-export default function ProjectCard({ project, usersMap, onEdit, onDelete }) {
+
+function ProjectCard({ project, usersMap, onEdit, onDelete }) {
     //guarda o elemento HTML que servirá de “âncora” para o menu (que começa fechado)
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -470,3 +472,10 @@ export default function ProjectCard({ project, usersMap, onEdit, onDelete }) {
         </div>
     );
 }
+
+export default memo(ProjectCard);
+/** Suponha que você digite algo no campo de busca. O estado searchInput muda → filtered é recalculado → todo o componente ProjectsMain re-renderiza.
+ * Sem memo, todos os ProjectCard (dezenas ou centenas) também re-renderizam,
+ * mesmo que seus dados (project, usersMap, onEdit, onDelete) sejam exatamente os mesmos de antes.
+ * Com React.memo(ProjectCard), cada ProjectCard só re-renderiza se o project mudar.
+ * */
