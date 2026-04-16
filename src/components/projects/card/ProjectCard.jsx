@@ -1,6 +1,5 @@
 "use client";
-import { memo } from "react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, memo } from "react";
 import {
     MdPerson,
 } from "react-icons/md";

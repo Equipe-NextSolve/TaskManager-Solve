@@ -17,23 +17,24 @@ export default function CardFooter({ project}) {
                     </span>
                 )}
 
-                {expectedInfo && (
-                    <span className={`flex items-center gap-1 text-[11px] font-semibold`}
-                        style={{ color: expectedInfo.color }}
-                    >
-                        <MdOutlineTimer size={11} />
-                        {expectedInfo.text !== expectedInfo.formatted
-                            ? `Previsão: ${expectedInfo.formatted} · ${expectedInfo.text}`
-                            : `Previsão: ${expectedInfo.formatted}`}
-                    </span>
-                )}
-                {deliveredInfo && (
+                {deliveredInfo ? (
                     <span className="flex items-center gap-1 text-[11px] font-semibold text-brand-600">
                         <MdOutlineTimer size={11} />
                         Entregue em: {deliveredInfo.formatted}
                     </span>
+                ):(
+                    expectedInfo && (
+                    <span className={`flex items-center gap-1 text-[11px] font-semibold`}
+                        style={{ color: expectedInfo.color }}
+                    >
+                        <MdOutlineTimer size={11} />
+                            {expectedInfo.text !== expectedInfo.formatted
+                                ? `Previsão: ${expectedInfo.formatted} · ${expectedInfo.text}`
+                                : `Previsão: ${expectedInfo.formatted}`}
+                        </span>
+                    )
                 )}
-                {deliveryStatus && (
+                {deliveryStatus && deliveredInfo && (
                     <span
                         style={{
                             fontSize: 10,
