@@ -19,10 +19,10 @@ import { useClients } from "@/context/ClientsContext";
 
 const schema = yup.object().shape({
     name: yup.string().required("O nome é obrigatório"),
-    email: yup.string().email("E-mail inválido").nullable(),
-    contato: yup.string().nullable(),
+    email: yup.string().email("E-mail inválido").required("O e-mail é obrigatório"),
+    contato: yup.string().required("O telefone é obrigatório"),
     documento: yup.string().nullable(),
-    status: yup.string().oneOf(["active", "inactive"]).required(),
+    status: yup.string().oneOf(["active", "inactive"]).required("O status é obrigatório"),
 });
 
 export default function ClientForm({ isOpen, onClose, client }) {

@@ -1,11 +1,7 @@
 "use client";
 
-import {
-    CircularProgress,
-    IconButton,
-    Tooltip,
-    Typography,
-} from "@mui/material";
+import { CircularProgress, IconButton, Tooltip } from "@mui/material";
+import { FiBriefcase } from "react-icons/fi";
 import {
     MdDelete,
     MdEdit,
@@ -16,10 +12,12 @@ import {
 } from "react-icons/md";
 import { useClients } from "@/context/ClientsContext";
 import { useRole } from "@/hooks/useRole";
+import useIsTablet from "@/responsive/useIsTablet";
+import { ClientCard } from "./clientsCards/ClientCard";
 
-export default function ClientsTable({ clients, loading, onEdit }) {
+export default function ClientsTable({ clients, loading, onEdit, onDelete }) {
     const { can } = useRole();
-    const { deleteClient } = useClients();
+    const isTablet = useIsTablet();
 
     if (loading) {
         return (
@@ -29,35 +27,65 @@ export default function ClientsTable({ clients, loading, onEdit }) {
         );
     }
 
+    // Em telas <= 1024px, mostrar layout de cards
+    if (isTablet) {
+        return (
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {clients.length === 0 ? (
+                    <div className="bg-[#121212] border border-white/5 rounded-2xl py-20 text-center">
+                        <FiBriefcase
+                            size={48}
+                            className="text-white/10 mx-auto mb-3"
+                        />
+                        <p className="text-white/40 font-medium">
+                            Nenhum cliente cadastrado.
+                        </p>
+                    </div>
+                ) : (
+                    clients.map((client) => (
+                        <ClientCard
+                            key={client.id}
+                            client={client}
+                            onEdit={onEdit}
+                            onDelete={() => {
+                                onDelete?.(client);
+                            }}
+                        />
+                    ))
+                )}
+            </div>
+        );
+    }
+
     return (
         <div className="space-y-4">
             {/* Cabeçalho de Títulos Opcional (seguindo a estética da imagem) */}
             <div className="grid grid-cols-12 px-8 mb-2">
                 <div className="col-span-5">
-                    <Typography className="text-white/30 font-bold uppercase text-[10px] tracking-widest">
+                    <p className="text-white/30 font-bold uppercase text-[11px] tracking-widest">
                         Cliente / Identificação
-                    </Typography>
+                    </p>
                 </div>
                 <div className="col-span-3 text-center">
-                    <Typography className="text-white/30 font-bold uppercase text-[10px] tracking-widest">
+                    <p className="text-white/30 font-bold uppercase text-[11px] tracking-widest">
                         Contato
-                    </Typography>
+                    </p>
                 </div>
                 <div className="col-span-2 text-center">
-                    <Typography className="text-white/30 font-bold uppercase text-[10px] tracking-widest">
+                    <p className="text-white/30 font-bold uppercase text-[11px] tracking-widest">
                         Status
-                    </Typography>
+                    </p>
                 </div>
                 <div className="col-span-2 text-right">
-                    <Typography className="text-white/30 font-bold uppercase text-[10px] tracking-widest">
+                    <p className="text-white/30 font-bold uppercase text-[11px] tracking-widest">
                         Gerenciar
-                    </Typography>
+                    </p>
                 </div>
             </div>
 
             {clients.length === 0 ? (
                 <div className="bg-[#121212] border border-white/5 rounded-2xl py-20 text-center">
-                    <MdPerson
+                    <FiBriefcase
                         size={48}
                         className="text-white/10 mx-auto mb-3"
                     />
@@ -147,9 +175,7 @@ export default function ClientsTable({ clients, loading, onEdit }) {
                                     </Tooltip>
                                     <Tooltip title="Excluir">
                                         <IconButton
-                                            onClick={() =>
-                                                deleteClient(client.id)
-                                            }
+                                            onClick={() => onDelete?.(client)}
                                             sx={{
                                                 color: "var(--color-error)",
                                                 backgroundColor:
