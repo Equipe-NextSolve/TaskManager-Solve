@@ -7,6 +7,7 @@ import { MdInfoOutline, MdLock } from "react-icons/md";
 import * as yup from "yup";
 import { useAuth } from "@/context/AuthContext";
 import { useSettings } from "@/context/SettingsContext";
+import useIsMobile from "@/responsive/useIsMobile";
 
 const schema = yup.object().shape({
     currentPassword: yup.string().required("Senha atual é obrigatória"),
@@ -23,6 +24,7 @@ const schema = yup.object().shape({
 export default function SecuritySettings() {
     const { currentUser } = useAuth();
     const { changePassword } = useSettings();
+    const isMobile = useIsMobile();
 
     const {
         register,
@@ -44,8 +46,8 @@ export default function SecuritySettings() {
 
     if (currentUser?.authMethod === "google") {
         return (
-            <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-2xl p-6 flex gap-4 items-start">
-                <MdInfoOutline className="text-cyan-400 text-2xl shrink-0" />
+            <div className={`text-center bg-cyan-500/5 border border-cyan-500/20 rounded-2xl ${isMobile ? 'p-4 gap-3 flex-col' : 'p-6 gap-4'} flex justify-center items-center`}>
+                <MdInfoOutline className={`text-cyan-400 ${isMobile ? 'text-xl' : 'text-2xl'} shrink-0`} />
                 <div className="space-y-1">
                     <h3 className="text-cyan-400 font-bold">
                         Autenticação Social Ativa
@@ -64,7 +66,7 @@ export default function SecuritySettings() {
         <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
-            className="space-y-6 max-w-md"
+            className={`space-y-6 ${isMobile ? 'w-full' : 'max-w-md'}`}
         >
             <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-white/30 ml-1">
@@ -153,7 +155,7 @@ export default function SecuritySettings() {
                     variant="contained"
                     disabled={isSubmitting}
                     startIcon={<MdLock />}
-                    className="shadow-lg shadow-brand-500/20"
+                    className={`${isMobile ? "w-full" : ""} shadow-lg shadow-brand-500/20`}
                     sx={{
                         backgroundColor: "var(--color-brand-500)",
                         "&:hover": {
@@ -162,6 +164,7 @@ export default function SecuritySettings() {
                         textTransform: "none",
                         borderRadius: "12px",
                         fontWeight: 700,
+                        color: "black",
                         py: 1.5,
                         px: 4,
                     }}

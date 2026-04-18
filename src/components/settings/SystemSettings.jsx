@@ -3,14 +3,16 @@
 import { Box, Switch } from "@mui/material";
 import { MdWarningAmber } from "react-icons/md";
 import { useSettings } from "@/context/SettingsContext";
+import useIsMobile from "@/responsive/useIsMobile";
 
 export default function SystemSettings() {
     const { systemSettings } = useSettings();
+    const isMobile = useIsMobile();
 
     return (
-        <Box className="space-y-8">
-            <div className="bg-orange-500/5 border border-orange-500/20 rounded-2xl p-6 flex gap-4 items-center">
-                <MdWarningAmber className="text-orange-400 text-2xl shrink-0" />
+        <Box className={`space-y-8 w-full`}>
+            <div className={`bg-orange-500/5 border border-orange-500/20 rounded-2xl ${isMobile ? 'p-4 gap-3 flex-col' : 'p-6 gap-4'} text-center flex justify-center items-center`}>
+                <MdWarningAmber className={`text-orange-400 ${isMobile ? 'text-xl' : 'text-2xl'} shrink-0`} />
                 <p className="text-orange-400/80 text-sm font-medium">
                     Atenção: Estas configurações afetam globalmente o
                     comportamento do sistema para todos os usuários.
@@ -22,8 +24,8 @@ export default function SystemSettings() {
                     Parâmetros de Controle
                 </h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-5 bg-white/[0.02] rounded-2xl border border-white/5 flex items-center justify-between group hover:border-white/10 transition-colors">
+                <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'} gap-4`}>
+                    <div className="p-5 bg-white/2 rounded-2xl border border-white/5 flex items-center justify-between group hover:border-white/10 transition-colors">
                         <div className="space-y-1">
                             <p className="text-white text-sm font-bold">
                                 Modo de Manutenção
