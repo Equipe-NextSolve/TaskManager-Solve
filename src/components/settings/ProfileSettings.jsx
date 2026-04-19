@@ -1,43 +1,61 @@
 "use client";
 
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
 import { MdEdit } from "react-icons/md";
-import * as yup from "yup";
 import RoleBadge from "@/components/auth/RoleBadge";
 import { useAuth } from "@/context/AuthContext";
 import { useSettings } from "@/context/SettingsContext";
 import useIsMobile from "@/responsive/useIsMobile";
-
-const schema = yup.object().shape({
-    name: yup.string().required("O nome é obrigatório"),
-});
 
 export default function ProfileSettings() {
     const { currentUser } = useAuth();
     const { updateProfile } = useSettings();
     const isMobile = useIsMobile();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting, isDirty },
-    } = useForm({
-        resolver: yupResolver(schema),
-        defaultValues: {
-            name: currentUser?.name || "",
-        },
-    });
+    // Controle manual de estado para garantir sincronia imediata
+    const [name, setName] = useState("");
+    const [baseName, setBaseName] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState("");
 
-    const onSubmit = async (data) => {
-        await updateProfile(data);
+    // Inicializa os estados quando o usuário for carregado
+    useEffect(() => {
+        if (currentUser?.name) {
+            setName(currentUser.name);
+            setBaseName(currentUser.name);
+        }
+    }, [currentUser]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!name.trim()) {
+            setError("O nome é obrigatório");
+            return;
+        }
+
+        setIsSubmitting(true);
+        setError("");
+
+        try {
+            await updateProfile({ name: name.trim() });
+            // Atualiza o baseName manualmente para o botão bloquear na hora
+            setBaseName(name.trim());
+        } catch (_err) {
+            // Erro já tratado no contexto (toast)
+        } finally {
+            setIsSubmitting(false);
+        }
     };
+
+    // Logica de bloqueio do botão
+    const isDirty = name.trim() !== baseName;
 
     return (
         <Box
             component="form"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit}
             className="space-y-8"
         >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -77,9 +95,10 @@ export default function ProfileSettings() {
                     Nome de Exibição
                 </label>
                 <TextField
-                    {...register("name")}
-                    error={!!errors.name}
-                    helperText={errors.name?.message}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    error={!!error}
+                    helperText={error}
                     fullWidth
                     variant="outlined"
                     placeholder="Seu nome completo"

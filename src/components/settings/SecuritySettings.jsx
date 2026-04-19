@@ -31,7 +31,7 @@ export default function SecuritySettings() {
         register,
         handleSubmit,
         reset,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting, isDirty },
     } = useForm({
         resolver: yupResolver(schema),
     });
@@ -118,7 +118,7 @@ export default function SecuritySettings() {
                 <Button
                     type="submit"
                     variant="contained"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !isDirty}
                     startIcon={<MdLock />}
                     className={`${isMobile ? "w-full" : ""} shadow-lg shadow-brand-500/20`}
                     sx={{
