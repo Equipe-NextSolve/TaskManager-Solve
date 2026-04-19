@@ -8,6 +8,7 @@ import * as yup from "yup";
 import { useAuth } from "@/context/AuthContext";
 import { useSettings } from "@/context/SettingsContext";
 import useIsMobile from "@/responsive/useIsMobile";
+import { muiDark } from "@/utils/StyleInputs";
 
 const schema = yup.object().shape({
     currentPassword: yup.string().required("Senha atual é obrigatória"),
@@ -46,13 +47,13 @@ export default function SecuritySettings() {
 
     if (currentUser?.authMethod === "google") {
         return (
-            <div className={`text-center bg-cyan-500/5 border border-cyan-500/20 rounded-2xl ${isMobile ? 'p-4 gap-3 flex-col' : 'p-6 gap-4'} flex justify-center items-center`}>
-                <MdInfoOutline className={`text-cyan-400 ${isMobile ? 'text-xl' : 'text-2xl'} shrink-0`} />
-                <div className="space-y-1">
-                    <h3 className="text-cyan-400 font-bold">
+            <div className={`bg-cyan-500/5 border border-cyan-500/20 rounded-2xl ${isMobile ? 'p-4 flex-col text-center' : 'p-6'} flex items-center gap-4`}>
+                <MdInfoOutline className={`text-cyan-400 ${isMobile ? 'text-2xl' : 'text-3xl'} shrink-0`} />
+                <div className={`space-y-1 ${isMobile ? 'text-center' : 'text-left'}`}>
+                    <h3 className="text-cyan-400 font-bold text-sm uppercase tracking-wider">
                         Autenticação Social Ativa
                     </h3>
-                    <p className="text-cyan-400/70 text-sm leading-relaxed">
+                    <p className="text-cyan-400/70 text-xs leading-relaxed">
                         Você está autenticado através do Google. Para sua
                         segurança, a senha deve ser gerenciada diretamente nas
                         configurações da sua conta Google.
@@ -79,19 +80,7 @@ export default function SecuritySettings() {
                     helperText={errors.currentPassword?.message}
                     fullWidth
                     variant="outlined"
-                    sx={{
-                        "& .MuiOutlinedInput-root": {
-                            color: "white",
-                            backgroundColor: "rgba(255,255,255,0.02)",
-                            borderRadius: "12px",
-                            "& fieldset": {
-                                borderColor: "rgba(255,255,255,0.05)",
-                            },
-                            "&.Mui-focused fieldset": {
-                                borderColor: "var(--color-brand-500)",
-                            },
-                        },
-                    }}
+                    sx={muiDark}
                 />
             </div>
 
@@ -106,19 +95,7 @@ export default function SecuritySettings() {
                     helperText={errors.newPassword?.message}
                     fullWidth
                     variant="outlined"
-                    sx={{
-                        "& .MuiOutlinedInput-root": {
-                            color: "white",
-                            backgroundColor: "rgba(255,255,255,0.02)",
-                            borderRadius: "12px",
-                            "& fieldset": {
-                                borderColor: "rgba(255,255,255,0.05)",
-                            },
-                            "&.Mui-focused fieldset": {
-                                borderColor: "var(--color-brand-500)",
-                            },
-                        },
-                    }}
+                    sx={muiDark}
                 />
             </div>
 
@@ -133,19 +110,7 @@ export default function SecuritySettings() {
                     helperText={errors.confirmPassword?.message}
                     fullWidth
                     variant="outlined"
-                    sx={{
-                        "& .MuiOutlinedInput-root": {
-                            color: "white",
-                            backgroundColor: "rgba(255,255,255,0.02)",
-                            borderRadius: "12px",
-                            "& fieldset": {
-                                borderColor: "rgba(255,255,255,0.05)",
-                            },
-                            "&.Mui-focused fieldset": {
-                                borderColor: "var(--color-brand-500)",
-                            },
-                        },
-                    }}
+                    sx={muiDark}
                 />
             </div>
 

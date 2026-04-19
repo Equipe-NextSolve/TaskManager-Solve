@@ -8,6 +8,7 @@ import * as yup from "yup";
 import RoleBadge from "@/components/auth/RoleBadge";
 import { useAuth } from "@/context/AuthContext";
 import { useSettings } from "@/context/SettingsContext";
+import useIsMobile from "@/responsive/useIsMobile";
 
 const schema = yup.object().shape({
     name: yup.string().required("O nome é obrigatório"),
@@ -16,6 +17,7 @@ const schema = yup.object().shape({
 export default function ProfileSettings() {
     const { currentUser } = useAuth();
     const { updateProfile } = useSettings();
+    const isMobile = useIsMobile();
 
     const {
         register,
@@ -107,7 +109,7 @@ export default function ProfileSettings() {
                     variant="contained"
                     disabled={isSubmitting || !isDirty}
                     startIcon={<MdEdit />}
-                    className="shadow-lg shadow-brand-500/20"
+                    className={`${isMobile ? "w-full" : ""} shadow-lg shadow-brand-500/20`}
                     sx={{
                         backgroundColor: "var(--color-brand-500)",
                         "&:hover": {

@@ -11,12 +11,17 @@ export default function SystemSettings() {
 
     return (
         <Box className={`space-y-8 w-full`}>
-            <div className={`bg-orange-500/5 border border-orange-500/20 rounded-2xl ${isMobile ? 'p-4 gap-3 flex-col' : 'p-6 gap-4'} text-center flex justify-center items-center`}>
-                <MdWarningAmber className={`text-orange-400 ${isMobile ? 'text-xl' : 'text-2xl'} shrink-0`} />
-                <p className="text-orange-400/80 text-sm font-medium">
-                    Atenção: Estas configurações afetam globalmente o
-                    comportamento do sistema para todos os usuários.
-                </p>
+            <div className={`bg-orange-500/5 border border-orange-500/20 rounded-2xl ${isMobile ? 'p-4 flex-col text-center' : 'p-6'} flex items-center gap-4`}>
+                <MdWarningAmber className={`text-orange-400 ${isMobile ? 'text-2xl' : 'text-3xl'} shrink-0`} />
+                <div className={`space-y-1 ${isMobile ? 'text-center' : 'text-left'}`}>
+                    <h3 className="text-orange-400 font-bold text-sm uppercase tracking-wider">
+                        Atenção: Configurações Globais
+                    </h3>
+                    <p className="text-orange-400/80 text-xs leading-relaxed">
+                        Estas configurações afetam globalmente o
+                        comportamento do sistema para todos os usuários.
+                    </p>
+                </div>
             </div>
 
             <div className="space-y-6">
@@ -51,7 +56,7 @@ export default function SystemSettings() {
                         />
                     </div>
 
-                    <div className="p-5 bg-white/[0.02] rounded-2xl border border-white/5 flex items-center justify-between group hover:border-white/10 transition-colors">
+                    <div className="p-5 bg-white/2 rounded-2xl border border-white/5 flex items-center justify-between group hover:border-white/10 transition-colors">
                         <div className="space-y-1">
                             <p className="text-white text-sm font-bold">
                                 Novos Registros
