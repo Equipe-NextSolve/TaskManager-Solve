@@ -7,17 +7,12 @@ import {
     MdEdit,
     MdEmail,
     MdFingerprint,
-    MdPerson,
     MdPhone,
 } from "react-icons/md";
-import { useClients } from "@/context/ClientsContext";
 import { useRole } from "@/hooks/useRole";
-import useIsTablet from "@/responsive/useIsTablet";
-import { ClientCard } from "./clientsCards/ClientCard";
 
 export default function ClientsTable({ clients, loading, onEdit, onDelete }) {
     const { can } = useRole();
-    const isTablet = useIsTablet();
 
     if (loading) {
         return (
@@ -27,39 +22,8 @@ export default function ClientsTable({ clients, loading, onEdit, onDelete }) {
         );
     }
 
-    // Em telas <= 1024px, mostrar layout de cards
-    if (isTablet) {
-        return (
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {clients.length === 0 ? (
-                    <div className="bg-[#121212] border border-white/5 rounded-2xl py-20 text-center">
-                        <FiBriefcase
-                            size={48}
-                            className="text-white/10 mx-auto mb-3"
-                        />
-                        <p className="text-white/40 font-medium">
-                            Nenhum cliente cadastrado.
-                        </p>
-                    </div>
-                ) : (
-                    clients.map((client) => (
-                        <ClientCard
-                            key={client.id}
-                            client={client}
-                            onEdit={onEdit}
-                            onDelete={() => {
-                                onDelete?.(client);
-                            }}
-                        />
-                    ))
-                )}
-            </div>
-        );
-    }
-
     return (
         <div className="space-y-4">
-            {/* Cabeçalho de Títulos Opcional (seguindo a estética da imagem) */}
             <div className="grid grid-cols-12 px-8 mb-2">
                 <div className="col-span-5">
                     <p className="text-white/30 font-bold uppercase text-[11px] tracking-widest">
@@ -84,7 +48,7 @@ export default function ClientsTable({ clients, loading, onEdit, onDelete }) {
             </div>
 
             {clients.length === 0 ? (
-                <div className="bg-[#121212] border border-white/5 rounded-2xl py-20 text-center">
+                <div className="bg-bg-card border border-white/5 rounded-2xl py-20 text-center">
                     <FiBriefcase
                         size={48}
                         className="text-white/10 mx-auto mb-3"
@@ -97,7 +61,7 @@ export default function ClientsTable({ clients, loading, onEdit, onDelete }) {
                 clients.map((client) => (
                     <div
                         key={client.id}
-                        className="grid grid-cols-12 items-center bg-[#121212] border border-white/5 p-4 px-6 rounded-2xl transition-all duration-300 hover:border-[#19ca6833] group"
+                        className="grid grid-cols-12 items-center bg-bg-card border border-white/5 p-4 px-6 rounded-2xl transition-all duration-300 hover:border-[#19ca6833] group"
                     >
                         {/* IDENTIFICAÇÃO */}
                         <div className="col-span-5 flex items-center gap-4">

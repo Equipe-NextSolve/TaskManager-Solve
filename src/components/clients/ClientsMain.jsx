@@ -3,26 +3,26 @@
 import { CircularProgress, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
 import { MdSearch } from "react-icons/md";
-import { toast } from "sonner";
 import { useClients } from "@/context/ClientsContext";
 import { useRole } from "@/hooks/useRole";
 import useIsMobile from "@/responsive/useIsMobile";
+import useIsTablet from "@/responsive/useIsTablet";
+import ClientCard from "./ClientCard";
+import ClientDeleteModal from "./ClientDeleteModal";
+import ClientForm from "./ClientForm";
 import ClientsHeader from "./ClientsHeader";
 import ClientsTable from "./ClientsTable";
-import ClientsCards from "./clientsCards/ClientsCards";
-import ClientDeleteModal from "./modals/ClientDeleteModal";
-import ClientForm from "./modals/ClientForm";
 
 export default function ClientsMain() {
-    const { clients, loading, deleteClient } = useClients();
+    const { clients, loading } = useClients();
     const { can } = useRole();
     const isMobile = useIsMobile();
+    const isTablet = useIsTablet();
     const [searchTerm, setSearchTerm] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [deletingClient, setDeletingClient] = useState(null);
-    const [deleting, setDeleting] = useState(false);
 
     const filteredClients = clients.filter(
         (client) =>
@@ -40,21 +40,6 @@ export default function ClientsMain() {
         setDeleteDialogOpen(true);
     };
 
-    const handleConfirmDelete = async () => {
-        setDeleting(true);
-        try {
-            await deleteClient(deletingClient.id);
-            toast.success("Cliente excluído!");
-            setDeleteDialogOpen(false);
-            setDeletingClient(null);
-        } catch (err) {
-            console.error(err);
-            toast.error("Erro ao excluir cliente");
-        } finally {
-            setDeleting(false);
-        }
-    };
-
     return (
         <div className="space-y-8">
             <ClientsHeader
@@ -63,6 +48,7 @@ export default function ClientsMain() {
                     can("canManageClients") ? () => handleOpenModal() : null
                 }
             />
+            
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
                 <TextField
                     placeholder="Buscar parceiros ou clientes..."
@@ -97,29 +83,29 @@ export default function ClientsMain() {
             </div>
 
             {loading ? (
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        padding: "60px 0",
-                        gap: 12,
-                    }}
-                >
-                    <CircularProgress size={24} style={{ color: "#19CA68" }} />
-                    <span style={{ color: "#6b7280", fontSize: 14 }}>
+                <div className="flex items-center justify-center py-16 gap-3">
+                    <CircularProgress size={24} style={{ color: "var(--color-brand-500)" }} />
+                    <span className="text-font-gray2 text-sm">
                         Carregando clientes...
-                        {filteredClients.length === 0
-                            ? "Nenhum cliente cadastrado ainda"
-                            : "Nenhum cliente encontrado"}
                     </span>
                 </div>
-            ) : isMobile ? (
-                <ClientsCards
-                    clients={filteredClients}
-                    onEdit={handleOpenModal}
-                    onDelete={handleOpenDelete}
-                />
+            ) : isTablet ? (
+                <div className="flex flex-col gap-3">
+                    {filteredClients.length === 0 ? (
+                         <div className="py-20 text-center text-font-gray2 text-sm bg-white/2">
+                            {searchTerm ? "Nenhum cliente encontrado para sua busca" : "Nenhum cliente cadastrado ainda"}
+                         </div>
+                    ) : (
+                        filteredClients.map((client) => (
+                            <ClientCard
+                                key={client.id}
+                                client={client}
+                                onEdit={handleOpenModal}
+                                onDelete={handleOpenDelete}
+                            />
+                        ))
+                    )}
+                </div>
             ) : (
                 <ClientsTable
                     clients={filteredClients}
@@ -144,8 +130,6 @@ export default function ClientsMain() {
                     setDeletingClient(null);
                 }}
                 client={deletingClient}
-                onConfirm={handleConfirmDelete}
-                loading={deleting}
             />
         </div>
     );
