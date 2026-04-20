@@ -17,7 +17,7 @@ export const menuItems = [
         icon: FiGrid,
         label: "Visão Geral",
         href: "/",
-        roles: [ADMIN, PROJECT_LEAD],
+        roles: [ADMIN, PROJECT_LEAD, DEVELOPER],
     },
     {
         icon: FiUsers,
@@ -41,7 +41,7 @@ export const menuItems = [
         icon: FiBriefcase,
         label: "Clientes",
         href: "/clients",
-        roles: [ADMIN, PROJECT_LEAD, DEVELOPER],
+        roles: [ADMIN, PROJECT_LEAD],
     },
     {
         icon: FiSettings,
