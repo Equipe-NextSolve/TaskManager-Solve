@@ -19,6 +19,7 @@ import Team from "./sections/Team";
 import ProjectsWeek from "./sections/ProjectsWeek";
 import ActiveProjects from "./sections/ActiveProjects";
 import OngoingProjects from "./sections/OngoingProjects";
+import { TeamRadar } from "./sections/TeamRadar";
 
 export default function HomeMain() {
     
@@ -149,7 +150,7 @@ export default function HomeMain() {
                 <OngoingProjects ongoingProjects={ongoingProjects} today={today} users={users}/>
             </div>
 
-            
+            <TeamRadar users={users} projects={projects}/>
         </div>
     );
 }
