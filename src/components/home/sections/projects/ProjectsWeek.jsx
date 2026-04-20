@@ -1,3 +1,6 @@
+import useIsMobile from "@/responsive/useIsMobile";
+import { format, startOfMonth } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import {
     Bar,
     BarChart,
@@ -7,20 +10,17 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
-import { CustomTooltip } from "../HomeSubComponents";
-import { format, startOfMonth } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import { CustomTooltip } from "../../HomeSubComponents";
 
-export default function ProjectsWeek({weeklyData, today}) {
-
+const LEGEND_ITEMS = [
+  ["#19CA68", "Concluídos"],
+  ["#22d3ee", "Em Andamento"],
+  ["#f59e0b", "Em Suporte"],
+];
+export default function ProjectsWeek({ weeklyData, today }) {
+    const isMobile = useIsMobile()
     return (
-        <div
-            className="xl:col-span-2 p-5 rounded-2xl"
-            style={{
-                background: "#121212",
-                border: "1px solid rgba(255,255,255,0.06)",
-            }}
-        >
+        <div className="xl:col-span-2 p-5 rounded-2xl bg-bg-card border border-white/6">
             <div className="flex items-center justify-between mb-5">
                 <div>
                     <h2 className="text-base font-bold text-white">
@@ -33,15 +33,8 @@ export default function ProjectsWeek({weeklyData, today}) {
                     </p>
                 </div>
                 <div className="flex items-center gap-3 text-xs text-font-gray2">
-                    {[
-                        ["#19CA68", "Concluídos"],
-                        ["#22d3ee", "Em Andamento"],
-                        ["#f59e0b", "Em Suporte"],
-                    ].map(([bg, label]) => (
-                        <span
-                            key={label}
-                            className="flex items-center gap-1.5"
-                        >
+                    {LEGEND_ITEMS.map(([bg, label]) => (
+                        <span key={label} className="flex items-center gap-1.5">
                             <span
                                 className="w-2.5 h-2.5 rounded-sm inline-block"
                                 style={{ background: bg }}
@@ -52,11 +45,7 @@ export default function ProjectsWeek({weeklyData, today}) {
                 </div>
             </div>
             <ResponsiveContainer width="100%" height={220}>
-                <BarChart
-                    data={weeklyData}
-                    barGap={4}
-                    barCategoryGap="30%"
-                >
+                <BarChart data={weeklyData} barGap={4} barCategoryGap="30%" accessibilityLayer={false}>
                     <CartesianGrid
                         vertical={false}
                         stroke="rgba(255,255,255,0.04)"
@@ -76,7 +65,8 @@ export default function ProjectsWeek({weeklyData, today}) {
                     />
                     <Tooltip
                         content={<CustomTooltip />}
-                        cursor={{ fill: "rgba(255,255,255,0.03)" }}
+                        cursor={isMobile ? false : { fill: "rgba(255,255,255,0.03)" }}
+                        trigger={isMobile ? "click" : "hover"}
                     />
                     <Bar
                         dataKey="concluidos"
@@ -99,5 +89,5 @@ export default function ProjectsWeek({weeklyData, today}) {
                 </BarChart>
             </ResponsiveContainer>
         </div>
-    )
+    );
 }

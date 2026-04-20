@@ -11,27 +11,27 @@ import {
 
 import { useProjects } from "@/context/ProjectsContext";
 import { useUsers } from "@/context/UsersContext";
-import { StatCard } from "./sections/StatCard";
-import { toDate, buildWeeklyData } from "../ui/DashboardUtils";
+import { buildWeeklyData, toDate } from "../ui/DashboardUtils";
 import { LoadingState } from "./HomeSubComponents";
 import HomeHeader from "./sections/HomeHeader";
-import Team from "./sections/Team";
-import ProjectsWeek from "./sections/ProjectsWeek";
-import ActiveProjects from "./sections/ActiveProjects";
-import OngoingProjects from "./sections/OngoingProjects";
-import { TeamRadar } from "./sections/TeamRadar";
+import ActiveProjects from "./sections/projects/ActiveProjects";
+import OngoingProjects from "./sections/projects/OngoingProjects";
+import ProjectsWeek from "./sections/projects/ProjectsWeek";
+import { StatCard } from "./sections/StatCard";
+import Team from "./sections/team/Team";
+import { TeamRadar } from "./sections/team/TeamRadar";
 
 export default function HomeMain() {
-    
-    const { projects, loadingProjects } = useProjects();
-    const { users, loadingUsers } = useUsers();
+    const { projects, loadingProjects } = useProjects(); // Retorna um objeto com a lista de projetos
+    const { users, loadingUsers } = useUsers(); // lista de usuários
+    const ACTIVE_STATUSES = ["em_andamento", "suporte"]; // Array constante que define quais status de projeto são considerados "ativos"
 
-    const today = new Date();
+    // csem dependências, today será criado apenas na primeira renderização, evitando cálculos desnecessários.
+    const today = useMemo(()=> new Date());
 
-
-    
-
+    // Recalcula o objeto counts somente quando projects mudar
     const counts = useMemo(
+        // Para cada status, filtra a lista e conta quantos itens atendem à condição
         () => ({
             concluido: projects.filter((p) => p.status === "concluido").length,
             em_andamento: projects.filter((p) => p.status === "em_andamento")
@@ -42,38 +42,42 @@ export default function HomeMain() {
         [projects],
     );
 
+    // porcentagem de projetos concluídos em relação ao total, arredondada
     const completionRate =
         counts.total > 0
             ? Math.round((counts.concluido / counts.total) * 100)
             : 0;
 
+    // Lista projetos onde data de entrega está nos próximos 10 dias, ou vence hoje.
     const nearDeadline = useMemo(
         () =>
             projects.filter((p) => {
-                const due = toDate(p.expectedDeliveryDate);
+                const due = toDate(p.expectedDeliveryDate); // converte o campo para um objeto date
                 if (!due) return false;
-                const diff = differenceInDays(due, today);
+                const diff = differenceInDays(due, today); // retorna a diferença em dias entre a data de entrega e hoje
+
                 return (
                     diff >= 0 &&
                     diff <= 10 &&
-                    p.status !== "concluido" &&
-                    p.status !== "arquivado"
+                    ACTIVE_STATUSES.includes(p.status)
                 );
             }),
         [projects, today],
     );
 
+    // Obter os primeiros 5 projetos com status "em_andamento" ou "suporte"
     const activeProjects = useMemo(
         () =>
             projects
                 .filter(
                     (p) =>
-                        p.status === "em_andamento" || p.status === "suporte",
+                        ACTIVE_STATUSES.includes(p.status),
                 )
                 .slice(0, 5),
         [projects],
     );
 
+    // Similar ao anterior, mas filtra todos os projetos não finalizados,  e pega os primeiros 10
     const ongoingProjects = useMemo(
         () =>
             projects
@@ -84,20 +88,23 @@ export default function HomeMain() {
         [projects],
     );
 
+    // Chama a função utilitária buildWeeklyData passando a lista de projetos
     const weeklyData = useMemo(() => buildWeeklyData(projects), [projects]);
 
+    // Enquanto os dados estiverem sendo carregados, o componente retorna um indicador visual de carregamento
     if (loadingProjects || loadingUsers) return <LoadingState />;
 
     return (
         <div className="min-h-screen bg-background-page text-white py-6 space-y-6 font-sans">
+
             {/* ── HEADER ── */}
-            
             <HomeHeader
                 counts={counts}
                 nearDeadline={nearDeadline}
                 completionRate={completionRate}
                 today={today}
             />
+
             {/* ── STAT CARDS ── */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <StatCard
@@ -136,21 +143,26 @@ export default function HomeMain() {
 
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
                 {/* GRÁFICO */}
-                <ProjectsWeek weeklyData={weeklyData} today={today}/>
+                <ProjectsWeek weeklyData={weeklyData} today={today} />
 
                 {/* EQUIPE */}
-                <Team users={users} projects={projects}/>
+                <Team users={users} projects={projects} />
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
                 {/* PROJETOS ATIVOS COM PROGRESSO */}
-                <ActiveProjects activeProjects={activeProjects} today={today}/>
+                <ActiveProjects activeProjects={activeProjects} today={today} />
 
                 {/* LISTA DE PROJETOS EM CURSO */}
-                <OngoingProjects ongoingProjects={ongoingProjects} today={today} users={users}/>
+                <OngoingProjects
+                    ongoingProjects={ongoingProjects}
+                    today={today}
+                    users={users}
+                />
             </div>
 
-            <TeamRadar users={users} projects={projects}/>
+            {/* RADAR DE TIME */}
+            <TeamRadar users={users} projects={projects} />
         </div>
     );
 }

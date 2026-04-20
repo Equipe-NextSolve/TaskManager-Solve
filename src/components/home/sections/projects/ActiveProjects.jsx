@@ -1,10 +1,10 @@
-import { MdCalendarToday, MdOutlineFlag, MdOutlineTimer } from "react-icons/md";
-import { ProgressBar } from "../HomeSubComponents";
-import { toDate, calcProgress } from "@/components/ui/DashboardUtils";
 import { differenceInDays, format } from "date-fns";
+import { MdCalendarToday, MdOutlineFlag, MdOutlineTimer } from "react-icons/md";
 import { AVATAR_COLORS } from "@/components/ui/AvatarBadge";
+import { calcProgress, toDate } from "@/components/ui/DashboardUtils";
+import { ProgressBar } from "../../HomeSubComponents";
 
-export default function ActiveProjects({activeProjects, today}) {
+export default function ActiveProjects({ activeProjects, today }) {
     return (
         <div
             className="p-5 rounded-2xl"
@@ -32,20 +32,16 @@ export default function ActiveProjects({activeProjects, today}) {
             ) : (
                 <div className="flex flex-col gap-4">
                     {activeProjects.map((proj, i) => {
-                        const dueDate = toDate(
-                            proj.expectedDeliveryDate,
-                        );
+                        const dueDate = toDate(proj.expectedDeliveryDate);
                         const startDate = toDate(proj.startDate);
                         const isSupport = proj.status === "suporte";
                         const daysLeft =
                             !isSupport && dueDate
                                 ? differenceInDays(dueDate, today)
                                 : null;
-                        const urgent =
-                            daysLeft !== null && daysLeft <= 10;
+                        const urgent = daysLeft !== null && daysLeft <= 10;
                         const progress = calcProgress(proj);
-                        const color =
-                            AVATAR_COLORS[i % AVATAR_COLORS.length];
+                        const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
                         return (
                             <div key={proj.id}>
                                 <div className="flex items-center justify-between mb-2">
@@ -86,36 +82,24 @@ export default function ActiveProjects({activeProjects, today}) {
                                         )}
                                     </div>
                                 </div>
-                                <ProgressBar
-                                    value={progress}
-                                    color={color}
-                                />
+                                <ProgressBar value={progress} color={color} />
                                 <div className="flex items-center justify-between mt-2 text-[11px] text-font-gray2">
                                     <span className="flex items-center gap-1">
-                                        <MdCalendarToday
-                                            fontSize={11}
-                                        />
+                                        <MdCalendarToday fontSize={11} />
                                         Início:{" "}
                                         {startDate
-                                            ? format(
-                                                startDate,
-                                                "dd/MM/yyyy",
-                                            )
+                                            ? format(startDate, "dd/MM/yyyy")
                                             : "—"}
                                     </span>
                                     <span className="flex items-center gap-1">
                                         <MdOutlineTimer fontSize={11} />
                                         Entrega:{" "}
                                         {dueDate
-                                            ? format(
-                                                dueDate,
-                                                "dd/MM/yyyy",
-                                            )
+                                            ? format(dueDate, "dd/MM/yyyy")
                                             : "—"}
                                     </span>
                                     <span>
-                                        {proj.developers?.length ?? 0}{" "}
-                                        devs
+                                        {proj.developers?.length ?? 0} devs
                                     </span>
                                 </div>
                             </div>
@@ -124,5 +108,5 @@ export default function ActiveProjects({activeProjects, today}) {
                 </div>
             )}
         </div>
-    )
+    );
 }
