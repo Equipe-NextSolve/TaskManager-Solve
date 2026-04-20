@@ -13,7 +13,9 @@ export default function LoginMain() {
 
     const toggleForm = (value) => {
         if (!value && !allowRegistration) {
-            toast.error("O cadastro de novos usuários está temporariamente desativado.");
+            toast.error(
+                "O cadastro de novos usuários está temporariamente desativado.",
+            );
             return;
         }
         setHaveAccount(value);

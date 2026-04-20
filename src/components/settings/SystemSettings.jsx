@@ -65,7 +65,10 @@ export default function SystemSettings() {
                             disabled={loadingField === "maintenanceMode"}
                             checked={systemSettings?.maintenanceMode || false}
                             onChange={(e) =>
-                                handleToggle("maintenanceMode", e.target.checked)
+                                handleToggle(
+                                    "maintenanceMode",
+                                    e.target.checked,
+                                )
                             }
                             sx={{
                                 "& .MuiSwitch-switchBase.Mui-checked": {
@@ -94,7 +97,10 @@ export default function SystemSettings() {
                             disabled={loadingField === "allowRegistration"}
                             checked={systemSettings?.allowRegistration ?? true}
                             onChange={(e) =>
-                                handleToggle("allowRegistration", e.target.checked)
+                                handleToggle(
+                                    "allowRegistration",
+                                    e.target.checked,
+                                )
                             }
                             sx={{
                                 "& .MuiSwitch-switchBase.Mui-checked": {

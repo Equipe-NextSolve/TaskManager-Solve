@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import AppProviders from "@/context/AppProviders";
 import { useAuth } from "@/context/AuthContext";
 import { useSettings } from "@/context/SettingsContext";
-import { ROLES } from "@/lib/roles";
 import Header from "@/layout/header/Header";
 import SideMenu from "@/layout/sideMenu/SideMenu";
+import { ROLES } from "@/lib/roles";
 import useIsMobile from "@/responsive/useIsMobile";
 
 export default function MainLayout({ children }) {
