@@ -4,9 +4,13 @@ import { useMemo } from "react";
 import { parseDate } from "@/utils/FormatDateProjects";
 
 export function useProjectsDates(project) {
+
     const startDateInfo = useMemo(() => {
+        // Converte a string (ex: "2024-01-15") em um objeto Date. Se a string for inválida, parseDate deve retornar null
         const start = parseDate(project.startDate);
         if (!start) return null;
+
+        // Formata a data no padrão brasileiro
         return { formatted: format(start, "dd/MM/yyyy") };
     }, [project.startDate]);
 
@@ -15,6 +19,7 @@ export function useProjectsDates(project) {
         //se não houver previsão de entrega, retorna null
         if (!project.expectedDeliveryDate) return null;
 
+        // Converte a string da data prevista em objeto Date
         const due = parseDate(project.expectedDeliveryDate);
         if (!due) return null;
 
@@ -45,15 +50,31 @@ export function useProjectsDates(project) {
     const deliveredInfo = useMemo(() => {
         if (!project.deliveryDate) return null;
 
+        // Converte a string da data de entrega em objeto Date
         const delivered = parseDate(project.deliveryDate);
         if (!delivered) return null;
 
+        // Formata a data no padrão brasileiro
         return {
             formatted: format(delivered, "dd/MM/yyyy"),
         };
     }, [project.deliveryDate]);
 
+    const supportInfo = useMemo(() => {
+        if (!project.supportEndDate) return null
+
+        // Converte a string da data de entrega em objeto Date
+        const support = parseDate(project.supportEndDate)
+        if (!support) return null 
+
+        // Formata a data no padrão brasileiro
+        return {
+            formatted: format(support, "dd/MM/yyyy"),
+        };
+    }, [project.supportEndDate])
+
     const deliveryStatus = useMemo(() => {
+        // Só calcula se ambas as datas existirem
         if (!project.deliveryDate || !project.expectedDeliveryDate) return null;
 
         const delivered = parseDate(project.deliveryDate);
@@ -78,5 +99,6 @@ export function useProjectsDates(project) {
         expectedInfo,
         deliveredInfo,
         deliveryStatus,
+        supportInfo,
     };
 }

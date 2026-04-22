@@ -109,22 +109,31 @@ export const ProjectsProvider = ({ children }) => {
 
     const updateProject = useCallback(
         async (projectId, data, currentProject) => {
-            const isFinishedStatus = (status) =>
-                status === "concluido" || status === "suporte";
+            const prevStatus= currentProject.status
+            const nextStatus = data.status
 
-            const wasFinished = isFinishedStatus(currentProject.status);
-            const isNowFinished = isFinishedStatus(data.status);
-
+            // preenchida apenas quando muda para "concluido", zera se sair
             let deliveryDate = currentProject.deliveryDate || null;
 
-            // virou concluído agora
-            if (!wasFinished && isNowFinished) {
+            // se antes não era concluido e virou concluido, gera a data de entraga, se vice versa, vira null
+            if (prevStatus !== "concluido" && nextStatus === "concluido"){
                 deliveryDate = serverTimestamp();
+
+            } else if (prevStatus === "concluido" && nextStatus !== "concluido"){
+                deliveryDate = null;
             }
 
-            // Saiu de concluído
-            if (wasFinished && !isNowFinished) {
-                deliveryDate = null;
+            // Calcula o 'agora' + 45 dias quando o status vira suporte, zera se sair
+            let supportEndDate = currentProject.supportEndDate || null;
+
+            // se antes não era suporte e virou suporte, gera a data final do suporte, se vice versa, vira null
+            if (prevStatus !== "suporte" && nextStatus === "suporte"){
+                const now = new Date()
+                now.setDate(now.getDate() + 45)
+                supportEndDate = now
+
+            } else if (prevStatus === "suporte" && nextStatus !== "suporte"){
+                supportEndDate = null;
             }
 
             const payload = {
@@ -139,6 +148,7 @@ export const ProjectsProvider = ({ children }) => {
                     ? new Date(data.expectedDeliveryDate)
                     : null,
                 deliveryDate,
+                supportEndDate,
                 techStack: data.techStack || [],
                 repositoryUrl: data.repositoryUrl || "",
                 hosting: data.hosting || "",

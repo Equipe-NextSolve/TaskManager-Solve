@@ -4,7 +4,7 @@ import { RiGitBranchLine } from "react-icons/ri";
 import { useProjectsDates } from "@/hooks/useProjectDates";
 
 export default function CardFooter({ project }) {
-    const { startDateInfo, expectedInfo, deliveryStatus, deliveredInfo } =
+    const { startDateInfo, expectedInfo, deliveryStatus, deliveredInfo, supportInfo } =
         useProjectsDates(project);
 
     return (
@@ -21,6 +21,11 @@ export default function CardFooter({ project }) {
                     <span className="flex items-center gap-1 text-[11px] font-semibold text-brand-600">
                         <MdOutlineTimer size={11} />
                         Entregue em: {deliveredInfo.formatted}
+                    </span>
+                ) : supportInfo ?(
+                    <span className="flex items-center gap-1 text-[11px] font-semibold text-purple-500">
+                        <MdOutlineTimer size={11} />
+                        Final do suporte: {supportInfo.formatted}
                     </span>
                 ) : (
                     expectedInfo && (
