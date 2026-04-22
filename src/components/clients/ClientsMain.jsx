@@ -8,11 +8,11 @@ import { useRole } from "@/hooks/useRole";
 import useIsMobile from "@/responsive/useIsMobile";
 import useIsTablet from "@/responsive/useIsTablet";
 import { StatPill } from "../ui/StatPill";
-import ClientCard from "./ClientCard";
-import ClientDeleteModal from "./ClientDeleteModal";
-import ClientForm from "./ClientForm";
-import ClientsHeader from "./ClientsHeader";
-import ClientsTable from "./ClientsTable";
+import ClientCard from "./sections/ClientCard";
+import ClientDeleteModal from "./modals/ClientDeleteModal";
+import ClientForm from "./modals/ClientForm";
+import ClientsHeader from "./sections/ClientsHeader";
+import ClientsTable from "./sections/ClientsTable";
 
 export default function ClientsMain() {
     const { clients, loading } = useClients();
