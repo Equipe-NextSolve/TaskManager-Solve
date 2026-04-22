@@ -2,6 +2,7 @@ import {
     MdArchive,
     MdCheckCircle,
     MdOutlineLoop,
+    MdOutlineRateReview,
     MdOutlineSupportAgent,
     MdPauseCircle,
 } from "react-icons/md";
@@ -41,6 +42,13 @@ export const STATUS_MAP = {
         bg: "var(--color-surface-purple-alt)",
         border: "var(--color-surface-purple-md)",
         icon: MdOutlineSupportAgent,
+    },
+    aguardando_teste: {
+        label: "Aguardando Teste",
+        color: "#818cf8",        
+        bg: "rgba(129,140,248,0.12)",
+        border: "rgba(129,140,248,0.25)",
+        icon: MdOutlineRateReview,
     },
 };
 
