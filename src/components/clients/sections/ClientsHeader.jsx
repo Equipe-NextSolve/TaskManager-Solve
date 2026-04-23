@@ -5,7 +5,7 @@ export default function ClientsHeader() {
     const isMobile = useIsMobile();
 
     return (
-        <div className="flex items-start justify-between flex-wrap gap-4">
+        <section className="flex items-start justify-between flex-wrap gap-4">
             <div>
                 <div className="flex items-center gap-2 mb-1">
                     <FiBriefcase className="text-brand-500 text-lg" />
@@ -21,6 +21,6 @@ export default function ClientsHeader() {
                 
             </div>
             
-        </div>
+        </section>
     );
 }

@@ -1,33 +1,27 @@
 "use client";
 
-import { CircularProgress, InputAdornment, TextField } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { useState } from "react";
-import { MdCheckCircle, MdPeople, MdSearch } from "react-icons/md";
+
 import { useClients } from "@/context/ClientsContext";
-import { useRole } from "@/hooks/useRole";
-import useIsMobile from "@/responsive/useIsMobile";
+
 import useIsTablet from "@/responsive/useIsTablet";
-import { StatPill } from "../ui/StatPill";
-import NewClient from "./button/NewClient";
 import ClientDeleteModal from "./modals/ClientDeleteModal";
 import ClientForm from "./modals/ClientForm";
 import ClientCard from "./sections/ClientCard";
 import ClientsHeader from "./sections/ClientsHeader";
 import ClientsTable from "./sections/ClientsTable";
+import ClientsStats from "./sections/ClientsStats";
+import SearchInput from "./sections/SearchInput";
 
 export default function ClientsMain() {
     const { clients, loading } = useClients();
-    const { can } = useRole();
-    const isMobile = useIsMobile();
     const isTablet = useIsTablet();
     const [searchTerm, setSearchTerm] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [deletingClient, setDeletingClient] = useState(null);
-
-    const totalClients = clients.length;
-    const activeClients = clients.filter((c) => c.status === "active").length;
 
     const filteredClients = clients.filter(
         (client) =>
@@ -49,64 +43,15 @@ export default function ClientsMain() {
         <div className="space-y-8">
             <ClientsHeader />
 
-            <div className="flex flex-wrap flex-col sm:flex-row justify-between gap-4">
-                <div className="flex flex-wrap gap-4">
-                    <StatPill
-                        icon={MdPeople}
-                        label="Total de clientes"
-                        value={totalClients}
-                        color="var(--color-cyan-400)"
-                        bg="var(--color-surface-cyan-alt)"
-                        border="var(--color-surface-cyan-md)"
-                    />
-                    <StatPill
-                        icon={MdCheckCircle}
-                        label={`${activeClients === 1 ? "Cliente ativo" : "Clientes ativos"}`}
-                        value={activeClients}
-                        color="var(--color-brand-500)"
-                        bg="var(--color-surface-green-alt)"
-                        border="var(--color-surface-green-md)"
-                    />
-                </div>
-                <NewClient
-                    onCreate={
-                        can("canManageClients") ? () => handleOpenModal() : null
-                    }
-                />
-            </div>
-
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                <TextField
-                    placeholder="Buscar parceiros ou clientes..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    size="small"
-                    className={isMobile ? "w-full" : "w-full md:max-w-md"}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <MdSearch className="text-white/20 text-xl" />
-                            </InputAdornment>
-                        ),
-                    }}
-                    sx={{
-                        "& .MuiOutlinedInput-root": {
-                            color: "white",
-                            backgroundColor: "rgba(255,255,255,0.02)",
-                            borderRadius: "12px",
-                            "& fieldset": {
-                                borderColor: "rgba(255,255,255,0.05)",
-                            },
-                            "&:hover fieldset": {
-                                borderColor: "rgba(255,255,255,0.1)",
-                            },
-                            "&.Mui-focused fieldset": {
-                                borderColor: "var(--color-brand-500)",
-                            },
-                        },
-                    }}
-                />
-            </div>
+            <ClientsStats
+                handleOpenModal={handleOpenModal}
+                clients={clients}
+            />
+            
+            <SearchInput
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+            />
 
             {loading ? (
                 <div className="flex items-center justify-center py-16 gap-3">
