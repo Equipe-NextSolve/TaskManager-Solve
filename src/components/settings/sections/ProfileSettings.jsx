@@ -6,7 +6,7 @@ import { MdEdit } from "react-icons/md";
 import RoleBadge from "@/components/auth/RoleBadge";
 import { useAuth } from "@/context/AuthContext";
 import { useSettings } from "@/context/SettingsContext";
-import useIsMobile from "@/responsive/useIsMobile";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
 
 export default function ProfileSettings() {
     const { currentUser } = useAuth();

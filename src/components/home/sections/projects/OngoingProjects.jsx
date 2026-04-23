@@ -1,7 +1,7 @@
 import { MdOutlineTimer } from "react-icons/md";
 
 import { PriorityBadge, StatusBadge } from "@/components/ui/StatusBadge";
-import { toDate } from "@/components/ui/DashboardUtils";
+import { toDate } from "@/utils/DashboardUtils";
 import { differenceInDays } from "date-fns";
 
 export default function OngoingProjects({ongoingProjects, today }) {

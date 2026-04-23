@@ -1,6 +1,6 @@
 import { AiOutlineClear } from "react-icons/ai";
 import { MdSearch } from "react-icons/md";
-import useIsMobile from "@/responsive/useIsMobile";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
 import FilterSelect from "@/components/ui/FilterSelect";
 import { PRIORITY_MAP, STATUS_MAP } from "@/components/ui/StatusBadge";
 

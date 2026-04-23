@@ -8,7 +8,7 @@ export function proxy(request) {
         return NextResponse.next();
     }
 
-    // Para rotas protegidas (como o home), veriifcar autenticação via cookie
+    // Para rotas protegidas (como o home), verificar autenticação via cookie
     // O firebase armazena a sessão em um cookie chamado '__session'
     const sessionCookie = request.cookies.get("__session");
 
@@ -20,7 +20,7 @@ export function proxy(request) {
     return NextResponse.next();
 }
 
-// configurar as rotas que o middleware deve proteger
+// Configurar as rotas que o middleware deve proteger
 export const config = {
     matcher: [
         /*

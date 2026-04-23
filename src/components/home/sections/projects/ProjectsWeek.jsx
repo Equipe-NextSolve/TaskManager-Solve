@@ -1,4 +1,4 @@
-import useIsMobile from "@/responsive/useIsMobile";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
 import { format, startOfMonth } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import {
@@ -10,7 +10,7 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
-import { CustomTooltip } from "../../HomeSubComponents";
+import { CustomTooltip } from "@/components/ui/CustomTooltip";
 
 const LEGEND_ITEMS = [
   ["#19CA68", "Concluídos"],

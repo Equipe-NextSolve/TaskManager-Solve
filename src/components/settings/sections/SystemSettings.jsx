@@ -4,9 +4,9 @@ import { Box, Switch } from "@mui/material";
 import { useState } from "react";
 import { MdWarningAmber } from "react-icons/md";
 import { useSettings } from "@/context/SettingsContext";
-import useIsMobile from "@/responsive/useIsMobile";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
 import { toast } from "sonner";
-import { switchStyles } from "@/utils/StyleSwitch";
+import { switchStyles } from "@/styles/StyleSwitch";
 export default function SystemSettings() {
     const { systemSettings, updateSystemSettings } = useSettings();
     const isMobile = useIsMobile();

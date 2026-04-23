@@ -9,7 +9,7 @@ import {
     MdPhone,
 } from "react-icons/md";
 import CanDo from "@/components/auth/CanDo";
-import useIsTablet from "@/responsive/useIsTablet";
+import useIsTablet from "@/hooks/responsive/useIsTablet";
 
 export default function ClientCard({ client, onEdit, onDelete }) {
     const isTablet = useIsTablet();

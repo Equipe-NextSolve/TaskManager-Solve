@@ -25,11 +25,11 @@ import {
     MdOutlineRocketLaunch
 } from "react-icons/md";
 import { RiGitBranchLine } from "react-icons/ri";
-import { projectSchema } from "@/components/projects/ProjectsConfig";
+import { projectSchema } from "@/components/projects/schema/ProjectsConfig";
 import { Avatar } from "@/components/ui/AvatarBadge";
 import { PRIORITY_MAP, STATUS_MAP } from "@/components/ui/StatusBadge";
 import { formatDateInput } from "@/utils/FormatDateProjects";
-import { menuPaper, muiDark } from "@/utils/StyleInputs";
+import { menuPaper, muiDark } from "@/styles/StyleInputs";
 
 export function ProjectForm({
     open,

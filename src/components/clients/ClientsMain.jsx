@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { useClients } from "@/context/ClientsContext";
 
-import useIsTablet from "@/responsive/useIsTablet";
+import useIsTablet from "@/hooks/responsive/useIsTablet";
 import ClientDeleteModal from "./modals/ClientDeleteModal";
 import ClientForm from "./modals/ClientForm";
 import ClientCard from "./sections/ClientCard";

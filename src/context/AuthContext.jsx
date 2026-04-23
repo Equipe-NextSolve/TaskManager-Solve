@@ -17,7 +17,7 @@ import {
     useRef,
     useState,
 } from "react";
-import { useAppRouter } from "@/utils/useAppRouter";
+import { useAppRouter } from "@/hooks/useAppRouter";
 import { auth, db } from "../lib/firebaseConfig";
 
 const AuthContext = createContext(); // Criação do contexto

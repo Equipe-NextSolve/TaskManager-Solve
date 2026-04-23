@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { MdRadar } from "react-icons/md";
 import { Avatar } from "@/components/ui/AvatarBadge";
-import { ProgressBar } from "@/components/home/HomeSubComponents";
+import { ProgressBar } from "@/components/ui/ProgressBar";
 import { ROLE_LABELS } from "@/lib/roles";
 
 const MAX_BAR = 6;

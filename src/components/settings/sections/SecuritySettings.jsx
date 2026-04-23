@@ -7,8 +7,8 @@ import { MdInfoOutline, MdLock } from "react-icons/md";
 import * as yup from "yup";
 import { useAuth } from "@/context/AuthContext";
 import { useSettings } from "@/context/SettingsContext";
-import useIsMobile from "@/responsive/useIsMobile";
-import { muiDark } from "@/utils/StyleInputs";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
+import { muiDark } from "@/styles/StyleInputs";
 const schema = yup.object().shape({
     currentPassword: yup.string().required("Senha atual é obrigatória"),
     newPassword: yup

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import useIsMobile from "@/responsive/useIsMobile";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
 export function BurgerButton({ isOpen, onClick }) {
     const [isHovered, setIsHovered] = useState(false);
     const isMobile = useIsMobile();

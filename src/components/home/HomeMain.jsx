@@ -11,8 +11,8 @@ import {
 
 import { useProjects } from "@/context/ProjectsContext";
 import { useUsers } from "@/context/UsersContext";
-import { buildWeeklyData, toDate } from "../ui/DashboardUtils";
-import { LoadingState } from "./HomeSubComponents";
+import { buildWeeklyData, toDate } from "../../utils/DashboardUtils";
+import { LoadingState } from "@/components/ui/LoadingState";
 import HomeHeader from "./sections/HomeHeader";
 import ActiveProjects from "./sections/projects/ActiveProjects";
 import OngoingProjects from "./sections/projects/OngoingProjects";

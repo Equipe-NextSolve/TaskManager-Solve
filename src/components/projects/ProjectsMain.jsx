@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import ModalDelete from "@/components/projects/modals/ModalDelete";
 import ProjectForm from "@/components/projects/modals/ProjectForm";
 import { useProjects } from "@/context/ProjectsContext";
-import { useDebounce } from "@/hooks/UseDebounce";
+import { useDebounce } from "@/hooks/useDebounce";
 import NewProject from "./button/NewProject";
 import ProjectsFilters from "./sections/ProjectsFilters";
 import ProjectsGrid from "./sections/ProjectsGrid";

@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { Avatar } from "@/components/ui/AvatarBadge";
 import { useUsers } from "@/context/UsersContext";
 import { ROLE_LABELS, ROLES_STYLES } from "@/lib/roles";
-import { menuPaper, muiDark2 } from "@/utils/StyleInputs";
+import { menuPaper, muiDark2 } from "@/styles/StyleInputs";
 
 export default function UserEditModal({ open, onClose, user }) {
     const { updateUser } = useUsers(); // função para editar user

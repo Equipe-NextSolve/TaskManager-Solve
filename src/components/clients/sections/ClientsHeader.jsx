@@ -1,5 +1,5 @@
 import { FiBriefcase } from "react-icons/fi";
-import useIsMobile from "@/responsive/useIsMobile";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
 
 export default function ClientsHeader() {
     const isMobile = useIsMobile();

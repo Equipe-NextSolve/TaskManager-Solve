@@ -1,7 +1,7 @@
 'use client'
 import { InputAdornment, TextField } from "@mui/material";
 import { MdSearch } from "react-icons/md";
-import useIsMobile from "@/responsive/useIsMobile";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
 
 export default function SearchInput({setSearchTerm,searchTerm}) {
     const isMobile = useIsMobile()

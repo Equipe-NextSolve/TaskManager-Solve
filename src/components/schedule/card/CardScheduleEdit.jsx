@@ -6,7 +6,7 @@ import { ptBR } from "date-fns/locale";
 import { useEffect, useRef, useState } from "react";
 import { MdCheck, MdClose, MdEdit } from "react-icons/md";
 import { toast } from "sonner";
-import useIsMobile from "@/responsive/useIsMobile";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
 
 export default function CardScheduleEdit({
     dayKey,

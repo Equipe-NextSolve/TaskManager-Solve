@@ -1,4 +1,4 @@
-import { menuPaper2, muiDark2 } from "@/utils/StyleInputs";
+import { menuPaper2, muiDark2 } from "@/styles/StyleInputs";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 // Componente interno para evitar repetição dos selects

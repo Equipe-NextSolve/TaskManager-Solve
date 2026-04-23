@@ -1,8 +1,8 @@
 import { differenceInDays, format } from "date-fns";
 import { MdCalendarToday, MdOutlineFlag, MdOutlineTimer } from "react-icons/md";
 import { AVATAR_COLORS } from "@/components/ui/AvatarBadge";
-import { calcProgress, toDate } from "@/components/ui/DashboardUtils";
-import { ProgressBar } from "../../HomeSubComponents";
+import { calcProgress, toDate } from "@/utils/DashboardUtils";
+import { ProgressBar } from "@/components/ui/ProgressBar";
 
 export default function ActiveProjects({ activeProjects, today }) {
     return (

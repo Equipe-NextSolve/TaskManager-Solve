@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FiSettings } from "react-icons/fi";
 import { MdPerson, MdSecurity } from "react-icons/md";
 import { useRole } from "@/hooks/useRole";
-import useIsMobile from "@/responsive/useIsMobile";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
 import ProfileSettings from "./sections/ProfileSettings";
 import SecuritySettings from "./sections/SecuritySettings";
 import SystemSettings from "./sections/SystemSettings";

@@ -3,8 +3,8 @@ import { createPortal } from "react-dom";
 import { MdFilterList, MdGroup, MdPerson } from "react-icons/md";
 import CanDo from "@/components/auth/CanDo";
 import { Avatar, avatarColor } from "@/components/ui/AvatarBadge";
-import useIsMobile from "@/responsive/useIsMobile";
-import UserPickerModal from "../modal/UserPickerModal";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
+import UserPickerModal from "../modals/UserPickerModal";
 
 export default function UsersFilter({
     users,

@@ -14,7 +14,7 @@ import UserDeleteModal from "@/components/users/modals/UserDeleteModal";
 import UserEditModal from "@/components/users/modals/UserEditModal";
 import { useUsers } from "@/context/UsersContext";
 import { ROLE_LABELS, ROLES } from "@/lib/roles";
-import useIsMobile from "@/responsive/useIsMobile";
+import useIsMobile from "@/hooks/responsive/useIsMobile";
 import { StatPill } from "../ui/StatPill";
 import UserRow from "./UserRow";
 import UsersCards from "./usersCards/UsersCards";
