@@ -88,7 +88,7 @@
     /* DARK THEME (Padrão) */
     --bg-main: #0a0a0a;
     --bg-card: #121212;
-    --bg-surface: #171c23;
+    --bg-surface: #1a1a1a;
     --bg-side: #000000b6;
 
     --text-primary: #ffffff;
@@ -98,7 +98,6 @@
     --border-main: rgba(255, 255, 255, 0.05);
     --border-subtle: rgba(255, 255, 255, 0.02);
 
-    /* Next.js defaults */
     --background: var(--bg-main);
     --foreground: var(--text-primary);
 }
@@ -117,9 +116,6 @@
     --border-main: rgba(0, 0, 0, 0.08);
     --border-subtle: rgba(0, 0, 0, 0.04);
 
-    --bg-image-geometric: url("../../public/img/geometric.jpg");
-
-    /* Next.js defaults */
     --background: var(--bg-main);
     --foreground: var(--text-primary);
 }

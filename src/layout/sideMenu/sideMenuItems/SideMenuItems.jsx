@@ -117,7 +117,7 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
                                 className={`h-12 flex items-center text-text-secondary sm:hover:text-text-primary sm:hover:bg-bg-surface rounded-lg transition-colors duration-200 group
                                     ${
                                         active
-                                            ? "text-text-primary bg-bg-surface border border-border-main"
+                                            ? "text-text-primary bg-bg-surface"
                                             : "text-text-secondary sm:hover:text-text-primary sm:hover:bg-bg-surface"
                                     }`}
                             >

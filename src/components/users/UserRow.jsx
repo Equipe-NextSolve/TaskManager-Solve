@@ -30,7 +30,7 @@ export default function UserRow({ user, onEdit, onDelete }) {
             className="grid grid-cols-[48px_1fr_160px_100px_100px_72px] 
             gap-4 items-center px-5 py-3 bg-bg-card
             rounded-xl border border-border-main
-            transition-[border-color_0.2s,transform_0.15s] hover:border-brand-500/30 group"
+            transition-[border-color_0.2s,transform_0.2s] hover:border-brand-500/30 group sm:hover:-translate-y-px"
         >
             {/* Avatar */}
             <div style={{ display: "flex", justifyContent: "center" }}>

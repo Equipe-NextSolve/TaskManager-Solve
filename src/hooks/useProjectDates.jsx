@@ -40,7 +40,7 @@ export function useProjectsDates(project) {
 
         return {
             text: formatted,
-            color: "var(--color-font-gray2)",
+            color: "var(--color-text-muted)",
             formatted,
         };
     }, [project.expectedDeliveryDate]);
