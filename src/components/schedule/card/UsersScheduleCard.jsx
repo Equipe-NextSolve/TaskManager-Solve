@@ -59,8 +59,8 @@ export default function UserScheduleCard({ scheduleDoc, weekStart, users }) {
                                     background: hasContent
                                         ? todayDay
                                             ? "rgba(25,202,104,0.12)"
-                                            : "var(--color-bg-surface)"
-                                        : "var(--color-border-subtle)",
+                                            : "var(--color-border-main)"
+                                        : "var(--color-border-main)",
                                     border: todayDay
                                         ? "1px solid rgba(25,202,104,0.25)"
                                         : hasContent

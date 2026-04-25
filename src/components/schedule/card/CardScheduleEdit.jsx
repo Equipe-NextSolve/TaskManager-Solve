@@ -64,9 +64,10 @@ export default function CardScheduleEdit({
             className={`flex flex-col gap-2 p-4 rounded-2xl transition-all duration-200 group relative border ${
                 todayDay
                     ? "bg-brand-500/10 border-brand-500/30"
-                    : "bg-bg-surface border-border-main"
+                    : "bg-border-main border-border-main2"
             }`}
             style={{
+
                 minHeight: "160px",
             }}
         >

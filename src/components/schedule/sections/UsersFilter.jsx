@@ -44,7 +44,7 @@ export default function UsersFilter({
                     style={{
                         background: isViewingMe
                             ? "rgba(25,202,104,0.15)"
-                            : "var(--color-bg-surface)",
+                            : "var(--color-border-main2)",
                         border: isViewingMe
                             ? "1px solid rgba(25,202,104,0.4)"
                             : "1px solid var(--color-border-main)",
@@ -65,7 +65,7 @@ export default function UsersFilter({
                         style={{
                             background: isViewingAll
                                 ? "rgba(34,211,238,0.12)"
-                                : "var(--color-bg-surface)",
+                                : "var(--color-border-main2)",
                             border: isViewingAll
                                 ? "1px solid rgba(34,211,238,0.35)"
                                 : "1px solid var(--color-border-main)",
@@ -85,7 +85,7 @@ export default function UsersFilter({
                             style={{
                                 background: selectedUser
                                     ? `${avatarColor(selectedUser.id)}20`
-                                    : "var(--color-bg-surface)",
+                                    : "var(--color-border-main2)",
                                 border: selectedUser
                                     ? `1px solid ${avatarColor(selectedUser.id)}60`
                                     : "1px solid var(--color-border-main)",
@@ -131,7 +131,7 @@ export default function UsersFilter({
                                     style={{
                                         background: selected
                                             ? `${color}20`
-                                            : "var(--color-bg-surface)",
+                                            : "var(--color-border-main2)",
                                         border: selected
                                             ? `1px solid ${color}60`
                                             : "1px solid var(--color-border-main)",
