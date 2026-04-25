@@ -56,10 +56,10 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
 
     const containerClasses = isMobile
         ? `fixed top-0 right-0 h-full w-64 z-50 transform transition-transform duration-300 ease-in-out
-       bg-bg-side backdrop-blur-xl border-l border-border-main shadow-xl
+       bg-gradient-to-br from-bg-main via-bg-card to-bg-main shadow-xl
        ${isOpen ? "translate-x-0" : "translate-x-full"}`
         : `fixed top-0 left-0 h-full z-50 transition-all duration-300 ease-in-out
-       bg-bg-side backdrop-blur-md border-r border-border-main shadow-xl
+       bg-gradient-to-br from-bg-main via-bg-card to-bg-main shadow-xl
        ${effectiveOpen ? "w-58 items-start" : "w-20 items-center"}`;
 
     return (
@@ -104,7 +104,7 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
                     </div>
                 </div>
                 <div
-                    className={`h-px bg-border-main my-1 mx-auto ${effectiveOpen ? "w-[90%]" : "w-[70%]"}`}
+                    className={`h-px rouned-[5px] bg-border-main my-1 mx-auto ${effectiveOpen ? "w-[90%]" : "w-[70%]"}`}
                 />
                 <div className="flex flex-col items-center gap-2 w-full sm:px-4">
                     {visibleItems.map((item) => {
@@ -114,7 +114,7 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
                                 key={item.label}
                                 href={item.href}
                                 onClick={isMobile ? onToggle : undefined}
-                                className={`h-12 w-full flex items-center text-text-secondary sm:hover:text-text-primary sm:hover:bg-bg-surface rounded-lg transition-colors duration-200 group
+                                className={`h-12 flex items-center text-text-secondary sm:hover:text-text-primary sm:hover:bg-bg-surface rounded-lg transition-colors duration-200 group
                                     ${
                                         active
                                             ? "text-text-primary bg-bg-surface border border-border-main"
