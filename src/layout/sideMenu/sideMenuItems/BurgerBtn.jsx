@@ -35,7 +35,7 @@ export function BurgerButton({ isOpen, onClick }) {
                         position: "absolute",
                         height: "2px",
                         width: "100%",
-                        background: isHovered ? "#ffffff" : "#6d6d6d",
+                        background: isHovered ? "var(--color-text-primary)" : "var(--color-text-muted)",
                         borderRadius: "9px",
                         left: 0,
                         transition: ".25s ease-in-out",

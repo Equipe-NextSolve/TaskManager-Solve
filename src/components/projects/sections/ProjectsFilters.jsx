@@ -27,18 +27,18 @@ export default function ProjectsFilters({
         searchInput;
 
     return (
-        <div className="flex flex-wrap gap-4 md:gap-2.5 py-3.5 px-4 bg-bg-card border border-white/10 rounded-[14px] items-center">
+        <div className="flex flex-wrap gap-4 md:gap-2.5 py-3.5 px-4 bg-bg-card border border-border-main rounded-[14px] items-center">
             {/* Campo de busca */}
             <div className="relative min-w-45 flex-[1_1_200px]">
                 <MdSearch
-                    className="absolute left-2.5 top-[50%] -translate-y-1/2 text-font-gray2"
+                    className="absolute left-2.5 top-[50%] -translate-y-1/2 text-text-muted"
                     size={16}
                 />
                 <input
                     value={searchInput}
                     onChange={(e) => onSearchChange(e.target.value)}
                     placeholder="Buscar projetos, clientes, tecnologias..."
-                    className="w-full bg-[#FFFFFF0A] border border-[#FFFFFF1A] rounded-lg p-[7px_10px_7px_32px] outline-none text-[#e5e7eb] text-[13px]"
+                    className="w-full bg-bg-surface border border-border-main rounded-lg p-[7px_10px_7px_32px] outline-none text-text-primary text-[13px] focus:border-brand-500 transition-colors"
                 />
             </div>
 

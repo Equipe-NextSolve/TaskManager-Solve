@@ -29,17 +29,8 @@ export default function UserRow({ user, onEdit, onDelete }) {
         <div
             className="grid grid-cols-[48px_1fr_160px_100px_100px_72px] 
             gap-4 items-center px-5 py-3 bg-bg-card
-            rounded-xl border border-[rgba(255,255,255,0.05)] 
-            transition-[border-color_0.2s,transform_0.15s]"
-            onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor =
-                    "var(--color-surface-green-md)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "#FFFFFF0D";
-                e.currentTarget.style.transform = "translateY(0)";
-            }}
+            rounded-xl border border-border-main
+            transition-[border-color_0.2s,transform_0.15s] hover:border-brand-500/30 group"
         >
             {/* Avatar */}
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -49,28 +40,12 @@ export default function UserRow({ user, onEdit, onDelete }) {
             {/* Nome + Email */}
             <div style={{ minWidth: 0 }}>
                 <p
-                    style={{
-                        color: "#f1f5f9",
-                        fontWeight: 500,
-                        fontSize: 14,
-                        margin: 0,
-                        marginBottom: 2,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                    }}
+                    className="text-text-primary font-bold text-sm m-0 mb-0.5 overflow-hidden text-ellipsis whitespace-nowrap"
                 >
                     {user.name}
                 </p>
                 <p
-                    style={{
-                        color: "#6b7280",
-                        fontSize: 12,
-                        margin: 0,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                    }}
+                    className="text-text-secondary text-xs m-0 overflow-hidden text-ellipsis whitespace-nowrap"
                 >
                     {user.email}
                 </p>
@@ -103,11 +78,7 @@ export default function UserRow({ user, onEdit, onDelete }) {
             {/* Data de entrada */}
             <div style={{ display: "flex", alignItems: "center" }}>
                 <span
-                    style={{
-                        fontSize: 11,
-                        color: "#4b5563",
-                        whiteSpace: "nowrap",
-                    }}
+                    className="text-[11px] text-text-muted whitespace-nowrap"
                 >
                     {formattedDate}
                 </span>

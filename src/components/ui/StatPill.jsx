@@ -20,7 +20,7 @@ export function StatPill({ icon: Icon, label, value, color, bg, border }) {
             >
                 {value}
             </span>
-            <span style={{ color: "#6b7280", fontWeight: 500 }}>{label}</span>
+            <span className="text-text-secondary font-medium">{label}</span>
         </div>
     );
 }

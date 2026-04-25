@@ -67,8 +67,8 @@ export function Avatar({
                 width: size,
                 height: size,
                 borderRadius: "50%",
-                background: `${color}20`,
-                border: `2px solid ${color}50`,
+                background: `${color}33`, // 20% -> 20% hex is 33
+                border: `2px solid ${color}80`, // 31% -> 50% hex is 80
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",

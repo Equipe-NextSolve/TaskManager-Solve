@@ -43,13 +43,13 @@ export default function CardDevs({ project, usersMap }) {
                         {developers.length > 4 && (
                             <span
                                 className="-ml-2 w-6.5 h-6.5  rounded-[50%] flex items-center justify-center text-[9px] font-bold
-                                    text-font-gray border-2 border-bg-card bg-[#FFFFFF14]"
+                                    text-text-primary border-2 border-bg-card bg-bg-surface"
                             >
                                 +{developers.length - 4}
                             </span>
                         )}
                     </div>
-                    <span className="text-[11px] text-font-gray2 ml-1">
+                    <span className="text-[11px] text-text-secondary ml-1">
                         {developers.length} dev
                         {developers.length !== 1 ? "s" : ""}
                     </span>

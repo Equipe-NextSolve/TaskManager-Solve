@@ -1,63 +1,48 @@
 import { MdOutlineTimer } from "react-icons/md";
-
 import { PriorityBadge, StatusBadge } from "@/components/ui/StatusBadge";
 import { toDate } from "@/utils/DashboardUtils";
 import { differenceInDays } from "date-fns";
 
-export default function OngoingProjects({ongoingProjects, today }) {
+export default function OngoingProjects({ ongoingProjects, today }) {
     return (
-        <div
-            className="p-5 rounded-2xl"
-            style={{
-                background: "#121212",
-                border: "1px solid rgba(255,255,255,0.06)",
-            }}
-        >
+        <div className="p-5 rounded-2xl bg-bg-card border border-border-main">
             <div className="flex items-center justify-between mb-5">
                 <div>
-                    <h2 className="text-base font-bold text-white">
+                    <h2 className="text-base font-bold text-text-primary">
                         Projetos em Curso
                     </h2>
-                    <p className="text-xs text-font-gray2 mt-0.5">
+                    <p className="text-xs text-text-secondary mt-0.5">
                         Status e prioridade
                     </p>
                 </div>
-                <MdOutlineTimer className="text-bg-hover2 text-xl" />
+                <MdOutlineTimer className="text-text-muted text-xl" />
             </div>
 
             <div className="flex flex-col gap-2 overflow-y-auto max-h-72 pr-1 scroll-hidden">
                 {ongoingProjects.length === 0 ? (
-                    <p className="text-xs text-font-gray2 text-center py-6">
+                    <p className="text-xs text-text-secondary text-center py-6">
                         Nenhum projeto em andamento
                     </p>
                 ) : (
                     ongoingProjects.map((proj) => {
-                        const dueDate = toDate(
-                            proj.expectedDeliveryDate,
-                        );
+                        const dueDate = toDate(proj.expectedDeliveryDate);
                         const isSupport = proj.status === "suporte";
                         const daysLeft =
                             !isSupport && dueDate
                                 ? differenceInDays(dueDate, today)
                                 : null;
-                        const isOverdue =
-                            daysLeft !== null && daysLeft < 0;
+                        const isOverdue = daysLeft !== null && daysLeft < 0;
                         const isUrgent =
-                            daysLeft !== null &&
-                            daysLeft >= 0 &&
-                            daysLeft <= 3;
+                            daysLeft !== null && daysLeft >= 0 && daysLeft <= 3;
 
                         return (
                             <div
                                 key={proj.id}
-                                className="flex items-start gap-3 p-3 rounded-xl transition-colors duration-150 hover:bg-white/3"
-                                style={{
-                                    border: "1px solid rgba(255,255,255,0.04)",
-                                }}
+                                className="flex items-start gap-3 p-3 rounded-xl transition-colors duration-150 hover:bg-bg-surface border border-border-subtle"
                             >
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-start justify-between gap-2">
-                                        <p className="text-sm text-white font-medium leading-tight truncate">
+                                        <p className="text-sm text-text-primary font-medium leading-tight truncate">
                                             {proj.title}
                                         </p>
                                         {daysLeft !== null && (
@@ -67,8 +52,8 @@ export default function OngoingProjects({ongoingProjects, today }) {
                                                     color: isOverdue
                                                         ? "#ef4444"
                                                         : isUrgent
-                                                            ? "#f59e0b"
-                                                            : "#6b7280",
+                                                          ? "#f59e0b"
+                                                          : "var(--color-text-secondary)",
                                                 }}
                                             >
                                                 {isOverdue
@@ -78,12 +63,14 @@ export default function OngoingProjects({ongoingProjects, today }) {
                                         )}
                                     </div>
                                     <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                                        <StatusBadge status={proj.status}/>
+                                        <StatusBadge status={proj.status} />
                                         {proj.priority && (
-                                            <PriorityBadge priority={proj.priority}/>
+                                            <PriorityBadge
+                                                priority={proj.priority}
+                                            />
                                         )}
                                         {proj.client && (
-                                            <span className="text-[10px] text-bg-hover2 truncate">
+                                            <span className="text-[10px] text-text-muted truncate">
                                                 {proj.client}
                                             </span>
                                         )}
@@ -95,5 +82,5 @@ export default function OngoingProjects({ongoingProjects, today }) {
                 )}
             </div>
         </div>
-    )
+    );
 }

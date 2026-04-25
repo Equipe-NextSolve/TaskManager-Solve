@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/context/AuthContext";
 import { SettingsProvider } from "@/context/SettingsContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata = {
     title: "Task Manager Solve",
@@ -14,10 +15,12 @@ export default function RootLayout({ children }) {
         <html lang="pt-BR">
             <body className={`antialiased`}>
                 <AuthProvider>
-                    <SettingsProvider>
-                        {children}
-                        <Toaster />
-                    </SettingsProvider>
+                    <ThemeProvider>
+                        <SettingsProvider>
+                            {children}
+                            <Toaster />
+                        </SettingsProvider>
+                    </ThemeProvider>
                 </AuthProvider>
             </body>
         </html>

@@ -18,9 +18,9 @@ function ProjectCard({ project, usersMap, clientMap, onEdit, onDelete }) {
 
     return (
         <div
-            className="bg-bg-card border border-white/5 rounded-xl p-4 flex flex-col gap-3
+            className="bg-bg-card border border-border-main rounded-xl p-4 flex flex-col gap-3
                 transition-all duration-200
-                hover:border-green-400/20 hover:-translate-y-0.5 select-none"
+                hover:border-brand-500/30 hover:-translate-y-0.5 select-none"
         >
             <CardHeader
                 project={project}
@@ -32,15 +32,15 @@ function ProjectCard({ project, usersMap, clientMap, onEdit, onDelete }) {
 
             {project.client && (
                 <div className="flex items-center gap-1.5">
-                    <MdPerson size={13} className="text-font-gray2 shrink-0" />
-                    <span className="text-font-gray text-[12px]">
+                    <MdPerson size={13} className="text-text-muted shrink-0" />
+                    <span className="text-text-secondary text-[12px]">
                         {clientMap[project.client]?.name || "Cliente não encontrado"}
                     </span>
                 </div>
             )}
 
             {project.description && (
-                <p className="text-font-gray2 text-[12px] m-0 leading-[1.6]">
+                <p className="text-text-secondary text-[12px] m-0 leading-[1.6]">
                     {project.description.length > 100
                         ? `${project.description.slice(0, 100)}…`
                         : project.description

@@ -19,16 +19,7 @@ export function UserCard({ user, onEdit, onDelete }) {
 
     return (
         <div
-            style={{
-                background: "#121212",
-                border: "1px solid rgba(255,255,255,0.06)",
-                borderRadius: 16,
-                padding: "16px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 12,
-                transition: "border-color 0.2s",
-            }}
+            className="bg-bg-card border border-border-main rounded-2xl p-4 flex flex-col gap-3 transition-all duration-200"
         >
             {/* Top row: avatar + name/email + actions */}
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -36,16 +27,7 @@ export function UserCard({ user, onEdit, onDelete }) {
 
                 <div style={{ flex: 1, minWidth: 0 }}>
                     <p
-                        style={{
-                            color: "#f1f5f9",
-                            fontWeight: 600,
-                            fontSize: 14,
-                            margin: 0,
-                            marginBottom: 2,
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                        }}
+                        className="text-text-primary font-bold text-sm m-0 mb-0.5"
                     >
                         {user.name}
                     </p>
@@ -58,17 +40,10 @@ export function UserCard({ user, onEdit, onDelete }) {
                     >
                         <MdEmail
                             size={11}
-                            style={{ color: "#4b5563", flexShrink: 0 }}
+                            className="text-text-muted shrink-0"
                         />
                         <p
-                            style={{
-                                color: "#6b7280",
-                                fontSize: 12,
-                                margin: 0,
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
-                            }}
+                            className="text-text-secondary text-xs m-0 truncate"
                         >
                             {user.email}
                         </p>
@@ -123,7 +98,7 @@ export function UserCard({ user, onEdit, onDelete }) {
             </div>
 
             {/* Divider */}
-            <div style={{ height: 1, background: "rgba(255,255,255,0.05)" }} />
+            <div className="h-px bg-border-main" />
 
             {/* Bottom row: role + auth + date */}
             <div
@@ -148,13 +123,9 @@ export function UserCard({ user, onEdit, onDelete }) {
                 </div>
 
                 <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                    <MdCalendarToday size={11} style={{ color: "#4b5563" }} />
+                    <MdCalendarToday size={11} className="text-text-muted" />
                     <span
-                        style={{
-                            fontSize: 11,
-                            color: "#4b5563",
-                            whiteSpace: "nowrap",
-                        }}
+                        className="text-[11px] text-text-muted whitespace-nowrap"
                     >
                         {formattedDate}
                     </span>

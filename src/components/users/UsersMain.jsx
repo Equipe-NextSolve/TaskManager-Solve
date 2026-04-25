@@ -69,16 +69,7 @@ export default function UsersMain() {
 
     return (
         <div
-            style={{
-                minHeight: "100vh",
-                background: "var(--color-background-page)",
-                color: "#fff",
-                paddingTop: 24,
-                paddingBottom: 40,
-                display: "flex",
-                flexDirection: "column",
-                gap: 24,
-            }}
+            className="min-h-screen bg-bg-main text-text-primary py-6 space-y-6 font-sans flex flex-col"
         >
             {/* ── Header ── */}
             <div
@@ -100,30 +91,19 @@ export default function UsersMain() {
                             marginBottom: 4,
                         }}
                     >
-                        <MdPeople style={{ color: "#19CA68", fontSize: 18 }} />
+                        <MdPeople style={{ color: "var(--color-brand-500)", fontSize: 18 }} />
                         <span
-                            style={{
-                                fontSize: 11,
-                                fontWeight: 700,
-                                textTransform: "uppercase",
-                                letterSpacing: "0.12em",
-                                color: "#4b5563",
-                            }}
+                            className="text-[11px] font-bold uppercase tracking-[0.12em] text-text-secondary"
                         >
                             Gestão de Usuários
                         </span>
                     </div>
                     <h1
-                        style={{
-                            fontSize: 26,
-                            fontWeight: 800,
-                            color: "#fff",
-                        }}
-                        className="mt-2"
+                        className="text-[26px] font-extrabold text-text-primary mt-2"
                     >
                         Usuários
                     </h1>
-                    <p style={{ fontSize: 13, color: "#6b7280", marginTop: 4 }}>
+                    <p className="text-[13px] text-text-muted mt-1">
                         {users.length} usuário{users.length !== 1 ? "s" : ""}{" "}
                         cadastrado
                         {users.length !== 1 ? "s" : ""}
@@ -169,16 +149,7 @@ export default function UsersMain() {
 
             {/* ── Filters ── */}
             <div
-                style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 10,
-                    padding: "14px 16px",
-                    background: "#121212",
-                    border: "1px solid rgba(255,255,255,0.06)",
-                    borderRadius: 14,
-                    alignItems: "center",
-                }}
+                className="flex flex-wrap gap-2.5 p-3.5 bg-bg-card border border-border-main rounded-[14px] items-center"
             >
                 <div
                     style={{
@@ -194,24 +165,14 @@ export default function UsersMain() {
                             left: 10,
                             top: "50%",
                             transform: "translateY(-50%)",
-                            color: "#6b7280",
+                            color: "var(--color-text-muted)",
                         }}
                     />
                     <input
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Buscar por nome ou e-mail..."
-                        style={{
-                            width: "100%",
-                            background: "rgba(255,255,255,0.04)",
-                            border: "1px solid rgba(255,255,255,0.1)",
-                            borderRadius: 8,
-                            color: "#e5e7eb",
-                            padding: "7px 10px 7px 32px",
-                            fontSize: 13,
-                            outline: "none",
-                            boxSizing: "border-box",
-                        }}
+                        className="w-full bg-bg-surface border border-border-main rounded-lg p-[7px_10px_7px_32px] outline-none text-text-primary text-[13px] focus:border-brand-500 transition-colors"
                     />
                 </div>
 
@@ -223,20 +184,15 @@ export default function UsersMain() {
                                 key={rf.value}
                                 type="button"
                                 onClick={() => setFilterRole(rf.value)}
+                                className="px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-150 cursor-pointer"
                                 style={{
-                                    padding: "5px 14px",
-                                    borderRadius: 20,
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                    cursor: "pointer",
-                                    transition: "all 0.15s",
                                     background: active
                                         ? "rgba(25,202,104,0.15)"
-                                        : "rgba(255,255,255,0.04)",
+                                        : "var(--color-bg-surface)",
                                     border: active
                                         ? "1px solid rgba(25,202,104,0.35)"
-                                        : "1px solid rgba(255,255,255,0.08)",
-                                    color: active ? "#19CA68" : "#6b7280",
+                                        : "1px solid var(--color-border-main)",
+                                    color: active ? "var(--color-brand-500)" : "var(--color-text-muted)",
                                 }}
                             >
                                 {rf.label}

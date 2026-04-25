@@ -42,22 +42,23 @@ export default function ClientDeleteModal({ open, onClose, client }) {
             maxWidth="xs"
             fullWidth
             PaperProps={{
-                style: {
-                    background: "#171C23",
-                    border: "1px solid rgba(239,68,68,0.2)",
-                    borderRadius: 16,
-                    boxShadow: "0 24px 60px rgba(0,0,0,0.7)",
+                sx: {
+                    background: "var(--color-bg-card)",
+                    backgroundImage: "none",
+                    border: "1px solid var(--color-border-main)",
+                    borderRadius: "20px",
+                    boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
                 },
             }}
         >
             {/* Header */}
             <DialogTitle
-                style={{
+                sx={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
                     padding: "20px 24px 12px",
-                    borderBottom: "1px solid rgba(255,255,255,0.06)",
+                    borderBottom: "1px solid var(--color-border-main)",
                 }}
             >
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -75,7 +76,7 @@ export default function ClientDeleteModal({ open, onClose, client }) {
                         <MdDelete style={{ color: "#ef4444", fontSize: 17 }} />
                     </div>
                     <span
-                        style={{ color: "#fff", fontWeight: 700, fontSize: 16 }}
+                        className="text-text-primary font-bold text-base"
                     >
                         Excluir Cliente
                     </span>
@@ -83,13 +84,12 @@ export default function ClientDeleteModal({ open, onClose, client }) {
                 <button
                     type="button"
                     onClick={handleClose}
-                    className="hover:brightness-150"
+                    className="hover:brightness-150 text-text-muted"
                     disabled={loading}
                     style={{
                         background: "none",
                         border: "none",
                         cursor: "pointer",
-                        color: "#6b7280",
                         padding: 4,
                         borderRadius: 6,
                         display: "flex",
@@ -100,7 +100,7 @@ export default function ClientDeleteModal({ open, onClose, client }) {
             </DialogTitle>
 
             <DialogContent
-                style={{
+                sx={{
                     padding: "20px 24px",
                     display: "flex",
                     flexDirection: "column",
@@ -110,15 +110,7 @@ export default function ClientDeleteModal({ open, onClose, client }) {
                 {/* Client preview */}
                 {client && (
                     <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 12,
-                            padding: "12px 14px",
-                            borderRadius: 10,
-                            background: "rgba(239,68,68,0.05)",
-                            border: "1px solid rgba(239,68,68,0.12)",
-                        }}
+                        className="flex items-center gap-3 p-3 rounded-xl bg-bg-surface border border-border-main"
                     >
                         <div
                             style={{
@@ -139,25 +131,12 @@ export default function ClientDeleteModal({ open, onClose, client }) {
                         </div>
                         <div style={{ minWidth: 0 }}>
                             <p
-                                style={{
-                                    color: "#f1f5f9",
-                                    fontWeight: 700,
-                                    fontSize: 14,
-                                    margin: 0,
-                                    marginBottom: 2,
-                                }}
+                                className="text-text-primary font-bold text-sm m-0 mb-0.5"
                             >
                                 {client.name}
                             </p>
                             <p
-                                style={{
-                                    color: "#6b7280",
-                                    fontSize: 12,
-                                    margin: 0,
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    whiteSpace: "nowrap",
-                                }}
+                                className="text-text-secondary text-xs m-0 truncate"
                             >
                                 {client.email}
                             </p>
@@ -201,26 +180,17 @@ export default function ClientDeleteModal({ open, onClose, client }) {
             </DialogContent>
 
             <DialogActions
-                style={{
+                sx={{
                     padding: "8px 24px 20px",
-                    gap: 8,
-                    borderTop: "1px solid rgba(255,255,255,0.06)",
+                    gap: 1,
+                    borderTop: "1px solid var(--color-border-main)",
                 }}
             >
                 <button
                     type="button"
                     onClick={handleClose}
                     disabled={loading}
-                    style={{
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        borderRadius: 8,
-                        color: "#9ca3af",
-                        padding: "8px 20px",
-                        cursor: "pointer",
-                        fontSize: 13,
-                        fontWeight: 600,
-                    }}
+                    className="bg-bg-surface border border-border-main text-text-secondary py-2 px-5 rounded-lg font-semibold text-xs cursor-pointer hover:bg-bg-card transition-colors"
                 >
                     Cancelar
                 </button>

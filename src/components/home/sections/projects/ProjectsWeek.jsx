@@ -20,19 +20,19 @@ const LEGEND_ITEMS = [
 export default function ProjectsWeek({ weeklyData, today }) {
     const isMobile = useIsMobile()
     return (
-        <div className="xl:col-span-2 p-5 rounded-2xl bg-bg-card border border-white/6">
+        <div className="xl:col-span-2 p-5 rounded-2xl bg-bg-card border border-border-main">
             <div className="flex items-center justify-between mb-5">
                 <div>
-                    <h2 className="text-base font-bold text-white">
+                    <h2 className="text-base font-bold text-text-primary">
                         Projetos por Semana
                     </h2>
-                    <p className="text-xs text-font-gray2 mt-0.5">
+                    <p className="text-xs text-text-secondary mt-0.5">
                         {format(startOfMonth(today), "MMMM 'de' yyyy", {
                             locale: ptBR,
                         })}
                     </p>
                 </div>
-                <div className="flex items-center gap-3 text-xs text-font-gray2">
+                <div className="flex items-center gap-3 text-xs text-text-secondary">
                     {LEGEND_ITEMS.map(([bg, label]) => (
                         <span key={label} className="flex items-center gap-1.5">
                             <span
@@ -48,16 +48,16 @@ export default function ProjectsWeek({ weeklyData, today }) {
                 <BarChart data={weeklyData} barGap={4} barCategoryGap="30%" accessibilityLayer={false}>
                     <CartesianGrid
                         vertical={false}
-                        stroke="rgba(255,255,255,0.04)"
+                        stroke="var(--color-border-main)"
                     />
                     <XAxis
                         dataKey="semana"
-                        tick={{ fill: "#6b7280", fontSize: 12 }}
+                        tick={{ fill: "var(--color-text-muted)", fontSize: 12 }}
                         axisLine={false}
                         tickLine={false}
                     />
                     <YAxis
-                        tick={{ fill: "#6b7280", fontSize: 12 }}
+                        tick={{ fill: "var(--color-text-muted)", fontSize: 12 }}
                         axisLine={false}
                         tickLine={false}
                         width={28}
@@ -65,7 +65,7 @@ export default function ProjectsWeek({ weeklyData, today }) {
                     />
                     <Tooltip
                         content={<CustomTooltip />}
-                        cursor={isMobile ? false : { fill: "rgba(255,255,255,0.03)" }}
+                        cursor={isMobile ? false : { fill: "var(--color-border-subtle)" }}
                         trigger={isMobile ? "click" : "hover"}
                     />
                     <Bar

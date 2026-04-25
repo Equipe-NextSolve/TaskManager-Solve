@@ -40,16 +40,15 @@ export function TeamRadar({ users, projects }) {
 
     return (
         <section
-            className="rounded-2xl p-5 space-y-4"
-            style={{ background: "#121212", border: "1px solid rgba(255,255,255,0.06)" }}
+            className="rounded-2xl p-5 space-y-4 bg-bg-card border border-border-main"
         >
             {/* cabeçalho */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <MdRadar className="text-indigo-400 text-xl" />
-                    <h2 className="text-base font-bold text-white">Radar do Time</h2>
+                    <h2 className="text-base font-bold text-text-primary">Radar do Time</h2>
                 </div>
-                <span className="text-xs text-font-gray2">{devStats.length} devs</span>
+                <span className="text-xs text-text-secondary">{devStats.length} devs</span>
             </div>
 
             {/* grid de cards */}
@@ -62,16 +61,15 @@ export function TeamRadar({ users, projects }) {
                     return (
                         <div
                             key={user.id}
-                            className="flex flex-col gap-3 rounded-xl px-3 pt-3 pb-2.5 hover:bg-white/3 transition-colors"
-                            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
+                            className="flex flex-col gap-3 rounded-xl px-3 pt-3 pb-2.5 bg-bg-surface border border-border-subtle hover:border-border-main transition-colors group"
                         >
                             <div className="flex flex-col items-center text-center gap-1.5">
                                 <Avatar name={user.name} uid={user.id} src={user.photo} size={36} />
                                 <div>
-                                    <p className="text-xs font-semibold text-white leading-tight line-clamp-1">
+                                    <p className="text-xs font-semibold text-text-primary leading-tight line-clamp-1">
                                         {user.name}
                                     </p>
-                                    <p className="text-[10px] text-font-gray2 truncate">
+                                    <p className="text-[10px] text-text-muted truncate">
                                         {ROLE_LABELS[user.role] || user.role}
                                     </p>
                                 </div>
@@ -87,7 +85,7 @@ export function TeamRadar({ users, projects }) {
                                     >
                                         {label}
                                     </span>
-                                    <span className="text-[11px] font-semibold text-font-gray2 tabular-nums">
+                                    <span className="text-[11px] font-semibold text-text-secondary tabular-nums">
                                         {count}<span className="text-[9px] font-normal"> proj</span>
                                     </span>
                                 </div>
@@ -99,8 +97,7 @@ export function TeamRadar({ users, projects }) {
 
             {/* rodapé resumo */}
             <div
-                className="flex flex-wrap gap-x-4 gap-y-1.5 pt-3"
-                style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+                className="flex flex-wrap gap-x-4 gap-y-1.5 pt-3 border-t border-border-main"
             >
                 {[
                     { key: "overloaded", label: "sobrecarregado" },
@@ -112,8 +109,8 @@ export function TeamRadar({ users, projects }) {
                             className="w-2 h-2 rounded-full shrink-0"
                             style={{ background: LOAD_LEVELS[key].color }}
                         />
-                        <span className="text-xs text-font-gray2">
-                            <span className="text-white font-semibold">{summary[key]}</span>{" "}
+                        <span className="text-xs text-text-secondary">
+                            <span className="text-text-primary font-semibold">{summary[key]}</span>{" "}
                             {label}{summary[key] !== 1 ? "s" : ""}
                         </span>
                     </div>

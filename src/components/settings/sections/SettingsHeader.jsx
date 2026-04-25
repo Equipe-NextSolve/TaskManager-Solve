@@ -13,18 +13,18 @@ export default function SettingsHeader({ title, description, icon: Icon }) {
                     ) : (
                         <FiSettings className="text-brand-500 text-lg" />
                     )}
-                    <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-bg-hover2">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-text-secondary">
                         Configurações
                     </span>
                 </div>
                 <h1
-                    className={`${isMobile ? "text-xl" : "text-[26px]"} font-extrabold text-white m-0`}
+                    className={`${isMobile ? "text-xl" : "text-[26px]"} font-extrabold text-text-primary m-0`}
                 >
                     {title}
                 </h1>
                 {description && (
                     <p
-                        className={`${isMobile ? "text-xs" : "text-[13px]"} text-font-gray2 mt-1`}
+                        className={`${isMobile ? "text-xs" : "text-[13px]"} text-text-muted mt-1`}
                     >
                         {description}
                     </p>

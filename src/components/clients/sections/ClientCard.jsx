@@ -17,7 +17,7 @@ export default function ClientCard({ client, onEdit, onDelete }) {
     return (
         <div
             className={`
-            bg-bg-card border border-white/5 rounded-2xl 
+            bg-bg-card border border-border-main rounded-2xl 
             ${isTablet ? "p-3 gap-2.5" : "p-4 gap-3"} 
             flex flex-col transition-all duration-200 hover:border-brand-500/20 group
         `}
@@ -39,7 +39,7 @@ export default function ClientCard({ client, onEdit, onDelete }) {
                 <div className="flex-1 min-w-0">
                     <p
                         className={`
-                          text-white font-bold text-base group-hover:text-brand-500 transition-colors
+                          text-text-primary font-bold text-base group-hover:text-brand-500 transition-colors
                         ${isTablet ? "text-xs" : "text-sm"}
                     `}
                     >
@@ -49,11 +49,11 @@ export default function ClientCard({ client, onEdit, onDelete }) {
                         <div className="flex items-center gap-1">
                             <MdFingerprint
                                 size={11}
-                                className="text-font-gray2 shrink-0"
+                                className="text-text-muted shrink-0"
                             />
                             <p
                                 className={`
-                                text-font-gray2 truncate
+                                text-text-secondary truncate
                                 ${isTablet ? "text-[10px]" : "text-xs"}
                             `}
                             >
@@ -103,7 +103,7 @@ export default function ClientCard({ client, onEdit, onDelete }) {
             </div>
 
             {/* Divider */}
-            <div className="h-px bg-white/5" />
+            <div className="h-px bg-border-main" />
 
             {/* Bottom row: email + phone + status */}
             <div className="flex flex-col gap-2">
@@ -111,7 +111,7 @@ export default function ClientCard({ client, onEdit, onDelete }) {
                     {client.email && (
                         <div
                             className={`
-                            flex items-center gap-1 text-font-gray2
+                            flex items-center gap-1 text-text-secondary
                             ${isTablet ? "text-[10px]" : "text-xs"}
                         `}
                         >
@@ -125,7 +125,7 @@ export default function ClientCard({ client, onEdit, onDelete }) {
                     {client.contato && (
                         <div
                             className={`
-                            flex items-center gap-1 text-font-gray2
+                            flex items-center gap-1 text-text-secondary
                             ${isTablet ? "text-[10px]" : "text-xs"}
                         `}
                         >
@@ -145,7 +145,7 @@ export default function ClientCard({ client, onEdit, onDelete }) {
                         ${
                             client.status === "active"
                                 ? "bg-brand-500/10 text-brand-500 border border-brand-500/30"
-                                : "bg-white/5 text-white/30 border border-white/10"
+                                : "bg-bg-surface text-text-muted border border-border-main"
                         }
                     `}
                     >

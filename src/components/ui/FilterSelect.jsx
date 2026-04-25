@@ -33,7 +33,7 @@ export default function FilterSelect({
                 onChange={(e) => onChange(e.target.value)}
                 MenuProps={menuPaper2}
             >
-                <MenuItem value="all" style={{ color: "#e5e7eb" }}>
+                <MenuItem value="all" sx={{ color: "var(--color-text-primary)" }}>
                     {allLabel}
                 </MenuItem>
 
@@ -41,7 +41,7 @@ export default function FilterSelect({
                     <MenuItem
                         key={item[valueKey]}
                         value={item[valueKey]}
-                        style={{ color: item[colorKey] || "#e5e7eb" }}
+                        sx={{ color: item[colorKey] || "var(--color-text-primary)" }}
                     >
                         {item[labelKey]}
                     </MenuItem>

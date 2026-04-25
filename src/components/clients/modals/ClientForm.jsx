@@ -78,20 +78,20 @@ export default function ClientForm({ isOpen, onClose, client }) {
 
     const inputStyle = {
         "& .MuiOutlinedInput-root": {
-            color: "#ffffff !important",
-            backgroundColor: "rgba(255,255,255,0.02)",
+            color: "var(--color-text-primary) !important",
+            backgroundColor: "var(--color-border-subtle)",
             borderRadius: "12px",
-            "& fieldset": { borderColor: "rgba(255,255,255,0.08)" },
-            "&:hover fieldset": { borderColor: "rgba(255,255,255,0.15)" },
+            "& fieldset": { borderColor: "var(--color-border-main)" },
+            "&:hover fieldset": { borderColor: "rgba(var(--color-brand-500-rgb), 0.3)" },
             "&.Mui-focused fieldset": { borderColor: "var(--color-brand-500)" },
         },
         "& label": {
-            color: "rgba(255,255,255,0.5)",
+            color: "var(--color-text-muted)",
             fontSize: "0.875rem",
             fontWeight: 600,
         },
         "& label.Mui-focused": { color: "var(--color-brand-500)" },
-        "& .MuiFormHelperText-root": { color: "#ef4444", fontWeight: 600 },
+        "& .MuiFormHelperText-root": { color: "var(--color-error)", fontWeight: 600 },
     };
 
     const contactValue = watch("contato")
@@ -104,27 +104,27 @@ export default function ClientForm({ isOpen, onClose, client }) {
             maxWidth="sm"
             PaperProps={{
                 sx: {
-                    backgroundColor: "#121212 !important",
+                    backgroundColor: "var(--color-bg-card) !important",
                     backgroundImage: "none !important",
-                    border: "1px solid rgba(255,255,255,0.05)",
+                    border: "1px solid var(--color-border-main)",
                     borderRadius: "24px",
-                    color: "white",
-                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+                    color: "var(--color-text-primary)",
+                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
                 },
             }}
         >
-            <DialogTitle className="flex justify-between items-center py-6 px-8 border-b border-white/5">
-                <span className="text-xl font-black uppercase tracking-tight text-white">
+            <DialogTitle className="flex justify-between items-center py-6 px-8 border-b border-border-main">
+                <span className="text-xl font-black uppercase tracking-tight text-text-primary">
                     {isEditing ? "Editar Cliente" : "Novo Cliente"}
                 </span>
                 <IconButton
                     onClick={onClose}
                     size="small"
                     sx={{
-                        color: "rgba(255,255,255,0.2)",
+                        color: "var(--color-text-muted)",
                         "&:hover": {
-                            color: "white",
-                            backgroundColor: "rgba(255,255,255,0.05)",
+                            color: "var(--color-text-primary)",
+                            backgroundColor: "var(--color-border-subtle)",
                         },
                     }}
                 >
@@ -132,7 +132,7 @@ export default function ClientForm({ isOpen, onClose, client }) {
                 </IconButton>
             </DialogTitle>
 
-            <DialogContent sx={{ px: 8, py: "40px !important" }}>
+            <DialogContent sx={{ px: { xs: 4, sm: 8 }, py: "40px !important" }}>
                 <Box
                     component="form"
                     className="flex flex-col gap-6" // Garante um abaixo do outro com espaçamento
@@ -192,16 +192,17 @@ export default function ClientForm({ isOpen, onClose, client }) {
                         sx={{
                             ...inputStyle,
                             "& .MuiSelect-icon": {
-                                color: "rgba(255,255,255,0.3)",
+                                color: "var(--color-text-muted)",
                             },
                         }}
                         SelectProps={{
                             MenuProps: {
                                 PaperProps: {
                                     sx: {
-                                        backgroundColor: "#171717",
-                                        border: "1px solid rgba(255,255,255,0.1)",
-                                        color: "white",
+                                        backgroundColor: "var(--color-bg-card)",
+                                        border: "1px solid var(--color-border-main)",
+                                        backgroundImage: "none",
+                                        color: "var(--color-text-primary)",
                                         "& .MuiMenuItem-root": {
                                             fontSize: "0.875rem",
                                             "&:hover": {
@@ -226,15 +227,15 @@ export default function ClientForm({ isOpen, onClose, client }) {
                 </Box>
             </DialogContent>
 
-            <DialogActions className="py-6 px-8 border-t border-white/5">
+            <DialogActions className="py-6 px-8 border-t border-border-main">
                 <Button
                     onClick={onClose}
                     sx={{
-                        color: "rgba(255,255,255,0.4)",
+                        color: "var(--color-text-secondary)",
                         textTransform: "none",
                         fontWeight: 700,
                         fontSize: "0.875rem",
-                        "&:hover": { color: "white" },
+                        "&:hover": { color: "var(--color-text-primary)" },
                     }}
                 >
                     Cancelar
@@ -256,6 +257,10 @@ export default function ClientForm({ isOpen, onClose, client }) {
                         px: 4,
                         py: 1.5,
                         color: "black",
+                        "&.Mui-disabled": {
+                            backgroundColor: "var(--color-border-main)",
+                            color: "var(--color-text-muted)",
+                        }
                     }}
                 >
                     {isSubmitting

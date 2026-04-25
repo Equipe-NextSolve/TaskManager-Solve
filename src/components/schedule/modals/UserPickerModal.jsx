@@ -13,23 +13,21 @@ export default function UserPickerModal({ users, filterUserId, onSelect, onClose
         >
             <div
                 role="none"
-                className="rounded-3xl p-5 space-y-4 mx-2"
-                style={{ background: "#141414", border: "1px solid rgba(255,255,255,0.08)" }}
+                className="rounded-3xl p-5 space-y-4 mx-2 bg-bg-card border border-border-main shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* handle + cabeçalho */}
                 <div className="flex items-center justify-between">
                     <div className="flex flex-col gap-0.5">
-                        <p className="text-white font-semibold text-base">Ver agenda de</p>
-                        <p className="text-xs text-font-gray2">Selecione um desenvolvedor</p>
+                        <p className="text-text-primary font-semibold text-base">Ver agenda de</p>
+                        <p className="text-xs text-text-secondary">Selecione um desenvolvedor</p>
                     </div>
                     <button
                         type="button"
                         onClick={onClose}
-                        className="flex items-center justify-center w-8 h-8 rounded-full transition-colors"
-                        style={{ background: "rgba(255,255,255,0.06)" }}
+                        className="flex items-center justify-center w-8 h-8 rounded-full transition-colors bg-bg-surface text-text-muted"
                     >
-                        <MdClose size={16} style={{ color: "#9ca3af" }} />
+                        <MdClose size={16} />
                     </button>
                 </div>
 
@@ -51,10 +49,10 @@ export default function UserPickerModal({ users, filterUserId, onSelect, onClose
                             >
                                 <Avatar name={u.name} uid={u.id} src={u.photo} size={38} />
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-semibold text-white truncate">
+                                    <p className="text-sm font-semibold text-text-primary truncate">
                                         {u.name}
                                     </p>
-                                    <p className="text-xs truncate" style={{ color: selected ? color : "#6b7280" }}>
+                                    <p className="text-xs truncate" style={{ color: selected ? color : "var(--color-text-muted)" }}>
                                         {ROLE_LABELS[u.role] || u.role}
                                     </p>
                                 </div>

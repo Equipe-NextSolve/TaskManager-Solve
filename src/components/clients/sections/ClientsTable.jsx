@@ -26,34 +26,34 @@ export default function ClientsTable({ clients, loading, onEdit, onDelete }) {
         <div className="space-y-4">
             <div className="grid grid-cols-12 px-8 mb-2">
                 <div className="col-span-5">
-                    <p className="text-white/30 font-bold uppercase text-[11px] tracking-widest">
+                    <p className="text-text-muted font-bold uppercase text-[11px] tracking-widest">
                         Cliente / Identificação
                     </p>
                 </div>
                 <div className="col-span-3 text-center">
-                    <p className="text-white/30 font-bold uppercase text-[11px] tracking-widest">
+                    <p className="text-text-muted font-bold uppercase text-[11px] tracking-widest">
                         Contato
                     </p>
                 </div>
                 <div className="col-span-2 text-center">
-                    <p className="text-white/30 font-bold uppercase text-[11px] tracking-widest">
+                    <p className="text-text-muted font-bold uppercase text-[11px] tracking-widest">
                         Status
                     </p>
                 </div>
                 <div className="col-span-2 text-right">
-                    <p className="text-white/30 font-bold uppercase text-[11px] tracking-widest">
+                    <p className="text-text-muted font-bold uppercase text-[11px] tracking-widest">
                         Gerenciar
                     </p>
                 </div>
             </div>
 
             {clients.length === 0 ? (
-                <div className="bg-bg-card border border-white/5 rounded-2xl py-20 text-center">
+                <div className="bg-bg-card border border-border-main rounded-2xl py-20 text-center">
                     <FiBriefcase
                         size={48}
-                        className="text-white/10 mx-auto mb-3"
+                        className="text-text-muted opacity-20 mx-auto mb-3"
                     />
-                    <p className="text-white/40 font-medium">
+                    <p className="text-text-muted font-medium">
                         Nenhum cliente cadastrado.
                     </p>
                 </div>
@@ -61,7 +61,7 @@ export default function ClientsTable({ clients, loading, onEdit, onDelete }) {
                 clients.map((client) => (
                     <div
                         key={client.id}
-                        className="grid grid-cols-12 items-center bg-bg-card border border-white/5 p-4 px-6 rounded-2xl transition-all duration-300 hover:border-[#19ca6833] group"
+                        className="grid grid-cols-12 items-center bg-bg-card border border-border-main p-4 px-6 rounded-2xl transition-all duration-300 hover:border-brand-500/30 group"
                     >
                         {/* IDENTIFICAÇÃO */}
                         <div className="col-span-5 flex items-center gap-4">
@@ -69,11 +69,11 @@ export default function ClientsTable({ clients, loading, onEdit, onDelete }) {
                                 {client.name.charAt(0).toUpperCase()}
                             </div>
                             <div className="flex flex-col">
-                                <p className="text-white font-bold text-base group-hover:text-brand-500 transition-colors">
+                                <p className="text-text-primary font-bold text-base group-hover:text-brand-500 transition-colors">
                                     {client.name}
                                 </p>
                                 {client.documento && (
-                                    <span className="text-white/40 text-[11px] font-medium flex items-center gap-1 uppercase tracking-wider">
+                                    <span className="text-text-muted text-[11px] font-medium flex items-center gap-1 uppercase tracking-wider">
                                         <MdFingerprint className="text-brand-500/50" />{" "}
                                         {client.documento}
                                     </span>
@@ -84,13 +84,13 @@ export default function ClientsTable({ clients, loading, onEdit, onDelete }) {
                         {/* CONTATOS */}
                         <div className="col-span-3 flex flex-col items-center gap-1.5">
                             {client.email && (
-                                <div className="flex items-center gap-2 text-white/70 text-xs font-medium">
+                                <div className="flex items-center gap-2 text-text-secondary text-xs font-medium">
                                     <MdEmail className="text-brand-500" />{" "}
                                     {client.email}
                                 </div>
                             )}
                             {client.contato && (
-                                <div className="flex items-center gap-2 text-white/70 text-xs font-medium">
+                                <div className="flex items-center gap-2 text-text-secondary text-xs font-medium">
                                     <MdPhone className="text-cyan-400" />{" "}
                                     {client.contato}
                                 </div>
@@ -103,7 +103,7 @@ export default function ClientsTable({ clients, loading, onEdit, onDelete }) {
                                 className={`inline-flex items-center px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
                                     client.status === "active"
                                         ? "bg-brand-500/10 text-brand-500 border border-brand-500/30"
-                                        : "bg-white/5 text-white/30 border border-white/10"
+                                        : "bg-bg-surface text-text-muted border border-border-main"
                                 }`}
                             >
                                 {client.status === "active"

@@ -1,17 +1,22 @@
 "use client";
 
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Switch, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { MdEdit } from "react-icons/md";
+import { MdDarkMode, MdEdit, MdLightMode } from "react-icons/md";
 import RoleBadge from "@/components/auth/RoleBadge";
 import { useAuth } from "@/context/AuthContext";
 import { useSettings } from "@/context/SettingsContext";
+import { useTheme } from "@/context/ThemeContext";
 import useIsMobile from "@/hooks/responsive/useIsMobile";
+import useIsTablet from "@/hooks/responsive/useIsTablet";
+import { switchStyles } from "@/styles/StyleSwitch";
 
 export default function ProfileSettings() {
     const { currentUser } = useAuth();
     const { updateProfile } = useSettings();
+    const { theme, toggleTheme } = useTheme();
     const isMobile = useIsMobile();
+    const isTablet = useIsTablet(1024);
 
     // Controle manual de estado para garantir sincronia imediata
     const [name, setName] = useState("");
@@ -54,18 +59,61 @@ export default function ProfileSettings() {
 
     return (
         <Box component="form" onSubmit={handleSubmit} className="space-y-8">
+            {/* Preferências de Tema */}
+            <div className="space-y-4">
+                <label
+                    htmlFor="theme-color"
+                    className="text-xs font-bold uppercase tracking-wider text-text-muted"
+                >
+                    Preferências de Exibição
+                </label>
+                <div
+                    className={`p-5 bg-bg-card rounded-2xl border border-border-main flex items-center justify-between group hover:border-brand-500/30 transition-colors ${isTablet ? "flex-col gap-4" : "flex-row"}`}
+                >
+                    <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-brand-500/10 flex items-center justify-center">
+                            {theme === "dark" ? (
+                                <MdDarkMode className="text-brand-500 text-xl" />
+                            ) : (
+                                <MdLightMode className="text-brand-500 text-xl" />
+                            )}
+                        </div>
+                        <div className="space-y-1">
+                            <p className="text-text-primary text-sm font-bold">
+                                Tema do Sistema
+                            </p>
+                            <p className="text-text-secondary text-xs">
+                                Alternar entre modo claro e escuro.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <p className="text-text-secondary text-sm">Escuro</p>
+                        <Switch
+                            color="primary"
+                            checked={theme === "light"}
+                            onChange={toggleTheme}
+                            sx={switchStyles}
+                        />
+                        <p className="text-text-secondary text-sm">Claro</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="h-px bg-border-main w-full" />
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-1">
                     <label
                         htmlFor="CargoAtual"
-                        className="text-xs font-bold uppercase tracking-wider text-white/30"
+                        className="text-xs font-bold uppercase tracking-wider text-text-muted"
                     >
                         Cargo Atual
                     </label>
                     <div className="pt-1">
                         <RoleBadge role={currentUser?.role} />
                     </div>
-                    <p className="text-[11px] text-white/20 mt-2">
+                    <p className="text-[11px] text-text-muted mt-2">
                         Suas permissões são definidas pelo administrador.
                     </p>
                 </div>
@@ -73,12 +121,12 @@ export default function ProfileSettings() {
                 <div className="space-y-1">
                     <label
                         htmlFor="InfosAccountUser"
-                        className="text-xs font-bold uppercase tracking-wider text-white/30"
+                        className="text-xs font-bold uppercase tracking-wider text-text-muted"
                     >
                         E-mail da Conta
                     </label>
                     <div className="flex flex-col pt-1">
-                        <span className="text-white font-medium">
+                        <span className="text-text-primary font-medium">
                             {currentUser?.email}
                         </span>
                         {currentUser?.authMethod === "google" && (
@@ -90,12 +138,12 @@ export default function ProfileSettings() {
                 </div>
             </div>
 
-            <div className="h-px bg-white/5 w-full" />
+            <div className="h-px bg-border-main w-full" />
 
             <div className="max-w-md space-y-2">
                 <label
                     htmlFor="UserName"
-                    className="text-xs font-bold uppercase tracking-wider text-white/30"
+                    className="text-xs font-bold uppercase tracking-wider text-text-muted"
                 >
                     Nome de Exibição
                 </label>
@@ -109,14 +157,15 @@ export default function ProfileSettings() {
                     placeholder="Seu nome completo"
                     sx={{
                         "& .MuiOutlinedInput-root": {
-                            color: "white",
-                            backgroundColor: "rgba(255,255,255,0.02)",
+                            color: "var(--color-text-primary)",
+                            backgroundColor: "var(--color-border-subtle)",
                             borderRadius: "12px",
                             "& fieldset": {
-                                borderColor: "rgba(255,255,255,0.05)",
+                                borderColor: "var(--color-border-main)",
                             },
                             "&:hover fieldset": {
-                                borderColor: "rgba(255,255,255,0.1)",
+                                borderColor:
+                                    "rgba(var(--color-brand-500-rgb), 0.3)",
                             },
                             "&.Mui-focused fieldset": {
                                 borderColor: "var(--color-brand-500)",

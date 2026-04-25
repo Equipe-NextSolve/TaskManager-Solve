@@ -61,16 +61,12 @@ export default function CardScheduleEdit({
 
     return (
         <div
-            className="flex flex-col gap-2 p-4 rounded-2xl transition-all duration-200 group relative"
+            className={`flex flex-col gap-2 p-4 rounded-2xl transition-all duration-200 group relative border ${
+                todayDay
+                    ? "bg-brand-500/10 border-brand-500/30"
+                    : "bg-bg-surface border-border-main"
+            }`}
             style={{
-                background: todayDay
-                    ? "rgba(25,202,104,0.06)"
-                    : weekend
-                      ? "rgba(255,255,255,0.015)"
-                      : "rgba(255,255,255,0.025)",
-                border: todayDay
-                    ? "1px solid rgba(25,202,104,0.3)"
-                    : "1px solid rgba(255,255,255,0.06)",
                 minHeight: "160px",
             }}
         >
@@ -83,28 +79,22 @@ export default function CardScheduleEdit({
                             style={{
                                 color: todayDay
                                     ? "#19CA68"
-                                    : weekend
-                                      ? "#4b5563"
-                                      : "#6b7280",
+                                    : "var(--color-text-muted)",
                             }}
                         >
                             {dayLabel}
                         </span>
                         {todayDay && (
                             <span
-                                className="text-[10px] px-1.5 py-0.5 rounded-full font-bold"
-                                style={{
-                                    background: "rgba(25,202,104,0.15)",
-                                    color: "#19CA68",
-                                }}
+                                className="text-[10px] px-1.5 py-0.5 rounded-full font-bold bg-brand-500/20 text-brand-500"
                             >
                                 Hoje
                             </span>
                         )}
                     </div>
-                    <p className="text-white font-semibold text-base mt-0.5">
+                    <p className="text-text-primary font-semibold text-base mt-0.5">
                         {format(date, "d", { locale: ptBR })}
-                        <span className="text-[#4b5563] font-normal text-sm ml-1">
+                        <span className="text-text-muted font-normal text-sm ml-1">
                             {format(date, "MMM", { locale: ptBR })}
                         </span>
                     </p>
@@ -115,8 +105,7 @@ export default function CardScheduleEdit({
                     <button
                         type="button"
                         onClick={() => setEditing(true)}
-                        className="opacity-0 lg:group-hover:opacity-100 transition-opacity duration-150 p-1.5 rounded-lg hover:bg-white/10"
-                        style={{ color: "#6b7280" }}
+                        className="opacity-0 lg:group-hover:opacity-100 transition-opacity duration-150 p-1.5 rounded-lg hover:bg-bg-card text-text-muted"
                     >
                         <MdEdit size={15} />
                     </button>
@@ -132,10 +121,8 @@ export default function CardScheduleEdit({
                             onChange={(e) => setDraft(e.target.value)}
                             rows={4}
                             placeholder="O que você fez hoje?"
-                            className="w-full resize-none rounded-xl px-3 py-2.5 text-sm text-white placeholder:text-[#4b5563] outline-none transition-all duration-150"
+                            className="w-full resize-none rounded-xl px-3 py-2.5 text-sm text-text-primary placeholder:text-text-muted outline-none transition-all duration-150 bg-bg-card border border-brand-500/40 focus:border-brand-500"
                             style={{
-                                background: "rgba(255,255,255,0.05)",
-                                border: "1px solid rgba(25,202,104,0.4)",
                                 fontFamily: "inherit",
                             }}
                         />
@@ -144,12 +131,7 @@ export default function CardScheduleEdit({
                                 type="button"
                                 onClick={handleSave}
                                 disabled={saving}
-                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150"
-                                style={{
-                                    background: "rgba(25,202,104,0.15)",
-                                    border: "1px solid rgba(25,202,104,0.3)",
-                                    color: "#19CA68",
-                                }}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 bg-brand-500/15 border border-brand-500/30 text-brand-500 hover:bg-brand-500/20"
                             >
                                 {saving ? (
                                     <CircularProgress
@@ -164,12 +146,7 @@ export default function CardScheduleEdit({
                             <button
                                 type="button"
                                 onClick={handleCancel}
-                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150"
-                                style={{
-                                    background: "rgba(255,255,255,0.04)",
-                                    border: "1px solid rgba(255,255,255,0.08)",
-                                    color: "#6b7280",
-                                }}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 bg-bg-surface border border-border-main text-text-secondary hover:bg-bg-card"
                             >
                                 <MdClose size={13} />
                                 Cancelar
@@ -179,7 +156,7 @@ export default function CardScheduleEdit({
                 ) : (
                     <button
                         type="button"
-                        className={`text-sm ${isMobile?'h-full w-full text-start' : ''} leading-relaxed ${description ? "text-[#d1d5db]" : "text-[#374151]"} ${canEdit && !description ? "italic" : ""}`}
+                        className={`text-sm ${isMobile?'h-full w-full text-start' : ''} leading-relaxed ${description ? "text-text-secondary" : "text-text-muted"} ${canEdit && !description ? "italic" : ""}`}
                         style={{ whiteSpace: "pre-wrap" }}
                         onClick={() => setEditing(true)}
                     >

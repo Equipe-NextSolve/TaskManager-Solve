@@ -33,15 +33,15 @@ export default function UsersFilter({
     return (
         <>
             <div className="flex items-center gap-2 flex-wrap">
-                <MdFilterList size={16} style={{ color: "#4b5563" }} />
+                <MdFilterList size={16} className="text-text-muted" />
                 <button
                     type="button"
                     onClick={() => setFilterUserId("me")}
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-150"
                     style={{
-                        background: isViewingMe ? "rgba(25,202,104,0.15)" : "rgba(255,255,255,0.04)",
-                        border: isViewingMe ? "1px solid rgba(25,202,104,0.4)" : "1px solid rgba(255,255,255,0.08)",
-                        color: isViewingMe ? "#19CA68" : "#9ca3af",
+                        background: isViewingMe ? "rgba(25,202,104,0.15)" : "var(--color-bg-surface)",
+                        border: isViewingMe ? "1px solid rgba(25,202,104,0.4)" : "1px solid var(--color-border-main)",
+                        color: isViewingMe ? "#19CA68" : "var(--color-text-secondary)",
                     }}
                 >
                     <MdPerson size={15} />
@@ -54,9 +54,9 @@ export default function UsersFilter({
                         onClick={() => setFilterUserId("all")}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-150"
                         style={{
-                            background: isViewingAll ? "rgba(34,211,238,0.12)" : "rgba(255,255,255,0.04)",
-                            border: isViewingAll ? "1px solid rgba(34,211,238,0.35)" : "1px solid rgba(255,255,255,0.08)",
-                            color: isViewingAll ? "#22d3ee" : "#9ca3af",
+                            background: isViewingAll ? "rgba(34,211,238,0.12)" : "var(--color-bg-surface)",
+                            border: isViewingAll ? "1px solid rgba(34,211,238,0.35)" : "1px solid var(--color-border-main)",
+                            color: isViewingAll ? "#22d3ee" : "var(--color-text-secondary)",
                         }}
                     >
                         <MdGroup size={15} />
@@ -68,9 +68,9 @@ export default function UsersFilter({
                             onClick={() => setModalOpen(true)}
                             className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-150"
                             style={{
-                                background: selectedUser ? `${avatarColor(selectedUser.id)}20` : "rgba(255,255,255,0.04)",
-                                border: selectedUser ? `1px solid ${avatarColor(selectedUser.id)}60` : "1px solid rgba(255,255,255,0.08)",
-                                color: selectedUser ? avatarColor(selectedUser.id) : "#9ca3af",
+                                background: selectedUser ? `${avatarColor(selectedUser.id)}20` : "var(--color-bg-surface)",
+                                border: selectedUser ? `1px solid ${avatarColor(selectedUser.id)}60` : "1px solid var(--color-border-main)",
+                                color: selectedUser ? avatarColor(selectedUser.id) : "var(--color-text-secondary)",
                             }}
                         >
                             {selectedUser ? (
@@ -96,9 +96,9 @@ export default function UsersFilter({
                                     onClick={() => setFilterUserId(filterUserId === u.id ? "me" : u.id)}
                                     className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200"
                                     style={{
-                                        background: selected ? `${color}20` : "rgba(255,255,255,0.04)",
-                                        border: selected ? `1px solid ${color}60` : "1px solid rgba(255,255,255,0.08)",
-                                        color: selected ? color : "#9ca3af",
+                                        background: selected ? `${color}20` : "var(--color-bg-surface)",
+                                        border: selected ? `1px solid ${color}60` : "1px solid var(--color-border-main)",
+                                        color: selected ? color : "var(--color-text-secondary)",
                                     }}
                                 >
                                     <Avatar name={u.name} uid={u.id} src={u.photo} />

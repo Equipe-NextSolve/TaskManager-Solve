@@ -56,10 +56,10 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
 
     const containerClasses = isMobile
         ? `fixed top-0 right-0 h-full w-64 z-50 transform transition-transform duration-300 ease-in-out
-       bg-gradient-to-br from-black  via-background-page to-black shadow-xl
+       bg-bg-side backdrop-blur-xl border-l border-border-main shadow-xl
        ${isOpen ? "translate-x-0" : "translate-x-full"}`
         : `fixed top-0 left-0 h-full z-50 transition-all duration-300 ease-in-out
-       bg-gradient-to-br from-bg-pure via-background-page to-bg-pure shadow-xl
+       bg-bg-side backdrop-blur-md border-r border-border-main shadow-xl
        ${effectiveOpen ? "w-58 items-start" : "w-20 items-center"}`;
 
     return (
@@ -77,7 +77,7 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
                 )}
                 <div className="mb-6 flex items-center min-h-10 w-full">
                     <div className="w-20 flex justify-center shrink-0">
-                        <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-gray-800 shadow-inner bg-gray-900 flex items-center justify-center">
+                        <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border-main shadow-inner bg-bg-surface flex items-center justify-center">
                             {user?.photoURL ? (
                                 <Image
                                     src={user.photoURL}
@@ -86,7 +86,7 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
                                     className="object-cover"
                                 />
                             ) : (
-                                <span className="text-white text-base sm:text-lg font-bold">
+                                <span className="text-text-primary text-base sm:text-lg font-bold">
                                     {initial}
                                 </span>
                             )}
@@ -95,7 +95,7 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
                     <div
                         className={`ml-2 transition-all duration-300 ease-in-out overflow-hidden ${effectiveOpen ? "opacity-100 w-32" : "opacity-0 w-0"}`}
                     >
-                        <p className="text-white text-sm font-bold whitespace-nowrap truncate">
+                        <p className="text-text-primary text-sm font-bold whitespace-nowrap truncate">
                             {displayName ? displayName : "sem nome"}
                         </p>
                         <div className="mt-1">
@@ -103,7 +103,7 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
                         </div>
                     </div>
                 </div>
-                <div className={`h-px rouned-[5px] bg-[#49494969] my-1 mx-auto ${effectiveOpen ? 'w-[90%]' : 'w-[70%]'}`}/>
+                <div className={`h-px bg-border-main my-1 mx-auto ${effectiveOpen ? 'w-[90%]' : 'w-[70%]'}`}/>
                 <div className="flex flex-col items-center gap-2 w-full sm:px-4">
                     {visibleItems.map((item) => {
                         const active = isActive(item.href);
@@ -112,11 +112,11 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
                                 key={item.label}
                                 href={item.href}
                                 onClick={isMobile ? onToggle : undefined}
-                                className={`h-12 flex items-center text-[#6d6d6d] sm:hover:text-white sm:hover:bg-[#1a1a1a] rounded-lg transition-colors duration-200 group
+                                className={`h-12 w-full flex items-center text-text-secondary sm:hover:text-text-primary sm:hover:bg-bg-surface rounded-lg transition-colors duration-200 group
                                     ${
                                         active
-                                            ? "text-white bg-[#1a1a1a]"
-                                            : "text-[#6d6d6d] sm:hover:text-white sm:hover:bg-[#1a1a1a]"
+                                            ? "text-text-primary bg-bg-surface border border-border-main"
+                                            : "text-text-secondary sm:hover:text-text-primary sm:hover:bg-bg-surface"
                                     }`}
                             >
                                 <div className="w-12 flex justify-center shrink-0">

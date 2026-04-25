@@ -8,10 +8,10 @@ export default function CardFooter({ project }) {
         useProjectsDates(project);
 
     return (
-        <div className="flex items-center justify-between pt-3 gap-2 flex-wrap border-t border-t-[#FFFFFF0D]">
+        <div className="flex items-center justify-between pt-3 gap-2 flex-wrap border-t border-border-main">
             <div className="flex flex-col gap-0.75">
                 {startDateInfo && (
-                    <span className="flex items-center gap-1 text-[11px] text-bg-hover2">
+                    <span className="flex items-center gap-1 text-[11px] text-text-secondary">
                         <MdCalendarToday size={11} />
                         Início: {startDateInfo.formatted}
                     </span>
@@ -59,8 +59,8 @@ export default function CardFooter({ project }) {
                             href={project.repositoryUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="flex items-center justify-center w-7 h-7 rounded-[7px] text-font-gray bg-[#FFFFFF0D]
-                                border border-[#FFFFFF14] no-underline transition-all duration-150
+                            className="flex items-center justify-center w-7 h-7 rounded-[7px] text-text-secondary bg-bg-surface
+                                border border-border-main no-underline transition-all duration-150
                                 sm:hover:text-brand-500 sm:hover:border-brand-500/30"
                         >
                             <RiGitBranchLine size={14} />
@@ -70,8 +70,8 @@ export default function CardFooter({ project }) {
                 {project.hosting && (
                     <Tooltip title={`Hosting: ${project.hosting}`} arrow>
                         <div
-                            className="flex items-center gap-1 py-0.75 px-2.5 rounded-[7px] text-font-gray2
-                            bg-[#FFFFFF0A] border border-[#FFFFFF14] text-[10px]"
+                            className="flex items-center gap-1 py-0.75 px-2.5 rounded-[7px] text-text-muted
+                            bg-bg-surface border border-border-main text-[10px]"
                         >
                             <MdComputer size={12} />
                             {project.hosting}

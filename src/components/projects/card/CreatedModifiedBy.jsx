@@ -13,17 +13,17 @@ export default function CreatedModifiedBy({ usersMap, project }) {
             }}
         >
             {createdBy && (
-                <span style={{ fontSize: 10, color: "#4b4b4b" }}>
+                <span className="text-[10px] text-text-muted">
                     Criado por{" "}
-                    <span style={{ color: "#6b7280", fontWeight: 600 }}>
+                    <span className="text-text-secondary font-semibold">
                         {createdBy.name}
                     </span>
                 </span>
             )}
             {lastModifiedBy && project.lastModified && (
-                <span style={{ fontSize: 10, color: "#4b4b4b" }}>
+                <span className="text-[10px] text-text-muted">
                     Últ. Edição por{" "}
-                    <span style={{ color: "#6b7280", fontWeight: 600 }}>
+                    <span className="text-text-secondary font-semibold">
                         {lastModifiedBy.name}
                     </span>
                 </span>

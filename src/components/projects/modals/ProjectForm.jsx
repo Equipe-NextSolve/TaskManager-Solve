@@ -123,15 +123,16 @@ export function ProjectForm({
             maxWidth="md"
             fullWidth
             PaperProps={{
-                style: {
-                    background: "#171C23",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    borderRadius: 16,
-                    boxShadow: "0 24px 60px rgba(0,0,0,0.7)",
+                sx: {
+                    background: "var(--color-bg-card)",
+                    backgroundImage: "none",
+                    border: "1px solid var(--color-border-main)",
+                    borderRadius: "16px",
+                    boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
                 },
             }}
         >
-            <DialogTitle className="flex items-center justify-between border-b border-[#FFFFFF0F]
+            <DialogTitle className="flex items-center justify-between border-b border-border-main
                 pt-5 px-6 pb-3">
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-brand-500/15">
@@ -140,7 +141,7 @@ export function ProjectForm({
                         />
                     </div>
                     <span
-                        style={{ color: "#fff", fontWeight: 700, fontSize: 16 }}
+                        className="text-text-primary font-bold text-base"
                     >
                         {isEdit ? "Editar Projeto" : "Novo Projeto"}
                     </span>
@@ -149,7 +150,7 @@ export function ProjectForm({
                     onClick={handleClose}
                     disabled={loading}
                     type="button"
-                    className="bg-none text-font-gray2 cursor-pointer rounded-md flex p-1 border-none">
+                    className="bg-none text-text-muted cursor-pointer rounded-md flex p-1 border-none hover:text-text-primary transition-colors">
                     <MdClose size={20} />
                 </button>
             </DialogTitle>
@@ -313,12 +314,13 @@ export function ProjectForm({
                                                         key={uid}
                                                         label={u?.name || uid}
                                                         size="small"
-                                                        style={{
+                                                        sx={{
                                                             background:
-                                                                "#19CA6826",
+                                                                "rgba(25, 202, 104, 0.15)",
                                                             color: "var(--color-brand-500)",
                                                             fontSize: 11,
                                                             height: 22,
+                                                            "& .MuiChip-label": { px: 1 }
                                                         }}
                                                     />
                                                 );
@@ -460,15 +462,16 @@ export function ProjectForm({
                     />
                 </DialogContent>
 
-                <DialogActions className="gap-2 border-t border-t-[#FFFFFF0F]" >
+                <DialogActions className="gap-2 border-t border-border-main py-4 px-6" >
                     <button
                         type="button"
                         onClick={handleClose}
                         disabled={loading}
                         className="
                             text-[13px] font-semibold cursor-pointer
-                            rounded-lg py-2 px-5 text-font-gray
-                            border border-[#FFFFFF1A] bg-[#FFFFFF0D]
+                            rounded-lg py-2 px-5 text-text-secondary
+                            border border-border-main bg-bg-surface
+                            hover:bg-bg-card transition-colors
                         "
                     >
                         Cancelar

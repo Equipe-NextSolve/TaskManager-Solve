@@ -23,14 +23,14 @@ export default function SearchInput({setSearchTerm,searchTerm}) {
                 }}
                 sx={{
                     "& .MuiOutlinedInput-root": {
-                        color: "white",
-                        backgroundColor: "rgba(255,255,255,0.02)",
+                        color: "var(--color-text-primary)",
+                        backgroundColor: "var(--color-border-subtle)",
                         borderRadius: "12px",
                         "& fieldset": {
-                            borderColor: "rgba(255,255,255,0.05)",
+                            borderColor: "var(--color-border-main)",
                         },
                         "&:hover fieldset": {
-                            borderColor: "rgba(255,255,255,0.1)",
+                            borderColor: "rgba(var(--color-brand-500-rgb), 0.3)",
                         },
                         "&.Mui-focused fieldset": {
                             borderColor: "var(--color-brand-500)",

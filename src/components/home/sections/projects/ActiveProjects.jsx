@@ -7,26 +7,22 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 export default function ActiveProjects({ activeProjects, today }) {
     return (
         <div
-            className="p-5 rounded-2xl"
-            style={{
-                background: "#121212",
-                border: "1px solid rgba(255,255,255,0.06)",
-            }}
+            className="p-5 rounded-2xl bg-bg-card border border-border-main"
         >
             <div className="flex items-center justify-between mb-5">
                 <div>
-                    <h2 className="text-base font-bold text-white">
+                    <h2 className="text-base font-bold text-text-primary">
                         Projetos Ativos
                     </h2>
-                    <p className="text-xs text-font-gray2 mt-0.5">
+                    <p className="text-xs text-text-secondary mt-0.5">
                         Início e previsão de entrega
                     </p>
                 </div>
-                <MdOutlineFlag className="text-bg-hover2 text-xl" />
+                <MdOutlineFlag className="text-text-muted text-xl" />
             </div>
 
             {activeProjects.length === 0 ? (
-                <p className="text-xs text-font-gray2 text-center py-6">
+                <p className="text-xs text-text-secondary text-center py-6">
                     Nenhum projeto ativo no momento
                 </p>
             ) : (
@@ -52,7 +48,7 @@ export default function ActiveProjects({ activeProjects, today }) {
                                                 background: color,
                                             }}
                                         />
-                                        <p className="text-sm font-semibold text-white truncate max-w-40">
+                                        <p className="text-sm font-semibold text-text-primary truncate max-w-40">
                                             {proj.title}
                                         </p>
                                     </div>
@@ -69,10 +65,10 @@ export default function ActiveProjects({ activeProjects, today }) {
                                                 style={{
                                                     color: urgent
                                                         ? "#ef4444"
-                                                        : "#6b7280",
+                                                        : "var(--color-text-secondary)",
                                                     background: urgent
                                                         ? "rgba(239,68,68,0.1)"
-                                                        : "rgba(107,114,128,0.1)",
+                                                        : "var(--color-border-main)",
                                                 }}
                                             >
                                                 {daysLeft >= 0
@@ -83,7 +79,7 @@ export default function ActiveProjects({ activeProjects, today }) {
                                     </div>
                                 </div>
                                 <ProgressBar value={progress} color={color} />
-                                <div className="flex items-center justify-between mt-2 text-[11px] text-font-gray2">
+                                <div className="flex items-center justify-between mt-2 text-[11px] text-text-secondary">
                                     <span className="flex items-center gap-1">
                                         <MdCalendarToday fontSize={11} />
                                         Início:{" "}

@@ -22,47 +22,39 @@ export default function ModalDelete({
             maxWidth="xs"
             fullWidth
             PaperProps={{
-                style: {
-                    background: "#171C23",
-                    border: "1px solid rgba(239,68,68,0.2)",
-                    borderRadius: 16,
+                sx: {
+                    background: "var(--color-bg-card)",
+                    backgroundImage: "none",
+                    border: "1px solid var(--color-border-main)",
+                    borderRadius: "16px",
                 },
             }}
         >
             <DialogTitle
-                style={{
-                    color: "#fff",
+                sx={{
+                    color: "var(--color-text-primary)",
                     fontWeight: 700,
-                    fontSize: 16,
-                    paddingBottom: 8,
+                    fontSize: "1.1rem",
+                    paddingBottom: 1,
                 }}
             >
                 Excluir Projeto
             </DialogTitle>
-            <DialogContent style={{ paddingTop: 0 }}>
-                <p style={{ color: "#9ca3af", fontSize: 14, lineHeight: 1.6 }}>
+            <DialogContent sx={{ pt: 2 }}>
+                <p className="text-text-secondary text-sm leading-relaxed m-0">
                     Tem certeza que deseja excluir{" "}
-                    <span style={{ color: "#fff", fontWeight: 600 }}>
+                    <span className="text-text-primary font-bold">
                         "{project?.title}"
                     </span>
                     ? Esta ação não pode ser desfeita.
                 </p>
             </DialogContent>
-            <DialogActions style={{ padding: "8px 24px 20px", gap: 8 }}>
+            <DialogActions sx={{ padding: "8px 24px 20px", gap: 1 }}>
                 <button
                     onClick={onClose}
                     disabled={loading}
                     type="button"
-                    style={{
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        borderRadius: 8,
-                        color: "#9ca3af",
-                        padding: "8px 20px",
-                        cursor: "pointer",
-                        fontSize: 13,
-                        fontWeight: 600,
-                    }}
+                    className="bg-bg-surface border border-border-main text-text-secondary py-2 px-5 rounded-lg font-semibold text-xs cursor-pointer hover:bg-bg-card transition-colors"
                 >
                     Cancelar
                 </button>

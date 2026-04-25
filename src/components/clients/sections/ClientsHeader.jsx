@@ -9,12 +9,12 @@ export default function ClientsHeader() {
             <div>
                 <div className="flex items-center gap-2 mb-1">
                     <FiBriefcase className="text-brand-500 text-lg" />
-                    <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-bg-hover2">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-text-secondary">
                         Gestão de Clientes
                     </span>
                 </div>
                 <h1
-                    className={`${isMobile ? "text-xl" : "text-[26px]"} font-extrabold text-white m-0`}
+                    className={`${isMobile ? "text-xl" : "text-[26px]"} font-extrabold text-text-primary m-0`}
                 >
                     Clientes
                 </h1>

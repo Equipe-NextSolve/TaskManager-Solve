@@ -3,10 +3,11 @@
 import { Box, Switch } from "@mui/material";
 import { useState } from "react";
 import { MdWarningAmber } from "react-icons/md";
+import { toast } from "sonner";
 import { useSettings } from "@/context/SettingsContext";
 import useIsMobile from "@/hooks/responsive/useIsMobile";
-import { toast } from "sonner";
 import { switchStyles } from "@/styles/StyleSwitch";
+
 export default function SystemSettings() {
     const { systemSettings, updateSystemSettings } = useSettings();
     const isMobile = useIsMobile();
@@ -18,7 +19,7 @@ export default function SystemSettings() {
             await updateSystemSettings({ [field]: value });
         } catch (error) {
             console.error(`Erro ao atualizar ${field}:`, error);
-            toast.error(`Erro ao atualizar ${field}:`, error)
+            toast.error(`Erro ao atualizar ${field}:`, error);
         } finally {
             setLoadingField(null);
         }
@@ -46,19 +47,19 @@ export default function SystemSettings() {
             </div>
 
             <div className="space-y-6">
-                <h3 className="text-white font-bold text-lg">
+                <h3 className="text-text-primary font-bold text-lg">
                     Parâmetros de Controle
                 </h3>
 
                 <div
                     className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"} gap-4`}
                 >
-                    <div className="p-5 bg-white/2 rounded-2xl border border-white/5 flex items-center justify-between group hover:border-white/10 transition-colors">
+                    <div className="p-5 bg-bg-card rounded-2xl border border-border-main flex items-center justify-between group hover:border-brand-500/30 transition-colors">
                         <div className="space-y-1">
-                            <p className="text-white text-sm font-bold">
+                            <p className="text-text-primary text-sm font-bold">
                                 Modo de Manutenção
                             </p>
-                            <p className="text-white/30 text-xs">
+                            <p className="text-text-secondary text-xs">
                                 Bloquear acesso de não-admins.
                             </p>
                         </div>
@@ -76,12 +77,12 @@ export default function SystemSettings() {
                         />
                     </div>
 
-                    <div className="p-5 bg-white/2 rounded-2xl border border-white/5 flex items-center justify-between group hover:border-white/10 transition-colors">
+                    <div className="p-5 bg-bg-card rounded-2xl border border-border-main flex items-center justify-between group hover:border-brand-500/30 transition-colors">
                         <div className="space-y-1">
-                            <p className="text-white text-sm font-bold">
+                            <p className="text-text-primary text-sm font-bold">
                                 Novos Registros
                             </p>
-                            <p className="text-white/30 text-xs">
+                            <p className="text-text-secondary text-xs">
                                 Habilitar criação de novas contas.
                             </p>
                         </div>

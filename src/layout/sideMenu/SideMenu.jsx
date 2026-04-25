@@ -6,7 +6,7 @@ export default function SideMenu({ isOpen, onToggle, isMobile }) {
         <>
             {isMobile && isOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
+                    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300"
                     onClick={onToggle}
                     aria-hidden="true"
                 />

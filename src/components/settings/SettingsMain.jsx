@@ -29,7 +29,7 @@ export default function SettingsMain() {
                     icon={FiSettings}
                 />
 
-                <div className="bg-bg-card border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+                <div className="bg-bg-card border border-border-main rounded-2xl overflow-hidden shadow-2xl">
                     <Tabs
                         value={activeTab}
                         onChange={handleTabChange}
@@ -38,10 +38,10 @@ export default function SettingsMain() {
                         variant="scrollable"
                         scrollButtons="auto"
                         allowScrollButtonsMobile
-                        className="border-b border-white/5 bg-white/2"
+                        className="border-b border-border-main bg-bg-surface"
                         sx={{
                             "& .MuiTab-root": {
-                                color: "rgba(255,255,255,0.4)",
+                                color: "var(--color-text-muted)",
                                 minHeight: isMobile ? 48 : 64,
                                 fontSize: isMobile ? "0.75rem" : "0.875rem",
                                 fontWeight: 600,

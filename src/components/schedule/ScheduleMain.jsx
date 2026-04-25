@@ -67,7 +67,7 @@ export default function ScheduleMain() {
     }, [weekStart, weekEnd]);
 
     return (
-        <div className="min-h-screen bg-background-page text-white py-6 space-y-6 font-sans">
+        <div className="min-h-screen bg-bg-main text-text-primary py-6 space-y-6 font-sans">
             <ScheduleHeader
                 isViewingAll={isViewingAll}
                 activeScheduleDoc={activeScheduleDoc}
@@ -125,11 +125,7 @@ export default function ScheduleMain() {
                     {/* Cabeçalho do dev visualizado (se não for "eu") */}
                     {!isViewingMe && (
                         <div
-                            className="flex items-center gap-3 mb-4 p-4 rounded-2xl"
-                            style={{
-                                background: "rgba(255,255,255,0.025)",
-                                border: "1px solid rgba(255,255,255,0.06)",
-                            }}
+                            className="flex items-center gap-3 mb-4 p-4 rounded-2xl bg-bg-card border border-border-main"
                         >
                             {(() => {
                                 const u = users.find(
@@ -139,10 +135,10 @@ export default function ScheduleMain() {
                                     <>
                                         <Avatar name={u.name} uid={u.id} src={u.photo}/>
                                         <div>
-                                            <p className="text-white font-semibold">
+                                            <p className="text-text-primary font-semibold">
                                                 {u.name}
                                             </p>
-                                            <p className="text-font-gray2 text-xs">
+                                            <p className="text-text-secondary text-xs">
                                                 Visualizando agenda
                                             </p>
                                         </div>

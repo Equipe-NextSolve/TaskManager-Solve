@@ -1,45 +1,57 @@
 export const muiDark = {
     "& .MuiOutlinedInput-root": {
-        color: "#e5e7eb",
-        "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
-        "&:hover fieldset": { borderColor: "rgba(255,255,255,0.25)" },
+        color: "var(--color-text-primary)",
+        "& fieldset": { borderColor: "var(--color-border-main)" },
+        "&:hover fieldset": { borderColor: "var(--color-border-main)" },
         "&.Mui-focused fieldset": { borderColor: "var(--color-brand-500)" },
-        "& .MuiSelect-icon": { color: "var(--color-font-gray)" },
+        "& .MuiSelect-icon": { color: "var(--color-text-muted)" },
         "& .MuiChip-root": {
             background: "rgba(25,202,104,0.15)",
             color: "var(--color-brand-500)",
             fontSize: 11,
         },
     },
-    "& .MuiInputLabel-root": { color: "var(--color-font-gray)" },
+    "& .MuiInputLabel-root": { color: "var(--color-text-muted)" },
     "& .MuiInputLabel-root.Mui-focused": { color: "var(--color-brand-500)" },
     "& .MuiFormHelperText-root": { color: "var(--color-error)" },
-    "& .MuiOutlinedInput-input": { color: "#e5e7eb" },
+    "& .MuiOutlinedInput-input": { color: "var(--color-text-primary)" },
 };
 
 export const muiDark2 = {
     "& .MuiOutlinedInput-root": {
-        color: "#e5e7eb",
-        background: "#FFFFFF0A",
-        "& fieldset": { borderColor: "rgba(255,255,255,0.12)" },
-        "&:hover fieldset": { borderColor: "rgba(255,255,255,0.25)" },
-        "&.Mui-focused fieldset": { borderColor: "var(--color-bg-hover2)" },
-        "& .MuiSelect-icon": { color: "var(--color-font-gray)" },
+        color: "var(--color-text-primary)",
+        background: "var(--color-border-subtle)",
+        "& fieldset": { borderColor: "var(--color-border-main)" },
+        "&:hover fieldset": { borderColor: "var(--color-border-main)" },
+        "&.Mui-focused fieldset": { borderColor: "var(--color-brand-500)" },
+        "& .MuiSelect-icon": { color: "var(--color-text-muted)" },
     },
     "& .MuiInputLabel-root": {
-        color: "var(--color-font-gray)",
-        "&.Mui-focused ": { color: "var(--color-font-gray)" },
+        color: "var(--color-text-muted)",
+        "&.Mui-focused ": { color: "var(--color-text-primary)" },
     },
     "& .MuiFormHelperText-root": { color: "var(--color-error)" },
-    "& .MuiOutlinedInput-input": { color: "#e5e7eb" },
+    "& .MuiOutlinedInput-input": { color: "var(--color-text-primary)" },
 };
 
 export const menuPaper = {
     PaperProps: {
-        style: {
-            background: "#171C23",
-            border: "1px solid rgba(255,255,255,0.1)",
-            borderRadius: 10,
+        sx: {
+            background: "var(--color-bg-card)",
+            border: "1px solid var(--color-border-main)",
+            borderRadius: "12px",
+            backgroundImage: "none",
+            "& .MuiMenuItem-root": {
+                color: "var(--color-text-primary)",
+                fontSize: 13,
+                "&:hover": {
+                    background: "var(--color-border-subtle)",
+                },
+                "&.Mui-selected": {
+                    background: "rgba(25,202,104,0.15)",
+                    color: "var(--color-brand-500)",
+                },
+            },
         },
     },
 };
@@ -48,9 +60,10 @@ export const menuPaper2 = {
     PaperProps: {
         sx: {
             background: "var(--color-bg-card)",
-            border: "1px solid rgba(255,255,255,0.1)",
+            border: "1px solid var(--color-border-main)",
             borderRadius: 1,
             mt: 1,
+            backgroundImage: "none",
 
             "& .MuiList-root": {
                 padding: "0px",
@@ -58,23 +71,24 @@ export const menuPaper2 = {
 
             "& .MuiMenuItem-root": {
                 fontSize: 13,
-                color: "#e5e7eb",
+                color: "var(--color-text-primary)",
                 transition: "all 0.15s ease",
 
                 "&:hover": {
-                    background: "var(--color-bg-hover)",
+                    background: "var(--color-border-subtle)",
                 },
 
                 "&.Mui-focusVisible": {
-                    background: "var(--color-bg-hover)",
+                    background: "var(--color-border-subtle)",
                 },
 
                 "&.Mui-selected": {
-                    background: "var(--color-bg-selected)",
+                    background: "rgba(25,202,104,0.15)",
+                    color: "var(--color-brand-500)",
                 },
 
                 "&.Mui-selected:hover": {
-                    background: "var(--color-bg-hover)",
+                    background: "rgba(25,202,104,0.25)",
                 },
             },
         },
