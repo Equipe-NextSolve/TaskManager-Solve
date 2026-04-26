@@ -20,6 +20,7 @@ import {
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import { db } from "@/lib/firebaseConfig";
+import { logActivity } from "@/utils/ActivityLogger";
 
 const ClientsContext = createContext();
 
@@ -67,6 +68,18 @@ export const ClientsProvider = ({ children }) => {
                     updatedAt: serverTimestamp(),
                 };
                 const ref = await addDoc(collection(db, "clients"), payload);
+                
+                // Log de Atividade
+                await logActivity({
+                    userId: currentUser.uid,
+                    userName: currentUser.name || currentUser.displayName,
+                    userPhoto: currentUser.photo || currentUser.photoURL,
+                    action: 'create',
+                    resourceType: 'client',
+                    resourceId: ref.id,
+                    resourceName: payload.name
+                });
+
                 toast.success("Cliente criado com sucesso");
                 return { id: ref.id, ...payload };
             } catch (error) {
@@ -89,6 +102,18 @@ export const ClientsProvider = ({ children }) => {
                 updatedAt: serverTimestamp(),
             };
             await updateDoc(doc(db, "clients", clientId), payload);
+
+            // Log de Atividade
+            await logActivity({
+                userId: currentUser.uid,
+                userName: currentUser.name || currentUser.displayName,
+                userPhoto: currentUser.photo || currentUser.photoURL,
+                action: 'update',
+                resourceType: 'client',
+                resourceId: clientId,
+                resourceName: payload.name
+            });
+
             toast.success("Cliente atualizado com sucesso");
         } catch (error) {
             console.error("Erro ao atualizar cliente:", error);
@@ -97,9 +122,22 @@ export const ClientsProvider = ({ children }) => {
         }
     }, []);
 
-    const deleteClient = useCallback(async (clientId) => {
+    const deleteClient = useCallback(async (client) => {
         try {
+            const clientId = client.id;
             await deleteDoc(doc(db, "clients", clientId));
+
+            // Log de Atividade
+            await logActivity({
+                userId: currentUser.uid,
+                userName: currentUser.name || currentUser.displayName,
+                userPhoto: currentUser.photo || currentUser.photoURL,
+                action: 'delete',
+                resourceType: 'client',
+                resourceId: clientId,
+                resourceName: client.name
+            });
+
             toast.success("Cliente excluído com sucesso");
         } catch (error) {
             console.error("Erro ao excluir cliente:", error);
