@@ -22,6 +22,8 @@ import {
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import { db } from "@/lib/firebaseConfig";
+import { logActivity } from "@/utils/ActivityLogger";
+import { STATUS_MAP } from "@/components/ui/StatusBadge";
 
 const ProjectsContext = createContext(); // contexto criado
 
@@ -118,6 +120,18 @@ export const ProjectsProvider = ({ children }) => {
                     currentUser.name || currentUser.displayName || "",
             };
             const ref = await addDoc(collection(db, "projects"), payload); // adiciona o payload como um novo documento na coleção projects
+            
+            // Log de Atividade
+            await logActivity({
+                userId: currentUser.uid,
+                userName: currentUser.name || currentUser.displayName,
+                userPhoto: currentUser.photo || currentUser.photoURL,
+                action: 'create',
+                resourceType: 'project',
+                resourceId: ref.id,
+                resourceName: payload.title
+            });
+
             return { id: ref.id, ...payload }; // A função retorna o projeto recém-criado com seu ID.
         },
         [currentUser],
@@ -175,14 +189,55 @@ export const ProjectsProvider = ({ children }) => {
                     currentUser.name || currentUser.displayName || "",
             };
             await updateDoc(doc(db, "projects", projectId), payload); // localiza o documento pelo caminho projects/projectId e aplica as alterações
+            
+            // Log de Atividade (Verifica se houve mudança de status)
+            if (prevStatus !== nextStatus) {
+                await logActivity({
+                    userId: currentUser.uid,
+                    userName: currentUser.name || currentUser.displayName,
+                    userPhoto: currentUser.photo || currentUser.photoURL,
+                    action: 'status_change',
+                    resourceType: 'project',
+                    resourceId: projectId,
+                    resourceName: payload.title,
+                    details: {
+                        field: 'status',
+                        oldValue: prevStatus,
+                        newValue: STATUS_MAP[nextStatus]?.label || nextStatus
+                    }
+                });
+            } else {
+                await logActivity({
+                    userId: currentUser.uid,
+                    userName: currentUser.name || currentUser.displayName,
+                    userPhoto: currentUser.photo || currentUser.photoURL,
+                    action: 'update',
+                    resourceType: 'project',
+                    resourceId: projectId,
+                    resourceName: payload.title
+                });
+            }
+
             return { id: projectId, ...payload };
         },
         [currentUser],
     );
 
-    const deleteProject = useCallback(async (projectId) => {
+    const deleteProject = useCallback(async (project) => {
+        const projectId = project.id;
         await deleteDoc(doc(db, "projects", projectId)); // remove o documento com o ID fornecido
-    }, []);
+        
+        // Log de Atividade
+        await logActivity({
+            userId: currentUser.uid,
+            userName: currentUser.name || currentUser.displayName,
+            userPhoto: currentUser.photo || currentUser.photoURL,
+            action: 'delete',
+            resourceType: 'project',
+            resourceId: projectId,
+            resourceName: project.title
+        });
+    }, [currentUser]);
 
     //isso permite usar usersMap[uid] para obter os dados rapidamente de um usuário sem precisar usar find
     const usersMap = useMemo(() => {
