@@ -186,7 +186,7 @@ export const TasksProvider = ({children, projectId}) =>{
                 resourceType: "task",
                 resourceId: task.id,
                 resourceName: task.title,
-                details: { projectId: payload.projectId || null },
+                details: { projectId: task.projectId || null },
             });
         }, [currentUser]
     )
