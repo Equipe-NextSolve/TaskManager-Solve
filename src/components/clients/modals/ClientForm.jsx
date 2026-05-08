@@ -17,10 +17,12 @@ import { MdClose } from "react-icons/md";
 import * as yup from "yup";
 import { useClients } from "@/context/ClientsContext";
 import { FormatPhone } from "@/utils/FormatPhone";
+import { FormatDocument } from "@/utils/FormatCnpj/CPF";
 
 const schema = yup.object().shape({
     name: yup.string().required("O nome é obrigatório"),
     email: yup.string().email("E-mail inválido"),
+    
     contato: yup
         .string()
         .required("O telefone é obrigatório")
@@ -29,7 +31,14 @@ const schema = yup.object().shape({
             const numbers = value.replace(/\D/g, ""); // remove tudo que não é número
             return numbers.length === 11; // DDD + 9 dígitos
         }),
-    documento: yup.string().nullable(),
+    documento: yup
+        .string()
+        .nullable()
+        .test("doc-format", "Documento incompleto/inválido", (value) => {
+            if (!value) return true;
+            const numbers = value.replace(/\D/g, "");
+            return numbers.length === 11 || numbers.length === 14;
+        }),
     status: yup
         .string()
         .oneOf(["active", "inactive"])
@@ -62,11 +71,12 @@ export default function ClientForm({ isOpen, onClose, client }) {
             const cleanData = {
                 ...data,
                 contato: data.contato.replace(/\D/g, ""),
+                documento: data.documento ? data.documento.replace(/\D/g, "") : "",
             };
             if (isEditing) {
-                await updateClient(client.id, data);
+                await updateClient(client.id, cleanData);
             } else {
-                await createClient(data);
+                await createClient(cleanData);
             }
             onClose();
         } catch (err) {
@@ -98,6 +108,7 @@ export default function ClientForm({ isOpen, onClose, client }) {
     };
 
     const contactValue = watch("contato");
+    const documentValue = watch("documento");
 
     return (
         <Dialog
@@ -155,6 +166,11 @@ export default function ClientForm({ isOpen, onClose, client }) {
                         {...register("documento")}
                         label="CPF ou CNPJ (Opcional)"
                         fullWidth
+                        value={FormatDocument(documentValue)}
+                        onChange={(e) => {
+                            // Seta o valor formatado no estado do form em tempo real
+                            setValue("documento", FormatDocument(e.target.value), { shouldValidate: true });
+                        }}
                         error={!!errors.documento}
                         helperText={errors.documento?.message}
                         variant="outlined"

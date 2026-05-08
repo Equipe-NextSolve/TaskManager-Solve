@@ -1,6 +1,6 @@
 import { Avatar } from "@/components/ui/AvatarBadge";
 import { formatDateInput } from "@/utils/FormatDateProjects";
-import { MdOutlineCalendarToday } from "react-icons/md";
+import { MdOutlineCalendarToday, MdPerson } from "react-icons/md";
 
 
 export default function CardFooter({assignedUsers, task}) {
