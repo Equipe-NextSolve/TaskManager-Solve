@@ -52,6 +52,9 @@ export const AuthProvider = ({ children }) => {
     // indica que o login acabou de acontecer nesta sessão, Usamos ref para não causar re-render e evitar loop
     const justLoggedIn = useRef(false);
 
+    // Guarda dados do novo usuário
+    const pendingUserData = useRef(null);
+
     useEffect(() => {
         // Esse bloco será executado apenas uma vez, quando o AuthProvider for renderizado pela 1° vez
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -61,8 +64,14 @@ export const AuthProvider = ({ children }) => {
                 setSessionCookie(token);
 
                 // Busca dados do usuários
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                const userData = userDoc.exists() ? userDoc.data() : {};
+                let userData;
+                if (pendingUserData.current) {
+                    userData = pendingUserData.current;
+                    pendingUserData.current = null;
+                } else {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    userData = userDoc.exists() ? userDoc.data() : {};
+                }
 
                 setCurrentUser({ ...user, ...userData }); // atualiza o estado com a informação recebida do firebase
 
@@ -90,29 +99,31 @@ export const AuthProvider = ({ children }) => {
     };
 
     const register = async (name, email, password) => {
-        // Função de registro, cria um novo usuário no Firebase Auth
-        const userCredential = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password,
-        );
+    
         const usersSnapshot = await getDocs(collection(db, "users"));
         const isFirstUser = usersSnapshot.empty;
 
-        // Cria o documento do usuário na coleção users do firestore
-        await setDoc(doc(db, "users", userCredential.user.uid), {
+        // dados do novo user
+        const userData = {
             name: name.trim(),
             email,
             role: isFirstUser ? "administrador" : "desenvolvedor",
             createdAt: new Date(),
             authMethod: "email",
-        });
-        // garantimos o cookie e o roteamento AQUI:
+        };
+
+        // Cria o documento do usuário na coleção users do firestore
+        // Salva em memória ANTES do setDoc — onAuthStateChanged vai consumir isso
+        pendingUserData.current = userData;
+        justLoggedIn.current = true; // deixa o onAuthStateChanged fazer o redirect
+
+        // Função de registro, cria um novo usuário no Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+        await setDoc(doc(db, "users", userCredential.user.uid), userData);
+
         const token = await userCredential.user.getIdToken();
         setSessionCookie(token);
-        
-        // Redireciona o usuário
-        router.goHome();
     };
 
     const logout = async () => {
