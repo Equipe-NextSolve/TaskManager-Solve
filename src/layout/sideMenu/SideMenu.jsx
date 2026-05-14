@@ -11,7 +11,7 @@ export default function SideMenu({ isOpen, onToggle, isMobile }) {
                     aria-hidden="true"
                 />
             )}
-            <aside className={` ${!isMobile ? "w-75 pr-4 sm:pr-6" : ""}`}>
+            <aside className={` ${isMobile ? " " : "w-75 pr-4 sm:pr-6"}`}>
                 <SideMenuItems
                     isOpen={isOpen}
                     onToggle={onToggle}

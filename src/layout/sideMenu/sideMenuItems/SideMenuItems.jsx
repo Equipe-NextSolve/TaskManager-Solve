@@ -19,8 +19,8 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
     const { logout, currentUser } = useAuth();
     const pathname = usePathname();
 
-    const handleMouseEnter = !isMobile ? () => setHoverOpen(true) : undefined;
-    const handleMouseLeave = !isMobile ? () => setHoverOpen(false) : undefined;
+    const handleMouseEnter = isMobile ? undefined : () => setHoverOpen(true);
+    const handleMouseLeave = isMobile ? undefined : () => setHoverOpen(false);
 
     //filtrar os itens com base no cargo do usuário
     const visibleItems = menuItems.filter(
@@ -77,7 +77,7 @@ export default function SideMenuItems({ isOpen, onToggle, isMobile }) {
                         className={`ml-2 transition-all duration-300 ease-in-out overflow-hidden ${effectiveOpen ? "opacity-100 w-32" : "opacity-0 w-0"}`}
                     >
                         <p className="text-text-primary text-sm font-bold whitespace-nowrap truncate">
-                            {displayName ? displayName : "sem nome"}
+                            {displayName || "sem nome"}
                         </p>
                         <div className="mt-1">
                             <RoleBadge />
