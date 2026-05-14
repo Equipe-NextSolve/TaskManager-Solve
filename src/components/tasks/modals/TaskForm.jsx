@@ -129,7 +129,7 @@ function TaskForm({
                         backgroundImage: "none",
                         color: "var(--color-text-primary)",
                     },
-                }
+                },
             }}
         >
             <DialogTitle sx={{ pb: 1 }}>

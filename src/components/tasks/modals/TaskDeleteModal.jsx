@@ -30,7 +30,7 @@ export default function TaskDeleteModal({
                         backgroundImage: "none",
                         color: "var(--color-text-primary)",
                     },
-                }
+                },
             }}
         >
             <DialogTitle>

@@ -51,7 +51,7 @@ export default function UserDeleteModal({ open, onClose, user }) {
                         borderRadius: "16px",
                         boxShadow: "0 24px 60px rgba(0,0,0,0.4)",
                     },
-                }
+                },
             }}
         >
             {/* Header */}

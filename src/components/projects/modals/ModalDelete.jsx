@@ -29,7 +29,7 @@ export default function ModalDelete({
                         border: "1px solid var(--color-border-main)",
                         borderRadius: "16px",
                     },
-                }
+                },
             }}
         >
             <DialogTitle

@@ -2,20 +2,20 @@
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-    Box,
-    Button,
+    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
-    IconButton,
     MenuItem,
     TextField,
 } from "@mui/material";
+import { memo } from "react";
 import { useForm } from "react-hook-form";
-import { MdClose } from "react-icons/md";
+import { MdClose, MdOutlinePeople } from "react-icons/md";
 import * as yup from "yup";
 import { useClients } from "@/context/ClientsContext";
+import { menuPaper, muiDark } from "@/styles/StyleInputs";
 import { FormatDocument } from "@/utils/FormatCnpj/CPF";
 import { FormatPhone } from "@/utils/FormatPhone";
 
@@ -45,7 +45,7 @@ const schema = yup.object().shape({
         .required("O status é obrigatório"),
 });
 
-export default function ClientForm({ isOpen, onClose, client }) {
+function ClientForm({ isOpen, onClose, client }) {
     const { createClient, updateClient } = useClients();
     const isEditing = !!client;
 
@@ -86,33 +86,8 @@ export default function ClientForm({ isOpen, onClose, client }) {
         }
     };
 
-    const inputStyle = {
-        "& .MuiOutlinedInput-root": {
-            color: "var(--color-text-primary) !important",
-            backgroundColor: "var(--color-border-subtle)",
-            borderRadius: "12px",
-            "& fieldset": { borderColor: "var(--color-border-main)" },
-            "&:hover fieldset": {
-                borderColor: "rgba(var(--color-brand-500-rgb), 0.3)",
-            },
-            "&.Mui-focused fieldset": { borderColor: "var(--color-brand-500)" },
-        },
-        "& label": {
-            color: "var(--color-text-muted)",
-            fontSize: "0.875rem",
-            fontWeight: 600,
-        },
-        "& label.Mui-focused": { color: "var(--color-brand-500)" },
-        "& .MuiFormHelperText-root": {
-            color: "var(--color-error)",
-            fontWeight: 600,
-        },
-    };
-
-    const getButtonLabel = () => {
-        if (isSubmitting) return "Processando...";
-        if (isEditing) return "Salvar Alterações";
-        return "Criar Cliente";
+    const handleClose = () => {
+        if (!isSubmitting) onClose();
     };
 
     const contactValue = watch("contato");
@@ -121,64 +96,67 @@ export default function ClientForm({ isOpen, onClose, client }) {
     return (
         <Dialog
             open={isOpen}
-            onClose={onClose}
+            onClose={handleClose}
             fullWidth
             maxWidth="sm"
             slotProps={{
                 paper: {
                     sx: {
-                        backgroundColor: "var(--color-bg-card) !important",
-                        backgroundImage: "none !important",
+                        background: "var(--color-bg-card)",
+                        backgroundImage: "none",
                         border: "1px solid var(--color-border-main)",
-                        borderRadius: "24px",
-                        color: "var(--color-text-primary)",
-                        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+                        borderRadius: "16px",
+                        boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
                     },
-                }
+                },
             }}
         >
-            <DialogTitle className="flex justify-between items-center py-6 px-8 border-b border-border-main">
-                <span className="text-xl font-black uppercase tracking-tight text-text-primary">
-                    {isEditing ? "Editar Cliente" : "Novo Cliente"}
-                </span>
-                <IconButton
-                    onClick={onClose}
-                    size="small"
-                    sx={{
-                        color: "var(--color-text-muted)",
-                        "&:hover": {
-                            color: "var(--color-text-primary)",
-                            backgroundColor: "var(--color-border-subtle)",
-                        },
-                    }}
+            <DialogTitle
+                className="flex items-center justify-between border-b border-border-main
+                pt-5 px-6 pb-3"
+            >
+                <div className="flex items-center gap-[10px]">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-brand-500/15">
+                        <MdOutlinePeople
+                            style={{
+                                color: "var(--color-brand-500)",
+                                fontSize: 18,
+                            }}
+                        />
+                    </div>
+                    <span className="text-text-primary font-bold text-base">
+                        {isEditing ? "Editar Cliente" : "Novo Cliente"}
+                    </span>
+                </div>
+                <button
+                    onClick={handleClose}
+                    disabled={isSubmitting}
+                    type="button"
+                    className="bg-none text-text-muted cursor-pointer rounded-md flex p-1 border-none hover:text-text-primary transition-colors"
                 >
-                    <MdClose />
-                </IconButton>
+                    <MdClose size={20} />
+                </button>
             </DialogTitle>
 
-            <DialogContent sx={{ px: { xs: 4, sm: 8 }, py: "40px !important" }}>
-                <Box
-                    component="form"
-                    className="flex flex-col gap-6" // Garante um abaixo do outro com espaçamento
-                    onSubmit={handleSubmit(onSubmit)}
-                >
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <DialogContent className="flex flex-col gap-4 py-5 px-6">
                     <TextField
                         {...register("name")}
-                        label="Nome do Cliente ou Empresa"
+                        label="Nome do Cliente ou Empresa *"
                         fullWidth
+                        size="small"
                         error={!!errors.name}
                         helperText={errors.name?.message}
-                        variant="outlined"
-                        sx={inputStyle}
+                        sx={muiDark}
                     />
 
                     <TextField
                         {...register("documento")}
                         label="CPF ou CNPJ (Opcional)"
                         fullWidth
+                        size="small"
                         value={FormatDocument(documentValue)}
                         onChange={(e) => {
-                            // Seta o valor formatado no estado do form em tempo real
                             setValue(
                                 "documento",
                                 FormatDocument(e.target.value),
@@ -187,120 +165,90 @@ export default function ClientForm({ isOpen, onClose, client }) {
                         }}
                         error={!!errors.documento}
                         helperText={errors.documento?.message}
-                        variant="outlined"
-                        sx={inputStyle}
+                        sx={muiDark}
                     />
 
                     <TextField
                         {...register("email")}
                         label="E-mail de Contato"
                         fullWidth
+                        size="small"
                         error={!!errors.email}
                         helperText={errors.email?.message}
-                        variant="outlined"
-                        sx={inputStyle}
+                        sx={muiDark}
                     />
 
                     <TextField
                         {...register("contato")}
-                        label="Telefone / WhatsApp"
+                        label="Telefone / WhatsApp *"
                         fullWidth
+                        size="small"
                         value={FormatPhone(contactValue)}
                         onChange={(e) => {
                             setValue("contato", e.target.value);
                         }}
                         error={!!errors.contato}
                         helperText={errors.contato?.message}
-                        variant="outlined"
-                        sx={inputStyle}
+                        sx={muiDark}
                     />
 
                     <TextField
                         {...register("status")}
                         select
-                        label="Status da Parceria"
+                        label="Status da Parceria *"
                         fullWidth
+                        size="small"
                         defaultValue={client?.status || "active"}
-                        variant="outlined"
-                        sx={{
-                            ...inputStyle,
-                            "& .MuiSelect-icon": {
-                                color: "var(--color-text-muted)",
-                            },
-                        }}
-                        slotProps={{
-                            select: {
-                                MenuProps: {
-                                    slotProps: {
-                                        paper: {
-                                            sx: {
-                                                backgroundColor: "var(--color-bg-card)",
-                                                border: "1px solid var(--color-border-main)",
-                                                backgroundImage: "none",
-                                                color: "var(--color-text-primary)",
-                                                "& .MuiMenuItem-root": {
-                                                    fontSize: "0.875rem",
-                                                    "&:hover": {
-                                                        backgroundColor: "rgba(25,202,104,0.1)",
-                                                        color: "var(--color-brand-500)",
-                                                    },
-                                                    "&.Mui-selected": {
-                                                        backgroundColor: "rgba(25,202,104,0.2)",
-                                                        color: "var(--color-brand-500)",
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
+                        sx={muiDark}
+                        SelectProps={{
+                            MenuProps: menuPaper,
                         }}
                     >
-                        <MenuItem value="active">Ativo</MenuItem>
-                        <MenuItem value="inactive">Inativo</MenuItem>
+                        <MenuItem value="active" style={{ fontSize: 13 }}>
+                            Ativo
+                        </MenuItem>
+                        <MenuItem value="inactive" style={{ fontSize: 13 }}>
+                            Inativo
+                        </MenuItem>
                     </TextField>
-                </Box>
-            </DialogContent>
+                </DialogContent>
 
-            <DialogActions className="py-6 px-8 border-t border-border-main">
-                <Button
-                    onClick={onClose}
-                    sx={{
-                        color: "var(--color-text-secondary)",
-                        textTransform: "none",
-                        fontWeight: 700,
-                        fontSize: "0.875rem",
-                        "&:hover": { color: "var(--color-text-primary)" },
-                    }}
-                >
-                    Cancelar
-                </Button>
-                <Button
-                    onClick={handleSubmit(onSubmit)}
-                    disabled={isSubmitting}
-                    variant="contained"
-                    className="shadow-xl shadow-brand-500/20"
-                    sx={{
-                        backgroundColor: "var(--color-brand-500)",
-                        "&:hover": {
-                            backgroundColor: "var(--color-brand-600)",
-                        },
-                        textTransform: "none",
-                        borderRadius: "14px",
-                        fontWeight: 800,
-                        fontSize: "0.875rem",
-                        px: 4,
-                        py: 1.5,
-                        color: "black",
-                        "&.Mui-disabled": {
-                            backgroundColor: "var(--color-border-main)",
-                            color: "var(--color-text-muted)",
-                        },
-                    }}
-                >
-                    {getButtonLabel()}
-                </Button>
-            </DialogActions>
+                <DialogActions className="gap-2 border-t border-border-main py-4 px-6">
+                    <button
+                        type="button"
+                        onClick={handleClose}
+                        disabled={isSubmitting}
+                        className="
+                            text-[13px] font-semibold cursor-pointer
+                            rounded-lg py-2 px-5 text-text-secondary
+                            border border-border-main bg-bg-surface
+                            hover:bg-bg-surface/60 duration-200 transition-all
+                        "
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`border-none rounded-lg text-black py-2 px-6 text-[13px] font-bold flex items-center gap-1.5 
+                            ${
+                                isSubmitting
+                                    ? "bg-brand-500/40 cursor-not-allowed shadow-none"
+                                    : "bg-linear-to-br from-brand-500 to-brand-600 cursor-pointer duration-200 transition-all shadow-[0_4px_14px_#A2C2B059] sm:hover:to-brand-700 sm:hover:from-brand-700"
+                            }`}
+                    >
+                        {isSubmitting && (
+                            <CircularProgress
+                                size={14}
+                                className="text-black"
+                            />
+                        )}
+                        {isEditing ? "Salvar Alterações" : "Criar Cliente"}
+                    </button>
+                </DialogActions>
+            </form>
         </Dialog>
     );
 }
+
+export default memo(ClientForm);
