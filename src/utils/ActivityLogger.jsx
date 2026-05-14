@@ -1,4 +1,14 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { 
+    addDoc, 
+    collection, 
+    serverTimestamp, 
+    query, 
+    where, 
+    getDocs, 
+    deleteDoc, 
+    doc,
+    Timestamp 
+} from "firebase/firestore";
 import { db } from "@/lib/firebaseConfig";
 
 /**
@@ -56,10 +66,10 @@ export const logActivity = async (activityData) => {
 /**
  * Exclui logs de atividade mais antigos que o número de dias especificado.
  * 
- * @param {number} days - Número de dias para manter os logs (padrão 7)
+ * @param {number} days - Número de dias para manter os logs (padrão 2)
  */
 
-export const cleanOldLogs = async (days = 7) => {
+export const cleanOldLogs = async (days = 2) => {
     try {
         const logsRef = collection(db, "activity_logs");
         

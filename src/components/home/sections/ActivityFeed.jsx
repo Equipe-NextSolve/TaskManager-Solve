@@ -35,11 +35,77 @@ export default function ActivityFeed() {
             setLoading(false);
         });
 
-        // Limpa logs com mais de 7 dias ao carregar o feed
-        cleanOldLogs(7);
+        // Limpa logs com mais de 2 dias ao carregar o feed
+        cleanOldLogs(2);
 
         return () => unsubscribe();
     }, []);
+
+    // Lógica de renderização condicionaal
+    const renderActivityContent= ()=> {
+        if (loading) { 
+            return (
+                <div className="py-10 flex flex-col items-center gap-2">
+                    <div className="w-5 h-5 border-2 border-brand-500 border-t-transparent animate-spin rounded-full" />
+                    <p className="text-xs text-text-muted">
+                        Carregando feed...
+                    </p>
+                </div>
+            )
+        }
+
+        if (activities.length === 0) {
+            return (
+                <div className="py-10 text-center space-y-2">
+                    <MdNotificationsNone className="text-3xl text-text-muted/20 mx-auto" />
+                    <p className="text-xs text-text-muted">
+                        Nenhuma atividade registrada ainda.
+                    </p>
+                </div>
+            )
+        }
+
+        return (
+            <div className="relative max-h-80 overflow-y-auto pr-2 scroll-hidden">
+                <div className="space-y-4">
+                    {activities.map((log) => {
+                        const timeAgo = log.timestamp
+                            ? formatDistanceToNow(
+                                log.timestamp.toDate(),
+                                { addSuffix: true, locale: ptBR },
+                            ) : "agora mesmo";
+
+                        return (
+                            <div
+                                key={log.id}
+                                className="relative flex items-start gap-3 p-2 group hover:bg-bg-surface rounded-lg transition-colors "
+                            >
+                                <div className="z-10 self-center">
+                                    <Avatar
+                                        name={log.userName}
+                                        uid={log.userId}
+                                        src={log.userPhoto}
+                                        size={30}
+                                    />
+                                </div>
+                                <div className="flex-1 min-w-0 pt-1">
+                                    <p className="text-xs text-text-secondary leading-relaxed">
+                                        <span className="font-bold text-text-primary">
+                                            {log.userName.split(" ")[0]}
+                                        </span>{" "}
+                                        {getActivityMessage(log)}
+                                    </p>
+                                    <span className="text-[10px] text-text-muted mt-1 block">
+                                        {timeAgo}
+                                    </span>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }
 
     return (
         <section className="bg-bg-card border border-border-main rounded-2xl p-5 space-y-4">
@@ -60,64 +126,7 @@ export default function ActivityFeed() {
             </div>
 
             <div className="space-y-6">
-                {loading ? (
-                    <div className="py-10 flex flex-col items-center gap-2">
-                        <div className="w-5 h-5 border-2 border-brand-500 border-t-transparent animate-spin rounded-full" />
-                        <p className="text-xs text-text-muted">
-                            Carregando feed...
-                        </p>
-                    </div>
-                ) : activities.length === 0 ? (
-                    <div className="py-10 text-center space-y-2">
-                        <MdNotificationsNone className="text-3xl text-text-muted/20 mx-auto" />
-                        <p className="text-xs text-text-muted">
-                            Nenhuma atividade registrada ainda.
-                        </p>
-                    </div>
-                ) : (
-                    <div className="relative max-h-80 overflow-y-auto pr-2 scroll-hidden">
-                        {/* Linha da timeline */}
-                        {/* <div className="absolute left-1 top-2 bottom-2 w-px h-full bg-border-main" /> */}
-
-                        <div className="space-y-4">
-                            {activities.map((log) => {
-                                const timeAgo = log.timestamp
-                                    ? formatDistanceToNow(
-                                          log.timestamp.toDate(),
-                                          { addSuffix: true, locale: ptBR },
-                                      )
-                                    : "agora mesmo";
-
-                                return (
-                                    <div
-                                        key={log.id}
-                                        className="relative flex items-start gap-3 p-2 group hover:bg-bg-surface rounded-lg transition-colors "
-                                    >
-                                        <div className="z-10 self-center">
-                                            <Avatar
-                                                name={log.userName}
-                                                uid={log.userId}
-                                                src={log.userPhoto}
-                                                size={30}
-                                            />
-                                        </div>
-                                        <div className="flex-1 min-w-0 pt-1">
-                                            <p className="text-xs text-text-secondary leading-relaxed">
-                                                <span className="font-bold text-text-primary">
-                                                    {log.userName.split(" ")[0]}
-                                                </span>{" "}
-                                                {getActivityMessage(log)}
-                                            </p>
-                                            <span className="text-[10px] text-text-muted mt-1 block">
-                                                {timeAgo}
-                                            </span>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                )}
+                {renderActivityContent()}
             </div>
         </section>
     );
